@@ -1,0 +1,35 @@
+header {
+    height: 350px;
+    width: 100%;
+}
+
+#header-img {
+    height: 90%;
+    width: 75%;
+    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#header-img h1 {
+    font-size: 60px;
+    font-weight: 600;
+    color: rgb(255, 113, 137);
+}
+
+#search-bar {
+    height: 40px;
+    width: 100px;
+}
+
+#search-bar img {
+    height: 40px;
+    width: 40px;
+}
+
+#search-bar input {
+    height: 40px;
+    width: 80px;
+}
