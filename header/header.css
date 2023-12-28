@@ -29,7 +29,16 @@ header {
     width: 40px;
 }
 
-#search-bar input {
+header input {
     height: 40px;
     width: 80px;
+    box-sizing: border-box;
+    background-image: url('/assets/icons/loupe.svg');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    padding-left: 35px;
+    height: 40px;
+    min-width: 270px;
+    border: 2px solid var(--clr-pink);
+    border-radius: 999px;
 }

@@ -2,63 +2,63 @@
     "festivals": [
       {
         "name": "Starlight Symphony",
-        "location": "Luna Valley, Mystica",
-        "date": "2023-08-15",
-        "genre": "Music and Light Show"
+        "location": "Nickelsdorf, AT",
+        "date": "Aug.-15",
+        "genre": "Rock"
       },
       {
         "name": "Aurora Food Fiesta",
-        "location": "Aurora Island, Oceanica",
-        "date": "2023-06-21",
-        "genre": "Gourmet Food and Wine"
+        "location": "St.Pölten, AT",
+        "date": "Juni-21",
+        "genre": "Pop"
       },
       {
         "name": "Neon Tech Expo",
-        "location": "Cyber City, Futureland",
-        "date": "2023-10-05",
-        "genre": "Technology and Innovation"
+        "location": "Graz, AT",
+        "date": "Okt.-05",
+        "genre": "Jazz"
       },
       {
         "name": "Harmony Arts Festival",
-        "location": "Harmony Hills, Artisia",
-        "date": "2023-04-30",
-        "genre": "Arts and Crafts"
+        "location": "Nickelsdorf, AT",
+        "date": "Apr.-30",
+        "genre": "Pop"
       },
       {
         "name": "Galactic Gaming Gala",
-        "location": "Virtual Space, Galactica",
-        "date": "2023-07-12",
-        "genre": "Video Games and Esports"
+        "location": "Klagenfurt, AT",
+        "date": "Juli-12",
+        "genre": "Jazz"
       },
       {
         "name": "Mystical Creatures Parade",
-        "location": "Enchanted Forest, Fantasia",
-        "date": "2023-05-16",
-        "genre": "Parade and Fantasy"
+        "location": "Salzburg, AT",
+        "date": "Mai-16",
+        "genre": "Rock"
       },
       {
         "name": "Retro Revival Fest",
-        "location": "Nostalgia Town, Retroville",
-        "date": "2023-09-09",
-        "genre": "Retro Music and Fashion"
+        "location": "Wien, AT",
+        "date": "Sept.-09",
+        "genre": "Techno"
       },
       {
         "name": "Sunset Jazz Jamboree",
-        "location": "Sunset Beach, Melodia",
-        "date": "2023-11-03",
-        "genre": "Jazz Music and Beach Party"
+        "location": "Wien, AT",
+        "date": "Nov.-03",
+        "genre": "Jazz"
       },
       {
         "name": "Eco Green Fair",
-        "location": "Green City, EcoWorld",
-        "date": "2023-03-15",
-        "genre": "Sustainability and Environment"
+        "location": "Nickelsdorf, AT",
+        "date": "März-15",
+        "genre": "Pop"
       },
       {
         "name": "Time Travelers' Convention",
-        "location": "Chronopolis, Timeless Realm",
-        "date": "2023-12-31",
-        "genre": "Science Fiction and Adventure"
+        "location": "Nickelsdorf, AT",
+        "date": "Dez.-31",
+        "genre": "Rock"
       }
     ]
   }
