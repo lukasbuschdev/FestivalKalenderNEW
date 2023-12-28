@@ -9,31 +9,31 @@
       {
         "name": "Aurora Food Fiesta",
         "location": "St.Pölten, AT",
-        "date": "Juni-21",
+        "date": "Juni-23",
         "genre": "Pop"
       },
       {
         "name": "Neon Tech Expo",
         "location": "Graz, AT",
-        "date": "Okt.-05",
+        "date": "Okt.-07",
         "genre": "Jazz"
       },
       {
         "name": "Harmony Arts Festival",
         "location": "Nickelsdorf, AT",
-        "date": "Apr.-30",
+        "date": "Apr.-17",
         "genre": "Pop"
       },
       {
         "name": "Galactic Gaming Gala",
         "location": "Klagenfurt, AT",
-        "date": "Juli-12",
+        "date": "Juli-19",
         "genre": "Jazz"
       },
       {
         "name": "Mystical Creatures Parade",
         "location": "Salzburg, AT",
-        "date": "Mai-16",
+        "date": "Mai-12",
         "genre": "Rock"
       },
       {
@@ -58,6 +58,66 @@
         "name": "Time Travelers' Convention",
         "location": "Nickelsdorf, AT",
         "date": "Dez.-31",
+        "genre": "Rock"
+      },
+      {
+        "name": "Starlight Symphony",
+        "location": "Nickelsdorf, AT",
+        "date": "Aug.-15",
+        "genre": "Rock"
+      },
+      {
+        "name": "Aurora Food Fiesta",
+        "location": "St.Pölten, AT",
+        "date": "Juni-21",
+        "genre": "Pop"
+      },
+      {
+        "name": "Neon Tech Expo",
+        "location": "Graz, AT",
+        "date": "Okt.-05",
+        "genre": "Jazz"
+      },
+      {
+        "name": "Harmony Arts Festival",
+        "location": "Nickelsdorf, AT",
+        "date": "Apr.-30",
+        "genre": "Pop"
+      },
+      {
+        "name": "Galactic Gaming Gala",
+        "location": "Klagenfurt, AT",
+        "date": "Juli-19",
+        "genre": "Jazz"
+      },
+      {
+        "name": "Mystical Creatures Parade",
+        "location": "Salzburg, AT",
+        "date": "Mai-13",
+        "genre": "Rock"
+      },
+      {
+        "name": "Retro Revival Fest",
+        "location": "Wien, AT",
+        "date": "Sept.-07",
+        "genre": "Techno"
+      },
+      {
+        "name": "Sunset Jazz Jamboree",
+        "location": "Wien, AT",
+        "date": "Nov.-01",
+        "genre": "Jazz"
+      },
+      {
+        "name": "Eco Green Fair",
+        "location": "Nickelsdorf, AT",
+        "date": "März-12",
+        "genre": "Pop"
+      },
+      {
+        "name": "Time Travelers' Convention",
+        "location": "Nickelsdorf, AT",
+        "date": "Dez.-30",
         "genre": "Rock"
       }
     ]
