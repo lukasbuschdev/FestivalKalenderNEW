@@ -1,0 +1,22 @@
+#content {
+    height: 500px;
+    width: 100%;
+}
+
+#filter-container {
+    width: 100%;
+    height: 40px;
+    /* background-color: black; */
+}
+
+.filters {
+    height: 40px;
+    width: 100%;
+}
+
+.filter-box {
+    height: 40px;
+    width: 20%;
+    background-color: black;
+    
+}
