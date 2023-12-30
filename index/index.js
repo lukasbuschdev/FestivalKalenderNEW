@@ -1,3 +1,5 @@
+const ads = ['/assets/img/ad-1.JPG', '/assets/img/ad-2.JPG'];
+
 function loadContent() {
     loadFilters();
     loadEventCards();
@@ -7,13 +9,10 @@ function loadFilters() {
     const filterContainer = $('#filter-container');
     filterContainer.innerHTML = /*html*/ `
         <div class="filters row flex-center">
-            <input type="text" placeholder="Datum">
-            
-            <input type="text" placeholder="Ort">
-            
-            <input type="text" placeholder="Genre">
-            
-            <input type="text" placeholder="Band">
+            <button id="date" class="">Datum</button>
+            <button id="location" class="">Ort</button>
+            <button id="genre" class="">Genre</button>
+            <button id="band" class="">Band</button>
         </div>
     `;
 }
@@ -27,15 +26,23 @@ async function loadEventCards() {
     festivals.forEach(festival => {
         allEventCardsHTML += renderEvents(festival);
         counter++;
-
-        if(counter % 4 === 0) {
-            allEventCardsHTML += renderAdBlock();
-        }
+        allEventCardsHTML = checkAd(allEventCardsHTML, counter);
     });
 
     const eventCardsContainer = $('#event-cards-container');
     eventCardsContainer.innerHTML = allEventCardsHTML;
 }
+
+
+function checkAd(allEventCardsHTML, counter) {
+    if (counter % 4 === 0) {
+        const adIndex = Math.floor((counter / 4 - 1) % ads.length);
+        const adUrl = ads[adIndex];
+        return allEventCardsHTML + renderAdBlock(adUrl);
+    }
+    return allEventCardsHTML;
+}
+
 
 function renderEvents({ id, name, date, location, genre }) {
     return /*html*/ `
@@ -54,10 +61,10 @@ function renderEvents({ id, name, date, location, genre }) {
     `;
 }
 
-function renderAdBlock() {
+function renderAdBlock(adUrl) {
     return /*html*/ `
         <div class="ad-container">
-            <img src="/assets/img/ad-1.JPG">
+            <img src="${adUrl}">
         </div>
     `;
 }
