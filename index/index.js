@@ -1,36 +1,33 @@
 const ads = ['/assets/img/ad-1.JPG', '/assets/img/ad-2.JPG'];
 
-async function getAllNames() {
+const getFestivals = async () => {
     const data = await getData();
-    const festivals = data.festivals;
-    const names = festivals.map(festival => festival.name);
+    return data.festivals;
+};
+
+async function getAllNames() {
+    const names = (await getFestivals()).map(festival => festival.name);
     const uniqueNames = new Set(names);
 
     return Array.from(uniqueNames);
 }
 
 async function getAllDates() {
-    const data = await getData();
-    const festivals = data.festivals;
-    const date = festivals.map(festival => festival.date);
+    const date = (await getFestivals()).map(festival => festival.date);
     const uniqueDate = new Set(date);
 
     return Array.from(uniqueDate);
 }
 
 async function getAllLocations() {
-    const data = await getData();
-    const festivals = data.festivals;
-    const locations = festivals.map(festival => festival.location);
+    const locations = (await getFestivals()).map(festival => festival.location);
     const uniqueLocations = new Set(locations);
 
     return Array.from(uniqueLocations);
 }
 
 async function getAllGenres() {
-    const data = await getData();
-    const festivals = data.festivals;
-    const genres = festivals.map(festival => festival.genre);
+    const genres = (await getFestivals()).map(festival => festival.genre);
     const uniqueGenres = new Set(genres);
 
     return Array.from(uniqueGenres);
@@ -56,27 +53,39 @@ function loadFilters() {
 }
 
 function addClickToFilterButtons() {
+    getNames();
+    getDates();
+    getLocations();
+    getGenres();
+}
+    
+function getNames() {
     $('#name').addEventListener('click', async function() {
         const names = await getAllNames();
         log(names);
     });
-    
+}
+
+function getDates() {
     $('#date').addEventListener('click', async function() {
         const dates = await getAllDates();
         log(dates);
     });
-    
+}
+
+function getLocations() {
     $('#location').addEventListener('click', async function() {
         const locations = await getAllLocations();
         log(locations);
     });
-    
+}
+
+function getGenres() {
     $('#genre').addEventListener('click', async function() {
         const genres = await getAllGenres();
         log(genres);
     });
 }
-
 
 
 async function loadEventCards() {
