@@ -31,9 +31,9 @@ async function loadEventCards() {
     eventCardsContainer.innerHTML = allEventCardsHTML;
 }
 
-function renderEvents({ name, date, location, genre }) {
+function renderEvents({ id, name, date, location, genre }) {
     return /*html*/ `
-        <div class="event-card column">
+        <div class="event-card column" onclick="openEvent('${id}')">
             <span class="event-name">${name}</span>
             <div class="row gap-20 card-info">
                 <span class="event-date">${date}</span>
@@ -48,36 +48,51 @@ function renderEvents({ name, date, location, genre }) {
     `;
 }
 
+async function openEvent(id) {
+    const selectedFestival = await checkFestivalId(id);
 
+    renderSelectedFestival(selectedFestival);
+}
 
+async function checkFestivalId(id) {
+    const festivalId = parseInt(id);
+    const dataset = await getData();
+    const festivals = dataset.festivals;
+    const festivalExists = festivals.find(festival => festival.id === festivalId);    
+    
+    if(festivalExists) return festivalExists;
+    if(!festivalExists) return log(`No festival found!`);    
+}
 
+function renderSelectedFestival(selectedFestival) {
+    const selectedFestivalContainer = $('#selected-festival-container-upper');
+    $('#selected-festival-container-upper').classList.remove('d-none');
 
+    selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selectedFestival);
+}
 
+function selectedFestivalTemplate({ id, name, date, location, genre }) {
+    return /*html*/ `
+        <div class="selected-festival-container-lower flex-center">
+            <div class="selected-event-card column" onclick="closeSelectedFestival()">
+                <span class="selected-event-name">${name}</span>
+                <div class="row selected-card-info">
+                    <div class="selected-event-date-container grid-center">
+                        <span class="selected-event-date">${date}</span>
+                    </div>
+                    <div class="column gap-10">
+                        <span class="selected-event-location">${location}</span>
+                        <span class="selected-event-genre">${genre}</span>
+                        <span class="selected-event-lineup">Lineup</span>
+                        <span class="selected-event-tickets">Tickets</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
 
-// async function loadEventCards() {
-//     const data = await getData();
-//     const festivals = data.festivals;
-
-//     festivals.forEach(festival => {
-//         log(festival)
-//     });
-
-//     const eventCardsContaier = $('#event-cards-container');
-//     eventCardsContaier.innerHTML = renderEvents(festivals);
-// }
-
-// function renderEvents({name, date, location, genre}) {
-//     return /*html*/ `
-//         <div class="event-card">
-//             <span class="event-name">${name}</span>
-//             <span class="event-date">${date}</span>
-//             <div>
-//                 <span class="event-location">${location}</span>
-//                 <span class="event-genre">${genre}</span>
-//                 <span class="event-line"></span>
-//                 <span class="event-tickets">Tickets</span>
-//             </div>
-//         </div>
-//     `;
-// }
-
+function closeSelectedFestival() {
+    $('#selected-festival-container-upper').classList.add('d-none');
+    $('#selected-festival-container-upper').innerHTML = '';
+}

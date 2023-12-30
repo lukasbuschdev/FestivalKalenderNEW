@@ -304,6 +304,7 @@ h4 {
 
 .d-none {
     display: none !important;
+    transition: all var(--transition-slow);
 }
 
 .o-none {

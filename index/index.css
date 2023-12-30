@@ -1,7 +1,13 @@
+#header-container {
+    height: 40vh;
+}
+
 #content {
-    height: 500px;
+    height: fit-content;
     width: 100%;
+    max-width: 1200px;
     padding: 0 10%;
+    align-self: center;
 }
 
 #filter-container {
@@ -108,6 +114,95 @@
 .event-tickets {
 
 }
+
+
+
+
+
+/* ############################################################### */
+/* SELECTED FESTIVAL  */
+/* ############################################################### */
+
+
+#selected-festival-container-upper {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(200, 200, 200, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+.selected-festival-container-lower {
+    height: 100vh;
+    width: 100%;
+    z-index: 9;
+}
+
+.selected-event-date-container {
+    min-width: 30%;
+    height: 100%;
+}
+
+.selected-event-date {
+    align-self: center;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.selected-event-card {
+    box-sizing: border-box;
+    height: 60vh;
+    width: 80%;
+    border: 3px solid var(--clr-pink);
+    border-radius: 20px;
+    padding: 10px;
+    background-color: var(--clr-bg-light);
+    z-index: 100;
+}
+
+.selected-event-card:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.selected-event-card > div {
+    height: 100%;
+    align-items: flex-start;
+}
+
+.selected-card-info {
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    padding: 5px 0;
+    width: 100%;
+}
+
+.selected-card-info > div:last-of-type {
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    gap: 40px;
+}
+
+.selected-card-info > div span {
+    font-size: 2rem;
+    font-weight: 600;
+    align-self: center;
+}
+
+.selected-event-name {
+    box-sizing: border-box;
+    text-align: center;
+    font-weight: 600;
+    font-size: 3rem;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--clr-placeholder);
+}
+
+
 
 
 
