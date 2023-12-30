@@ -22,9 +22,15 @@ async function loadEventCards() {
     const data = await getData();
     const festivals = data.festivals;
     let allEventCardsHTML = '';
+    let counter = 0;
 
     festivals.forEach(festival => {
         allEventCardsHTML += renderEvents(festival);
+        counter++;
+
+        if(counter % 4 === 0) {
+            allEventCardsHTML += renderAdBlock();
+        }
     });
 
     const eventCardsContainer = $('#event-cards-container');
@@ -33,7 +39,7 @@ async function loadEventCards() {
 
 function renderEvents({ id, name, date, location, genre }) {
     return /*html*/ `
-        <div class="event-card column" onclick="openEvent('${id}')">
+        <div class="event-card column" onclick="openSelectedFestival('${id}')">
             <span class="event-name">${name}</span>
             <div class="row gap-20 card-info">
                 <span class="event-date">${date}</span>
@@ -48,7 +54,15 @@ function renderEvents({ id, name, date, location, genre }) {
     `;
 }
 
-async function openEvent(id) {
+function renderAdBlock() {
+    return /*html*/ `
+        <div class="ad-container">
+            <img src="/assets/img/ad-1.JPG">
+        </div>
+    `;
+}
+
+async function openSelectedFestival(id) {
     const selectedFestival = await checkFestivalId(id);
 
     renderSelectedFestival(selectedFestival);
