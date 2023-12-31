@@ -1,5 +1,10 @@
 const ads = ['/assets/img/ad-1.JPG', '/assets/img/ad-2.JPG'];
 
+const monthMap = {
+    'Jan.': 1, 'Feb.': 2, 'März': 3, 'Apr.': 4, 'Mai': 5, 'Juni': 6,
+    'Juli': 7, 'Aug.': 8, 'Sept.': 9, 'Okt.': 10, 'Nov.': 11, 'Dez.': 12
+};
+
 const getFestivals = async () => {
     const data = await getData();
     return data.festivals;
@@ -58,39 +63,85 @@ function addClickToFilterButtons() {
     getLocations();
     getGenres();
 }
-    
-function getNames() {
-    $('#name').addEventListener('click', async function() {
-        const names = await getAllNames();
-        log(names);
+
+function sortByFirstLetter(array) {
+    return array.sort((a, b) => {
+        return a[0].localeCompare(b[0]);
     });
 }
 
 function getDates() {
     $('#date').addEventListener('click', async function() {
         const dates = await getAllDates();
-        log(dates);
+        const sortedList = sortDates(dates);
+        openFilterList(sortedList);
+    });
+}
+
+function sortDates(dates) {
+    return dates.sort((a, b) => {
+        let [monthA, dayA] = a.split('-');
+        let [monthB, dayB] = b.split('-');
+
+        monthA = monthMap[monthA];
+        monthB = monthMap[monthB];
+
+        if (monthA === monthB) {
+            return parseInt(dayA, 10) - parseInt(dayB, 10);
+        }
+        return monthA - monthB;
+    });
+}
+
+function getNames() {
+    $('#name').addEventListener('click', async function() {
+        const names = await getAllNames();
+        const sortedList = sortByFirstLetter(names);
+        openFilterList(sortedList);
     });
 }
 
 function getLocations() {
     $('#location').addEventListener('click', async function() {
         const locations = await getAllLocations();
-        log(locations);
+        const sortedList = sortByFirstLetter(locations);
+        openFilterList(sortedList);
     });
 }
 
 function getGenres() {
     $('#genre').addEventListener('click', async function() {
         const genres = await getAllGenres();
-        log(genres);
+        const sortedList = sortByFirstLetter(genres);
+        openFilterList(sortedList);
     });
 }
 
+function openFilterList(sortedList) {
+    const filterListContainer = $('#filter-list-container'); 
+    filterListContainer.classList.remove('d-none');
+    const filterListItems = $('#filter-list-items');
+    filterListItems.innerHTML = '';
+    filterListItems.innerHTML += renderFilterList(sortedList);
+}
+
+function renderFilterList(sortedList) {
+    return sortedList.map(listItem => {
+        return /*html*/ `
+            <div class="list-item-container">
+                <span>${listItem}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function closeFilter() {
+    const filterListContainer = $('#filter-list-container'); 
+    filterListContainer.classList.add('d-none');
+}
 
 async function loadEventCards() {
-    const data = await getData();
-    const festivals = data.festivals;
+    const festivals = await getFestivals();
     let allEventCardsHTML = '';
     let counter = 0;
 
@@ -104,7 +155,6 @@ async function loadEventCards() {
     eventCardsContainer.innerHTML = allEventCardsHTML;
 }
 
-
 function checkAd(allEventCardsHTML, counter) {
     if (counter % 4 === 0) {
         const adIndex = Math.floor((counter / 4 - 1) % ads.length);
@@ -113,7 +163,6 @@ function checkAd(allEventCardsHTML, counter) {
     }
     return allEventCardsHTML;
 }
-
 
 function renderEvents({ id, name, date, location, genre }) {
     return /*html*/ `
@@ -148,8 +197,7 @@ async function openSelectedFestival(id) {
 
 async function checkFestivalId(id) {
     const festivalId = parseInt(id);
-    const dataset = await getData();
-    const festivals = dataset.festivals;
+    const festivals = await getFestivals();
     const festivalExists = festivals.find(festival => festival.id === festivalId);    
     
     if(festivalExists) return festivalExists;
@@ -166,17 +214,20 @@ function renderSelectedFestival(selectedFestival) {
 function selectedFestivalTemplate({ id, name, date, location, genre }) {
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center">
-            <div class="selected-event-card column" onclick="closeSelectedFestival()">
+            <div class="selected-event-card column">
+                <img class="selected-event-card-close" src="/assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${name}</span>
                 <div class="row selected-card-info">
                     <div class="selected-event-date-container grid-center">
-                        <span class="selected-event-date">${date}</span>
+                        <div class="flex-center">
+                            <span class="selected-event-date">${date}</span>
+                        </div>
                     </div>
                     <div class="column gap-10">
                         <span class="selected-event-location">${location}</span>
                         <span class="selected-event-genre">${genre}</span>
                         <span class="selected-event-lineup">Lineup</span>
-                        <span class="selected-event-tickets">Tickets</span>
+                        <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
                     </div>
                 </div>
             </div>
