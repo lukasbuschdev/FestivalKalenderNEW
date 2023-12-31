@@ -141,13 +141,15 @@ function checkNumberOfItems() {
     const filterListContainer = $('#filter-list-items');
     let filterList = [...$$('.list-item-container')];
 
-    if (filterList.length > 10) return;
-    filterListContainer.style.justifyContent = "center";   
+    if (filterList.length >= 10) filterListContainer.style.justifyContent = "flex-start";
+    if (filterList.length < 10) filterListContainer.style.justifyContent = "center";   
 }
 
 function closeFilter() {
-    const filterListContainer = $('#filter-list-container'); 
+    const filterListContainer = $('#filter-list-container');
+    $('#filter-list-items').innerHTML = ''; 
     filterListContainer.classList.add('d-none');
+
 }
 
 async function loadEventCards() {
@@ -194,7 +196,9 @@ function renderEvents({ id, name, date, location, genre }) {
 function renderAdBlock(adUrl) {
     return /*html*/ `
         <div class="ad-container">
-            <img src="${adUrl}">
+            <a href="https://www.austrian.com/at/de/homepage">
+                <img src="${adUrl}">
+            </a>
         </div>
     `;
 }
