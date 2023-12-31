@@ -123,6 +123,8 @@ function openFilterList(sortedList) {
     const filterListItems = $('#filter-list-items');
     filterListItems.innerHTML = '';
     filterListItems.innerHTML += renderFilterList(sortedList);
+
+    checkNumberOfItems()
 }
 
 function renderFilterList(sortedList) {
@@ -133,6 +135,14 @@ function renderFilterList(sortedList) {
             </div>
         `;
     }).join('');
+}
+
+function checkNumberOfItems() {
+    const filterListContainer = $('#filter-list-items');
+    let filterList = [...$$('.list-item-container')];
+
+    if (filterList.length > 10) return;
+    filterListContainer.style.justifyContent = "center";   
 }
 
 function closeFilter() {
