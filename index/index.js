@@ -167,6 +167,20 @@ async function loadEventCards() {
     eventCardsContainer.innerHTML = allEventCardsHTML;
 }
 
+async function loadFilteredEventCards(festivals) {
+    let allEventCardsHTML = '';
+    let counter = 0;
+
+    festivals.forEach(festival => {
+        allEventCardsHTML += renderEvents(festival);
+        counter++;
+        allEventCardsHTML = checkAd(allEventCardsHTML, counter);
+    });
+
+    const eventCardsContainer = $('#event-cards-container');
+    eventCardsContainer.innerHTML = allEventCardsHTML;
+}
+
 function checkAd(allEventCardsHTML, counter) {
     if (counter % 4 === 0) {
         const adIndex = Math.floor((counter / 4 - 1) % ads.length);
