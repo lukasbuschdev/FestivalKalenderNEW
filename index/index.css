@@ -271,6 +271,7 @@
     box-sizing: border-box;
     height: 60vh;
     width: 80%;
+    max-width: 900px;
     border: 3px solid var(--clr-pink);
     border-radius: 20px;
     padding: 10px;
@@ -292,8 +293,9 @@
 }
 
 .selected-event-card > div {
-    height: 100%;
+    height: 65%;
     align-items: flex-start;
+    padding: 20px;
 }
 
 .selected-card-info {
@@ -313,7 +315,6 @@
 .selected-card-info > div span {
     font-size: 2rem;
     font-weight: 600;
-    align-self: center;
 }
 
 .selected-event-name {
@@ -321,7 +322,7 @@
     text-align: center;
     font-weight: 600;
     font-size: 3rem;
-    padding: 20px 0;
+    padding: 30px 0;
     border-bottom: 1px solid var(--clr-placeholder);
 }
 
@@ -340,4 +341,74 @@
     cursor: pointer;
     background-color: var(--clr-pink-hover);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* ############################################################ */
+/* MAIN RESPONSIVE DESIGN  */
+/* ############################################################ */
+
+@media(max-width: 800px) {
+    .selected-event-name {
+        font-size: 2rem;
+    }
+
+    .selected-card-info > div span {
+        font-size: 1.5rem;
+    }
+
+    .selected-event-date-container > div {
+        height: 7rem;
+    }
+
+    .selected-card-info > div:last-of-type {
+        justify-content: center;
+        gap: 20px;
+    }
+}
+
+@media(max-width: 600px) {
+    .selected-event-name {
+        font-size: 1.5rem;
+    }
+
+    .selected-card-info > div span {
+        font-size: 1rem;
+    }
+
+    .selected-event-date-container > div {
+        height: 5rem;
+    }
+}
+
+@media(max-width: 450px) {
+    .selected-event-name {
+        padding: 40px 0;
+    }
+
+    .selected-event-date-container {
+        place-items: self-start;
+        height: fit-content;
+    }
+
+    .selected-card-info {
+        flex-direction: column;
+    }
+
+    .selected-event-info-container div {
+        gap: 40px;
+    }
+
+    .selected-event-tickets {
+        height: 40px;
+        width: 170px;
+        font-size: 1.5rem;
+    }
+}
+
+@media(max-width: 400px) {
+    .selected-card-info > div:last-of-type {
+        gap: 10px;
+    }
 }

@@ -251,13 +251,20 @@ function selectedFestivalTemplate({ id, name, date, location, genre }) {
                             <span class="selected-event-date">${date}</span>
                         </div>
                     </div>
-                    <div class="column gap-10">
-                        <span class="selected-event-location">${location}</span>
-                        <span class="selected-event-genre">${genre}</span>
-                        <span class="selected-event-lineup">Lineup</span>
-                        <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
+                    <div class="selected-event-info-container row">
+                        <div class="column gap-30">
+                            <span class="selected-event-location">Ort: </span>
+                            <span class="selected-event-genre">Genre: </span>
+                            <span class="selected-event-lineup">Lineup: </span>
+                        </div>
+                        <div class="column gap-30">
+                            <span class="selected-event-location">${location}</span>
+                            <span class="selected-event-genre">${genre}</span>
+                            <span class="selected-event-lineup">Lineup</span>
+                        </div>
                     </div>
                 </div>
+                <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
             </div>
         </div>
     `;

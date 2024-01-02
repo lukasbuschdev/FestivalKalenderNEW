@@ -17,11 +17,10 @@ function loadHeader() {
     includeTemplate(headerContainer, headerContent);
 };
 
-document.addEventListener('DOMContentLoaded', function() {
-    
+document.addEventListener('DOMContentLoaded', function() {  
     setTimeout(() => {
         const inputField = $('#header-img input');
-        inputField.addEventListener('keydown', function() {
+        inputField.addEventListener('input', function() {
             filterAndSearch();
         });
     }, 1000)
