@@ -275,32 +275,38 @@ function renderSelectedFestival(selectedFestival) {
     selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selectedFestival);
 }
 
-function selectedFestivalTemplate({ id, name, date, location, genre }) {
+function selectedFestivalTemplate({ name, date, location, genre }) {
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center">
             <div class="selected-event-card column">
                 <img class="selected-event-card-close" src="/assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${name}</span>
-                <div class="row selected-card-info">
-                    <div class="selected-event-date-container grid-center">
-                        <div class="flex-center">
-                            <span class="selected-event-date">${date}</span>
-                        </div>
-                    </div>
-                    <div class="selected-event-info-container row">
-                        <div class="column gap-30">
-                            <span class="selected-event-location">Ort: </span>
-                            <span class="selected-event-genre">Genre: </span>
-                            <span class="selected-event-lineup">Lineup: </span>
-                        </div>
-                        <div class="column gap-30">
-                            <span class="selected-event-location">${location}</span>
-                            <span class="selected-event-genre">${genre}</span>
-                            <span class="selected-event-lineup">Lineup</span>
-                        </div>
-                    </div>
-                </div>
+
+                <div class="row selected-card-info">${renderSelectedCardInfo(date, location, genre)}</div>
+
                 <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
+            </div>
+        </div>
+    `;
+}
+
+function renderSelectedCardInfo(date, location, genre) {
+    return /*html*/ `
+        <div class="selected-event-date-container grid-center">
+            <div class="flex-center">
+                <span class="selected-event-date">${date}</span>
+            </div>
+        </div>
+        <div class="selected-event-info-container row">
+            <div class="column gap-30">
+                <span class="selected-event-location">Ort: </span>
+                <span class="selected-event-genre">Genre: </span>
+                <span class="selected-event-lineup">Lineup: </span>
+            </div>
+            <div class="column gap-30">
+                <span class="selected-event-location">${location}</span>
+                <span class="selected-event-genre">${genre}</span>
+                <span class="selected-event-lineup">Lineup</span>
             </div>
         </div>
     `;
