@@ -117,9 +117,6 @@ function getGenres() {
     });
 }
 
-
-
-
 function openFilterList(sortedList) {
     const filterListContainer = $('#filter-list-container'); 
     filterListContainer.classList.remove('d-none');
@@ -147,11 +144,6 @@ function renderFilterList(sortedList) {
     }).join('');
 }
 
-// function openSelectedItem(clickedItem) {
-    
-//     searchForItems(spanValue);
-// }
-
 async function searchForItems(clickedItem) {
     const spanValue = clickedItem.querySelector('span').textContent;
     const input = spanValue.toLowerCase();
@@ -161,12 +153,10 @@ async function searchForItems(clickedItem) {
         [name, location, date, genre].some(attr => attr.toLowerCase().includes(input))
     );
 
-    // log(filteredItems)
     searchItems(filteredItems);
 }
 
 function searchItems(filteredItems) {
-    log(filteredItems);
     loadSelectedItems(filteredItems);
     closeFilter();
 }
@@ -266,7 +256,6 @@ function renderAdBlock(adUrl) {
 
 async function openSelectedFestival(id) {
     const selectedFestival = await checkFestivalId(id);
-
     renderSelectedFestival(selectedFestival);
 }
 
@@ -276,7 +265,7 @@ async function checkFestivalId(id) {
     const festivalExists = festivals.find(festival => festival.id === festivalId);    
     
     if(festivalExists) return festivalExists;
-    if(!festivalExists) return log(`No festival found!`);    
+    if(!festivalExists) return error(`No festival found!`);    
 }
 
 function renderSelectedFestival(selectedFestival) {
