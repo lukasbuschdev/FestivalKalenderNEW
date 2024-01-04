@@ -129,13 +129,44 @@ function openFilterList(sortedList) {
 
 function renderFilterList(sortedList) {
     return sortedList.map(listItem => {
+        log(listItem)
         return /*html*/ `
-            <div class="list-item-container">
+            <div class="list-item-container" onclick=openSelectedItem()>
                 <span>${listItem}</span>
             </div>
         `;
     }).join('');
 }
+
+
+
+async function openSelectedItem(listItem) {
+    const input = listItem.toLowerCase();
+    log(listItem)
+    const festivals = (await dataSet()).festivals;
+  
+    const filteredFestivals = (await festivals).filter(({name, location, date, genre}) => 
+        [name, location, date, genre].some(attr => attr.toLowerCase().includes(input))
+    );
+
+    searchItems(filteredFestivals);
+}
+
+function searchItems(filteredData) {
+    log(filteredData);
+    loadFilteredEventCards(filteredData);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function checkNumberOfItems() {
     const filterListContainer = $('#filter-list-items');
