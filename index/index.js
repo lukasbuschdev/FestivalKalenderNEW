@@ -313,6 +313,9 @@ function renderSelectedCardInfo(date, location, genre) {
 }
 
 function closeSelectedFestival() {
+    const filterListContainer = $('#filter-list-items').innerHTML;
+    log(filterListContainer)
+    // filterListContainer.scrollTo({ top: 0, behavior: 'smooth' });
     $('#selected-festival-container-upper').classList.add('d-none');
     $('#selected-festival-container-upper').innerHTML = '';
 }

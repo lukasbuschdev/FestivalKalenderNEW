@@ -17,18 +17,6 @@ function loadHeader() {
     includeTemplate(headerContainer, headerContent);
 };
 
-// async function filterAndSearch() {
-//     const input = $('#header-img input').value.toLowerCase();
-//     const filteredFestivals = (await dataSet()).festivals.filter(festival => {
-//         return festival.name.toLowerCase().includes(input) ||
-//                festival.location.toLowerCase().includes(input) ||
-//                festival.date.toLowerCase().includes(input) ||
-//                festival.genre.toLowerCase().includes(input);
-//     });
-
-//     search(filteredFestivals);
-// }
-
 async function filterAndSearch() {
     const input = $('#header-img input').value.toLowerCase();
     const festivals = (await dataSet()).festivals;
