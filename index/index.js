@@ -117,6 +117,9 @@ function getGenres() {
     });
 }
 
+
+
+
 function openFilterList(sortedList) {
     const filterListContainer = $('#filter-list-container'); 
     filterListContainer.classList.remove('d-none');
@@ -124,49 +127,63 @@ function openFilterList(sortedList) {
     filterListItems.innerHTML = '';
     filterListItems.innerHTML += renderFilterList(sortedList);
 
-    checkNumberOfItems()
+    const allListItems = $$('.list-item-container');
+    allListItems.forEach((listItem) => {
+        listItem.addEventListener('click', function() {
+            searchForItems(this);
+        });
+    });
+
+    checkNumberOfItems();
 }
 
 function renderFilterList(sortedList) {
-    return sortedList.map(listItem => {
-        log(listItem)
+    return sortedList.map((listItem, index) => {
         return /*html*/ `
-            <div class="list-item-container" onclick=openSelectedItem()>
+            <div class="list-item-container" id="list-item-${index}">
                 <span>${listItem}</span>
             </div>
         `;
     }).join('');
 }
 
+// function openSelectedItem(clickedItem) {
+    
+//     searchForItems(spanValue);
+// }
 
-
-async function openSelectedItem(listItem) {
-    const input = listItem.toLowerCase();
-    log(listItem)
-    const festivals = (await dataSet()).festivals;
+async function searchForItems(clickedItem) {
+    const spanValue = clickedItem.querySelector('span').textContent;
+    const input = spanValue.toLowerCase();
+    const items = (await dataSet()).festivals;
   
-    const filteredFestivals = (await festivals).filter(({name, location, date, genre}) => 
+    const filteredItems = (await items).filter(({name, location, date, genre}) => 
         [name, location, date, genre].some(attr => attr.toLowerCase().includes(input))
     );
 
-    searchItems(filteredFestivals);
+    // log(filteredItems)
+    searchItems(filteredItems);
 }
 
-function searchItems(filteredData) {
-    log(filteredData);
-    loadFilteredEventCards(filteredData);
+function searchItems(filteredItems) {
+    log(filteredItems);
+    loadSelectedItems(filteredItems);
+    closeFilter();
 }
 
+function loadSelectedItems(filteredItems) {
+    let allEventCardsHTML = '';
+    let counter = 0;
 
+    filteredItems.forEach(festival => {
+        allEventCardsHTML += renderEvents(festival);
+        counter++;
+        allEventCardsHTML = checkAd(allEventCardsHTML, counter);
+    });
 
-
-
-
-
-
-
-
-
+    const eventCardsContainer = $('#event-cards-container');
+    eventCardsContainer.innerHTML = allEventCardsHTML;
+}
 
 function checkNumberOfItems() {
     const filterListContainer = $('#filter-list-items');
@@ -180,7 +197,6 @@ function closeFilter() {
     const filterListContainer = $('#filter-list-container');
     $('#filter-list-items').innerHTML = ''; 
     filterListContainer.classList.add('d-none');
-
 }
 
 async function loadEventCards() {
