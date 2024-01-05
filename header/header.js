@@ -2,6 +2,8 @@ const dataSet = async () => {
     return await getData();
 };
 
+let currentInput = '';
+
 function loadHeader() {
     const headerContainer = $('#header-container');
 
@@ -20,7 +22,7 @@ function loadHeader() {
 async function filterAndSearch() {
     const input = $('#header-img input').value.toLowerCase();
     const festivals = (await dataSet()).festivals;
-  
+    currentInput = input;
     const filteredFestivals = (await festivals).filter(({name, location, date, genre}) => 
         [name, location, date, genre].some(attr => attr.toLowerCase().includes(input))
     );
@@ -55,3 +57,29 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 250);
 });
+
+function highlightIfContains(text, input) {
+    const dataString = [...text];
+    log(dataString)
+
+    if (input && dataString.toLowerCase().includes(input.toLowerCase())) {
+        return `<span class="highlight">${text}</span>`;
+    }
+    return text;
+}
+
+
+// ###########################################################################
+// THIS MARKS EVERY SINGLE CHARACTER 
+// ###########################################################################
+
+// function highlightIfContains(text, input) {
+//     if (!input) return text;
+
+//     return text.split('').map(char => {
+//         if (input.toLowerCase().includes(char.toLowerCase())) {
+//             return `<span class="highlight">${char}</span>`;
+//         }
+//         return char;
+//     }).join('');
+// }

@@ -61,3 +61,11 @@ header input {
     border: 2px solid var(--clr-pink);
     border-radius: 999px;
 }
+
+.highlight {
+    box-sizing: border-box;
+    background-color: rgb(255, 113, 137);
+    border-radius: 7px;
+    padding: 3px 5px;
+    color: white;
+}

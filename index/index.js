@@ -146,6 +146,7 @@ function renderFilterList(sortedList) {
 
 async function searchForItems(clickedItem) {
     const spanValue = clickedItem.querySelector('span').textContent;
+    currentInput = spanValue;
     const input = spanValue.toLowerCase();
     const items = (await dataSet()).festivals;
   
@@ -230,12 +231,12 @@ function checkAd(allEventCardsHTML, counter) {
 function renderEvents({ id, name, date, location, genre }) {
     return /*html*/ `
         <div class="event-card column" onclick="openSelectedFestival('${id}')">
-            <span class="event-name">${name}</span>
+            <span class="event-name">${highlightIfContains(name, currentInput)}</span>
             <div class="row gap-20 card-info">
-                <span class="event-date">${date}</span>
+                <span class="event-date">${highlightIfContains(date, currentInput)}</span>
                 <div class="column gap-10">
-                    <span class="event-location">${location}</span>
-                    <span class="event-genre">${genre}</span>
+                    <span class="event-location">${highlightIfContains(location, currentInput)}</span>
+                    <span class="event-genre">${highlightIfContains(genre, currentInput)}</span>
                     <span class="event-lineup">Lineup</span>
                     <span class="event-tickets">Tickets</span>
                 </div>
@@ -313,9 +314,6 @@ function renderSelectedCardInfo(date, location, genre) {
 }
 
 function closeSelectedFestival() {
-    const filterListContainer = $('#filter-list-items').innerHTML;
-    log(filterListContainer)
-    // filterListContainer.scrollTo({ top: 0, behavior: 'smooth' });
     $('#selected-festival-container-upper').classList.add('d-none');
     $('#selected-festival-container-upper').innerHTML = '';
 }
