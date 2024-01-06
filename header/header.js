@@ -11,7 +11,7 @@ function loadHeader() {
         <header class="bg-white flex-center">
             <div id="header-img">
                 <h1>Festivalkalender</h1>
-                <input type="text">
+                <input type="text" oninput="checkHeaderInput()">
             </div>
         </header>
     `;
@@ -45,41 +45,22 @@ function debounce(func, delay) {
     };
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        const inputField = $('#header-img input');
-        
-        if(!inputField) return error("Input field not found");
-        if (inputField) {
-            inputField.addEventListener('input', debounce(function() {
-                filterAndSearch();
-            }, 250));
-        }
-    }, 250);
-});
+function checkHeaderInput() {
+    const inputField = $('#header-img input');
+    
+    if(!inputField) return error("Input field not found");
+    if (inputField) {
+        inputField.addEventListener('input', debounce(function() {
+            filterAndSearch();
+        }, 250));
+    }
+}
 
 function highlightIfContains(text, input) {
     const dataString = text;
-    log(dataString)
 
     if (input && dataString.toLowerCase().includes(input.toLowerCase())) {
         return `<span class="highlight">${text}</span>`;
     }
     return text;
 }
-
-
-// ###########################################################################
-// THIS MARKS EVERY SINGLE CHARACTER 
-// ###########################################################################
-
-// function highlightIfContains(text, input) {
-//     if (!input) return text;
-
-//     return text.split('').map(char => {
-//         if (input.toLowerCase().includes(char.toLowerCase())) {
-//             return `<span class="highlight">${char}</span>`;
-//         }
-//         return char;
-//     }).join('');
-// }
