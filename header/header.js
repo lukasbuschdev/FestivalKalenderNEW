@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function highlightIfContains(text, input) {
-    const dataString = [...text];
+    const dataString = text;
     log(dataString)
 
     if (input && dataString.toLowerCase().includes(input.toLowerCase())) {
