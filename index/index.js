@@ -307,7 +307,7 @@ function renderSelectedCardInfo(date, location, genre) {
             <div class="column gap-30">
                 <span class="selected-event-location">${location}</span>
                 <span class="selected-event-genre">${genre}</span>
-                <span class="selected-event-lineup">Lineup</span>
+                <span class="selected-event-lineup">N/A</span>
             </div>
         </div>
     `;
