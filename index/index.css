@@ -10,16 +10,71 @@
     align-self: center;
 }
 
+
+
+/* ############################################# */
+/* FILTER BUTTONS SECTION */
+/* ############################################# */
+
+.open-filter-btn-containter {
+    gap: 10px;
+}
+
+.open-filter-btn-containter button {
+    box-sizing: border-box;
+    padding: 5px 15px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    border: 1px solid var(--clr-pink);
+    border-radius: 999px;
+    background-color: var(--clr-pink);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1)
+}
+
+.open-filter-btn-containter button:hover {
+    background-color: var(--clr-pink-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+}
+
 #filter-container {
     width: 100%;
-    height: 50px;
+    justify-content: center;
 }
 
 .filters {
-    height: 50px;
+    box-sizing: border-box;
     width: 100%;
-    gap: 20px;
-    flex-wrap: wrap;
+    height: fit-content;
+    gap: 15px;
+    padding: 0 10px;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    justify-content: center;
+    transition: all 150ms ease-in-out;
+}
+
+@media(max-width: 600px) {
+    #filter-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .filters {
+        flex-direction: column;
+        height: 50vh;
+        gap: 30px;
+    }
+}
+
+.filters-closed {
+    height: 0;
+    width: 0;
+    padding: 0;
+}
+
+.filters::-webkit-scrollbar {
+    display: none;
 }
 
 .filters button {
@@ -27,13 +82,11 @@
     background-image: url('/assets/icons/loupe.svg');
     background-position: 10px center;
     background-repeat: no-repeat;
-    padding-left: 35px;
+    padding: 0 10px 0 35px;
     height: 30px;
-    aspect-ratio: 4/1;
+    width: fit-content;
     font-weight: 600;
     color: var(--clr-gray);
-    max-width: 200px;
-    min-width: 120px;
     border: 1px solid var(--clr-pink);
     border-radius: 999px;
 }
@@ -55,9 +108,9 @@
 #filter-list-card {
     position: relative;
     width: 50%;
+    height: 80vh;
     max-height: 650px;
     min-height: 500px;
-    aspect-ratio: 1/1.5;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -73,6 +126,7 @@
 @media(max-width: 800px) {
     #filter-list-card {
         width: 80%;
+        aspect-ratio: unset;
     }
 }
 
@@ -216,7 +270,7 @@
 }
 
 .ad-container img {
-    width: 100%; 
+    width: 100%;
     height: 100%;
     cursor: pointer;
 }
@@ -269,7 +323,7 @@
 .selected-event-card {
     position: relative;
     box-sizing: border-box;
-    height: 60vh;
+    height: 75vh;
     width: 80%;
     max-width: 900px;
     border: 3px solid var(--clr-pink);

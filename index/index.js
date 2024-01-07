@@ -46,7 +46,11 @@ async function loadContent() {
 function loadFilters() {
     const filterContainer = $('#filter-container');
     filterContainer.innerHTML = /*html*/ `
-        <div class="filters row flex-center">
+        <div class="open-filter-btn-containter row">
+            <button onclick="openFilterButtons()">Filter</button>
+            <button id="reset-filter-btn" class="d-none" onclick="resetSelectedFilter()">Filter löschen</button>
+        </div>
+        <div class="filters filters-closed row flex-center">
             <button id="name">Name</button>
             <button id="date">Datum</button>
             <button id="location">Ort</button>
@@ -55,6 +59,16 @@ function loadFilters() {
     `;
 
     addClickToFilterButtons();
+}
+
+function openFilterButtons() {
+    $('.filters').classList.toggle('filters-closed');
+}
+
+async function resetSelectedFilter() {
+    currentInput = '';
+    await loadEventCards();
+    $('#reset-filter-btn').classList.add('d-none');
 }
 
 function addClickToFilterButtons() {
@@ -145,6 +159,9 @@ function renderFilterList(sortedList) {
 }
 
 async function searchForItems(clickedItem) {
+    $('#reset-filter-btn').classList.remove('d-none');
+    $('.filters').classList.add('filters-closed');
+
     const spanValue = clickedItem.querySelector('span').textContent;
     currentInput = spanValue;
     const input = spanValue.toLowerCase();

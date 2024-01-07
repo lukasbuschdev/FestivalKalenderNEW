@@ -11,7 +11,7 @@ function loadHeader() {
         <header class="bg-white flex-center">
             <div id="header-img">
                 <h1>Festivalkalender</h1>
-                <input type="text" oninput="checkHeaderInput()">
+                <input type="text">
             </div>
         </header>
     `;
@@ -45,16 +45,18 @@ function debounce(func, delay) {
     };
 }
 
-function checkHeaderInput() {
-    const inputField = $('#header-img input');
-    
-    if(!inputField) return error("Input field not found");
-    if (inputField) {
-        inputField.addEventListener('input', debounce(function() {
-            filterAndSearch();
-        }, 250));
-    }
-}
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        const inputField = $('#header-img input');
+        
+        if(!inputField) return error("Input field not found");
+        if (inputField) {
+            inputField.addEventListener('input', debounce(function() {
+                filterAndSearch();
+            }, 250));
+        }
+    }, 250);
+})
 
 function highlightIfContains(text, input) {
     const dataString = text;
