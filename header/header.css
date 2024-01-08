@@ -60,6 +60,31 @@ header input {
     min-width: 220px;
     border: 2px solid var(--clr-pink);
     border-radius: 999px;
+    position: relative;
+}
+
+#close-icon {
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    box-sizing: border-box;
+    border-radius: 999px;
+    background-image: url('/assets/icons/close.svg');
+    background-position: center;
+    background-size: cover;
+    right: 23px;
+    top: 10px;
+}
+
+.show-close #close-icon {
+    display: block;
+}
+
+.input-wrapper {
+    position: relative;
+    display: inline-block;
 }
 
 .highlight {

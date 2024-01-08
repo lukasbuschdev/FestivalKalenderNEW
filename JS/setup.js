@@ -5,8 +5,8 @@ const includeTemplate = (selector, htmlContent) => {
     if(targetElement) return targetElement.innerHTML += htmlContent;
 };
 
-async function getData() {
-    const url = '/database.json';
-    const data = await (await fetch(url)).json();
-    return data;
-}
+// async function getData() {
+//     const url = '/database.json';
+//     const data = await (await fetch(url)).json();
+//     return data;
+// }

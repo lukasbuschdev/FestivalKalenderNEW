@@ -7,32 +7,33 @@ const monthMap = {
 
 const getFestivals = async () => {
     const data = await getData();
-    return data.festivals;
+    console.log(data);
+    return data;
 };
 
 async function getAllNames() {
-    const names = (await getFestivals()).map(festival => festival.name);
+    const names = (await getFestivals()).map(festival => festival.NAME);
     const uniqueNames = new Set(names);
 
     return Array.from(uniqueNames);
 }
 
 async function getAllDates() {
-    const date = (await getFestivals()).map(festival => festival.date);
+    const date = (await getFestivals()).map(festival => festival['DATUM 2024']);
     const uniqueDate = new Set(date);
 
     return Array.from(uniqueDate);
 }
 
 async function getAllLocations() {
-    const locations = (await getFestivals()).map(festival => festival.location);
+    const locations = (await getFestivals()).map(festival => festival.STADT);
     const uniqueLocations = new Set(locations);
 
     return Array.from(uniqueLocations);
 }
 
 async function getAllGenres() {
-    const genres = (await getFestivals()).map(festival => festival.genre);
+    const genres = (await getFestivals()).map(festival => festival.GENRES);
     const uniqueGenres = new Set(genres);
 
     return Array.from(uniqueGenres);
@@ -67,6 +68,8 @@ function openFilterButtons() {
 
 async function resetSelectedFilter() {
     currentInput = '';
+    $('#header-img .input-wrapper').classList.remove('show-close');   
+    $('.input-wrapper input').value = '';
     await loadEventCards();
     $('#reset-filter-btn').classList.add('d-none');
 }
@@ -141,7 +144,7 @@ function openFilterList(sortedList) {
     const allListItems = $$('.list-item-container');
     allListItems.forEach((listItem) => {
         listItem.addEventListener('click', function() {
-            searchForItems(this);
+            searchForItems(this);          
         });
     });
 
@@ -214,6 +217,7 @@ async function loadEventCards() {
 
     festivals.forEach(festival => {
         allEventCardsHTML += renderEvents(festival);
+        // log(festival)
         counter++;
         allEventCardsHTML = checkAd(allEventCardsHTML, counter);
     });
@@ -334,3 +338,4 @@ function closeSelectedFestival() {
     $('#selected-festival-container-upper').classList.add('d-none');
     $('#selected-festival-container-upper').innerHTML = '';
 }
+

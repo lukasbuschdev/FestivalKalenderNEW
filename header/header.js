@@ -11,7 +11,10 @@ function loadHeader() {
         <header class="bg-white flex-center">
             <div id="header-img">
                 <h1>Festivalkalender</h1>
-                <input type="text">
+                <div class="input-wrapper">
+                    <input type="text">
+                    <div onclick="deleteInput()" id="close-icon"></div>
+                </div>
             </div>
         </header>
     `;
@@ -21,18 +24,31 @@ function loadHeader() {
 
 async function filterAndSearch() {
     const input = $('#header-img input').value.toLowerCase();
+    checkInput(input);
     const festivals = (await dataSet()).festivals;
     currentInput = input;
     const filteredFestivals = (await festivals).filter(({name, location, date, genre}) => 
         [name, location, date, genre].some(attr => attr.toLowerCase().includes(input))
     );
 
-    search(filteredFestivals);
+    loadFilteredEventCards(filteredFestivals);
 }
 
-function search(filteredData) {
-    log(filteredData);
-    loadFilteredEventCards(filteredData);
+function deleteInput() {
+    const closeIcon = $('#close-icon');
+    
+    if(closeIcon) {
+        const inputField = $('#header-img input');
+        inputField.value = '';
+        checkInput('');
+        filterAndSearch();
+    }
+}
+
+function checkInput(input) {
+    const inputWrapper = $('#header-img .input-wrapper');
+    if(input.length < 1) inputWrapper.classList.remove('show-close');
+    if(input.length >= 1) inputWrapper.classList.add('show-close');
 }
 
 function debounce(func, delay) {
