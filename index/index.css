@@ -79,7 +79,7 @@
 
 .filters button {
     box-sizing: border-box;
-    background-image: url('/assets/icons/loupe.svg');
+    background-image: url('../assets/icons/loupe.svg');
     background-position: 10px center;
     background-repeat: no-repeat;
     padding: 0 10px 0 35px;
@@ -232,14 +232,20 @@
 }
 
 .event-name {
+    font-size: 0.8rem;
     text-align: center;
     font-weight: 600;
     padding: 5px;
     border-bottom: 1px solid var(--clr-placeholder);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .event-date {
-
+    align-self: center;
 }
 
 .event-location {

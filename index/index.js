@@ -1,4 +1,4 @@
-const ads = ['/assets/img/ad-1.JPG', '/assets/img/ad-2.JPG'];
+const ads = ['../assets/img/ad-1.JPG', '../assets/img/ad-2.JPG'];
 
 const monthMap = {
     'Jan.': 1, 'Feb.': 2, 'März': 3, 'Apr.': 4, 'Mai': 5, 'Juni': 6,
@@ -7,8 +7,15 @@ const monthMap = {
 
 const getFestivals = async () => {
     const data = await getData();
-    console.log(data);
-    return data;
+
+    const updatedData = data.map((festival, index) => {
+        return {
+            ...festival,
+            id: index + 1
+        };
+    });
+
+    return updatedData;
 };
 
 async function getAllNames() {
@@ -19,7 +26,7 @@ async function getAllNames() {
 }
 
 async function getAllDates() {
-    const date = (await getFestivals()).map(festival => festival['DATUM 2024']);
+    const date = (await getFestivals()).map(festival => festival.DATUM);
     const uniqueDate = new Set(date);
 
     return Array.from(uniqueDate);
@@ -168,10 +175,10 @@ async function searchForItems(clickedItem) {
     const spanValue = clickedItem.querySelector('span').textContent;
     currentInput = spanValue;
     const input = spanValue.toLowerCase();
-    const items = (await dataSet()).festivals;
+    const items = (await getFestivals());
   
-    const filteredItems = (await items).filter(({name, location, date, genre}) => 
-        [name, location, date, genre].some(attr => attr.toLowerCase().includes(input))
+    const filteredItems = items.filter(({NAME, STADT, DATUM, GENRES}) => 
+        [NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
     );
 
     searchItems(filteredItems);
@@ -249,21 +256,27 @@ function checkAd(allEventCardsHTML, counter) {
     return allEventCardsHTML;
 }
 
-function renderEvents({ id, name, date, location, genre }) {
+function renderEvents({ id, NAME, DATUM, STADT, KATEGORIE }) {
     return /*html*/ `
-        <div class="event-card column" onclick="openSelectedFestival('${id}')">
-            <span class="event-name">${highlightIfContains(name, currentInput)}</span>
+        <div class="event-card column" onclick="openSelectedFestival(${id})">
+            <span class="event-name">${highlightIfContains(NAME, currentInput)}</span>
             <div class="row gap-20 card-info">
-                <span class="event-date">${highlightIfContains(date, currentInput)}</span>
+                <span class="event-date">${processDate(DATUM)}</span>
                 <div class="column gap-10">
-                    <span class="event-location">${highlightIfContains(location, currentInput)}</span>
-                    <span class="event-genre">${highlightIfContains(genre, currentInput)}</span>
-                    <span class="event-lineup">Lineup</span>
-                    <span class="event-tickets">Tickets</span>
+                    <span class="event-location">${highlightIfContains(STADT, currentInput)}</span>
+                    <span class="event-genre">${highlightIfContains(KATEGORIE, currentInput)}</span>
                 </div>
             </div>
         </div>
     `;
+}
+
+function processDate(DATUM) {
+    if (DATUM.includes('-')) {
+        const [start, end] = DATUM.split('-').map(s => s.trim());
+        return `${highlightIfContains(start, currentInput)} - ${highlightIfContains(end, currentInput)}`;
+    }
+    return highlightIfContains(DATUM, currentInput);
 }
 
 function renderAdBlock(adUrl) {
@@ -295,16 +308,17 @@ function renderSelectedFestival(selectedFestival) {
     $('#selected-festival-container-upper').classList.remove('d-none');
 
     selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selectedFestival);
+    log(selectedFestival)
 }
 
-function selectedFestivalTemplate({ name, date, location, genre }) {
+function selectedFestivalTemplate({ NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER }) {
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center">
             <div class="selected-event-card column">
                 <img class="selected-event-card-close" src="/assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
-                <span class="selected-event-name">${name}</span>
+                <span class="selected-event-name">${NAME}</span>
 
-                <div class="row selected-card-info">${renderSelectedCardInfo(date, location, genre)}</div>
+                <div class="row selected-card-info">${renderSelectedCardInfo(DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
 
                 <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
             </div>
@@ -312,23 +326,29 @@ function selectedFestivalTemplate({ name, date, location, genre }) {
     `;
 }
 
-function renderSelectedCardInfo(date, location, genre) {
+function renderSelectedCardInfo(DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER) {
     return /*html*/ `
         <div class="selected-event-date-container grid-center">
             <div class="flex-center">
-                <span class="selected-event-date">${date}</span>
+                <span class="selected-event-date">${DATUM}</span>
             </div>
         </div>
         <div class="selected-event-info-container row">
             <div class="column gap-30">
                 <span class="selected-event-location">Ort: </span>
                 <span class="selected-event-genre">Genre: </span>
-                <span class="selected-event-lineup">Lineup: </span>
+                <span class="selected-event-category">Kategorie: </span>
+                <span class="selected-event-where">Wo: </span>
+                <span class="selected-event-duration">Dauer: </span>
+                <span class="selected-event-visitors">Besucher: </span>
             </div>
             <div class="column gap-30">
-                <span class="selected-event-location">${location}</span>
-                <span class="selected-event-genre">${genre}</span>
-                <span class="selected-event-lineup">N/A</span>
+                <span class="selected-event-location">${STADT}</span>
+                <span class="selected-event-genre">${GENRES}</span>
+                <span class="selected-event-category">${KATEGORIE}</span>
+                <span class="selected-event-where">${WO}</span>
+                <span class="selected-event-duration">${DAUER}</span>
+                <span class="selected-event-visitors">${BESUCHER}</span>
             </div>
         </div>
     `;

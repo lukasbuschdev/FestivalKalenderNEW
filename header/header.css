@@ -6,7 +6,7 @@ header {
 #header-img {
     height: 100%;
     width: 100%;
-    background-image: url('/assets/img/header-img.jpg');
+    background-image: url('../assets/img/headerBG2.jpeg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -51,7 +51,7 @@ header input {
     height: 40px;
     width: 35%;
     box-sizing: border-box;
-    background-image: url('/assets/icons/loupe.svg');
+    background-image: url('../assets/icons/loupe.svg');
     background-position: 10px center;
     background-repeat: no-repeat;
     padding-left: 35px;
