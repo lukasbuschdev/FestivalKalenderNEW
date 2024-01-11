@@ -297,6 +297,8 @@ async function openSelectedFestival(id) {
 async function checkFestivalId(id) {
     const festivalId = parseInt(id);
     const festivals = await getFestivals();
+    log(festivalId)
+    log(festivals)
     const festivalExists = festivals.find(festival => festival.id === festivalId);    
     
     if(festivalExists) return festivalExists;

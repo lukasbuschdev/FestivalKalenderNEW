@@ -71,7 +71,7 @@ header input {
     width: 20px;
     box-sizing: border-box;
     border-radius: 999px;
-    background-image: url('/assets/icons/close.svg');
+    background-image: url('../assets/icons/close.svg');
     background-position: center;
     background-size: cover;
     right: 23px;

@@ -5,9 +5,7 @@ async function init() {
 }
 
 const datasets = [
-    "./FestivalKalenderAT.xlsx.csv",
-    "./FestivalKalenderCH.xlsx.csv",
-    "./FestivalKalenderDE.xlsx.csv"
+    "../FestivalKalenderData.xlsx.csv"
 ];
 
 async function getData() {
@@ -40,85 +38,3 @@ function CSVtoJSON(csv, delimiter = ',') {
         }, {});
     }).filter(obj => Object.keys(obj).length > 0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// async function fetchAndParseCSV(url) {
-//     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-//     try {
-//         const response = await fetch(proxyUrl + url);
-//         const text = await response.text();
-//         const jsonData = CSVtoJSON(text); 
-//         return jsonData;
-//     } catch (error) {
-//         console.error("Error fetching or parsing the file:", error);
-//     }
-// }
-
-
-// async function fetchAndParseCSV(url) {
-//     try {
-//         const response = await fetch(url);
-//         const text = await response.text();
-//         const jsonData = CSVtoJSON(text); 
-//         return jsonData;
-//     } catch (error) {
-//         console.error("Error fetching or parsing the file:", error);
-//     }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// async function fetchAndParseXLSX(url) {
-//     try {
-//         const response = await fetch(url);
-//         const arrayBuffer = await response.arrayBuffer();
-//         const data = new Uint8Array(arrayBuffer);
-//         const workbook = XLSX.read(data, { type: "array" });
-
-//         const firstSheetName = workbook.SheetNames[0];
-//         const worksheet = workbook.Sheets[firstSheetName];
-//         const jsonData = XLSX.utils.sheet_to_json(worksheet);
-//         // console.log(jsonData);
-//         return jsonData;
-//     } catch (error) {
-//         console.error("Error fetching or parsing the file:", error);
-//     }
-// }
