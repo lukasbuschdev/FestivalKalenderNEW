@@ -5,15 +5,20 @@ async function init() {
 }
 
 const datasets = [
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSsSjrEn4kV5e875u9VohZRBDSVfFLWg-RjYoUqCEqge6fJ1rHIf_pRHb4y8JFK4w/pub?output=csv",
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw8XGlB5WV5_K2mQwpyM_f5KfsQjdySGtDYlKHTDr-xw2emJiGUehC9DWGgVciWw/pub?output=csv",
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQM-ynHikWhurk83pnauFp45Fhcp7kxMlQbYWIBEd3CIUMCWdZ4znudGGkHDEonVA/pub?output=csv"
-]
+    "./FestivalKalenderAT.xlsx.csv",
+    "./FestivalKalenderCH.xlsx.csv",
+    "./FestivalKalenderDE.xlsx.csv"
+];
+
+async function getData() {
+    const promises = datasets.map(dataset => fetchAndParseCSV(dataset));
+    const results = await Promise.all(promises);
+    return results.flat();
+}
 
 async function fetchAndParseCSV(url) {
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     try {
-        const response = await fetch(proxyUrl + url);
+        const response = await fetch(url);
         const text = await response.text();
         const jsonData = CSVtoJSON(text); 
         return jsonData;
@@ -21,18 +26,6 @@ async function fetchAndParseCSV(url) {
         console.error("Error fetching or parsing the file:", error);
     }
 }
-
-
-// async function fetchAndParseCSV(url) {
-//     try {
-//         const response = await fetch(url);
-//         const text = await response.text();
-//         const jsonData = CSVtoJSON(text); 
-//         return jsonData;
-//     } catch (error) {
-//         console.error("Error fetching or parsing the file:", error);
-//     }
-// }
 
 function CSVtoJSON(csv, delimiter = ',') {
     const lines = csv.split('\n');
@@ -48,12 +41,40 @@ function CSVtoJSON(csv, delimiter = ',') {
     }).filter(obj => Object.keys(obj).length > 0);
 }
 
-async function getData() {
-    const promises = datasets.map(dataset => fetchAndParseCSV(dataset));
-    const results = await Promise.all(promises);
-    return results.flat();
-}
 
+
+
+
+
+
+
+
+
+
+
+// async function fetchAndParseCSV(url) {
+//     const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+//     try {
+//         const response = await fetch(proxyUrl + url);
+//         const text = await response.text();
+//         const jsonData = CSVtoJSON(text); 
+//         return jsonData;
+//     } catch (error) {
+//         console.error("Error fetching or parsing the file:", error);
+//     }
+// }
+
+
+// async function fetchAndParseCSV(url) {
+//     try {
+//         const response = await fetch(url);
+//         const text = await response.text();
+//         const jsonData = CSVtoJSON(text); 
+//         return jsonData;
+//     } catch (error) {
+//         console.error("Error fetching or parsing the file:", error);
+//     }
+// }
 
 
 
