@@ -1,7 +1,3 @@
-const dataSet = async () => {
-    return await getData();
-};
-
 let currentInput = '';
 
 function loadHeader() {
@@ -26,7 +22,7 @@ async function filterAndSearch() {
     const input = $('#header-img input').value.toLowerCase();
     checkInput(input);
     currentInput = input;
-    const filteredFestivals = (await dataSet()).filter(({NAME, STADT, DATUM, GENRES}) => 
+    const filteredFestivals = (await getFestivals()).filter(({NAME, STADT, DATUM, GENRES}) => 
         [NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
     );
     log(filteredFestivals);

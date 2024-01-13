@@ -322,7 +322,9 @@ function selectedFestivalTemplate({ NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE
 
                 <div class="row selected-card-info">${renderSelectedCardInfo(DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
 
-                <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
+                <div class="selected-event-tickets-container">
+                    <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
+                </div>
             </div>
         </div>
     `;
@@ -332,11 +334,11 @@ function renderSelectedCardInfo(DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESU
     return /*html*/ `
         <div class="selected-event-date-container grid-center">
             <div class="flex-center">
-                <span class="selected-event-date">${DATUM}</span>
+                <span class="selected-event-date">${processDate(DATUM)}</span>
             </div>
         </div>
         <div class="selected-event-info-container row">
-            <div class="column gap-30">
+            <div class="column gap-20">
                 <span class="selected-event-location">Ort: </span>
                 <span class="selected-event-genre">Genre: </span>
                 <span class="selected-event-category">Kategorie: </span>
