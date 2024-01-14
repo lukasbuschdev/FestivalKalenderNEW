@@ -262,6 +262,7 @@ function renderEvents({ id, NAME, DATUM, STADT, KATEGORIE }) {
             <span class="event-name">${highlightIfContains(NAME, currentInput)}</span>
             <div class="row gap-20 card-info">
                 <span class="event-date">${processDate(DATUM)}</span>
+                <p></p>
                 <div class="column gap-10">
                     <span class="event-location">${highlightIfContains(STADT, currentInput)}</span>
                     <span class="event-genre">${highlightIfContains(KATEGORIE, currentInput)}</span>

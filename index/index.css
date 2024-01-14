@@ -234,13 +234,11 @@
     justify-content: center;
 }
 
-.card-info > div::before {
-    height: 100%;
-    width: 5px;
-    background-color: var(--clr-gray);
-    position: absolute;
-    left: 0;
-    top: 0;
+.card-info p {
+    height: 80%;
+    width: 1px;
+    border-radius: 99px;
+    background-color: var(--clr-placeholder);
 }
 
 .event-name {
@@ -258,6 +256,7 @@
 
 .event-date {
     align-self: center;
+    text-align: center;
 }
 
 .event-location {
@@ -393,6 +392,14 @@
     font-size: 3rem;
     padding: 30px 0;
     border-bottom: 1px solid var(--clr-placeholder);
+}
+
+.selected-event-genre {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: hidden;
+    width: 100%;
+    break-after: '/';
 }
 
 .selected-event-tickets-container {
