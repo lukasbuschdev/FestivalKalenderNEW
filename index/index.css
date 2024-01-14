@@ -353,12 +353,15 @@
     top: 3%;
     right: 5%;
     scale: 1;
+    background-color: white;
+    border-radius: 99px;
     transition: all var(--transition-fast);
 }
 
 .selected-event-card-close:hover {
     cursor: pointer;
     scale: 1.2;
+    background-color: var(--clr-placeholder);
 }
 
 .selected-event-card > div {
