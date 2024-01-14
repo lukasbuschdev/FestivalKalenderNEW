@@ -318,7 +318,7 @@ function selectedFestivalTemplate({ NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center">
             <div class="selected-event-card column">
-                <img class="selected-event-card-close" src="/assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
+                <img class="selected-event-card-close grid-center" src="/assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${NAME}</span>
 
                 <div class="row selected-card-info">${renderSelectedCardInfo(DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
