@@ -18,41 +18,6 @@ const getFestivals = async () => {
     return updatedData;
 };
 
-async function getAllCountries() {
-    const counties = (await getFestivals()).map(festival => festival.LAND);
-    const uniqueCountries = new Set(counties);
-
-    return Array.from(uniqueCountries);
-}
-
-async function getAllNames() {
-    const names = (await getFestivals()).map(festival => festival.NAME);
-    const uniqueNames = new Set(names);
-
-    return Array.from(uniqueNames);
-}
-
-async function getAllDates() {
-    const date = (await getFestivals()).map(festival => festival.DATUM);
-    const uniqueDate = new Set(date);
-
-    return Array.from(uniqueDate);
-}
-
-async function getAllLocations() {
-    const locations = (await getFestivals()).map(festival => festival.STADT);
-    const uniqueLocations = new Set(locations);
-
-    return Array.from(uniqueLocations);
-}
-
-async function getAllGenres() {
-    const genres = (await getFestivals()).map(festival => festival.GENRES);
-    const uniqueGenres = new Set(genres);
-
-    return Array.from(uniqueGenres);
-}
-
 async function loadContent() {
     loadFilters();
     loadEventCards();
@@ -69,7 +34,7 @@ function loadFilters() {
             <button id="country">Land</button>
             <button id="name">Name</button>
             <button id="date">Datum</button>
-            <button id="location">Ort</button>
+            <button id="location">Stadt</button>
             <button id="genre">Genre</button>
         </div>
     `;
@@ -89,18 +54,36 @@ async function resetSelectedFilter() {
     $('#reset-filter-btn').classList.add('d-none');
 }
 
+async function fetchData(attribute) {
+    const data = (await getFestivals()).map(festival => festival[attribute]);
+    return Array.from(new Set(data));
+}
+
+function addClickListener(id, attribute, sortFunction) {
+    $(`#${id}`).addEventListener('click', async function() {
+        const data = await fetchData(attribute);
+        const sortedList = sortFunction ? sortFunction(data) : data;
+        openFilterList(sortedList);
+    });
+}
+
 function addClickToFilterButtons() {
-    getCountries();
-    getNames();
-    getDates();
-    getLocations();
-    getGenres();
+    addClickListener('country', 'LAND', sortByFirstLetter);
+    addClickListener('name', 'NAME', sortByFirstLetter);
+    addClickListener('date', 'DATUM', sortDates);
+    addClickListener('location', 'STADT', sortByFirstLetter);
+    addClickListener('genre', 'GENRES', sortByFirstLetter);
 }
 
 function sortByFirstLetter(array) {
-    return array.sort((a, b) => {
-        return a[0].localeCompare(b[0]);
-    });
+    return array.sort((a, b) => a[0].localeCompare(b[0]));
+}
+
+async function getAllDates() {
+    const date = (await getFestivals()).map(festival => festival.DATUM);
+    const uniqueDate = new Set(date);
+
+    return Array.from(uniqueDate);
 }
 
 function getDates() {
@@ -119,42 +102,7 @@ function sortDates(dates) {
         monthA = monthMap[monthA];
         monthB = monthMap[monthB];
 
-        if (monthA === monthB) {
-            return parseInt(dayA, 10) - parseInt(dayB, 10);
-        }
-        return monthA - monthB;
-    });
-}
-
-function getCountries() {
-    $('#country').addEventListener('click', async function() {
-        const countries = await getAllCountries();
-        const sortedList = sortByFirstLetter(countries);
-        openFilterList(sortedList);
-    });    
-}
-
-function getNames() {
-    $('#name').addEventListener('click', async function() {
-        const names = await getAllNames();
-        const sortedList = sortByFirstLetter(names);
-        openFilterList(sortedList);
-    });
-}
-
-function getLocations() {
-    $('#location').addEventListener('click', async function() {
-        const locations = await getAllLocations();
-        const sortedList = sortByFirstLetter(locations);
-        openFilterList(sortedList);
-    });
-}
-
-function getGenres() {
-    $('#genre').addEventListener('click', async function() {
-        const genres = await getAllGenres();
-        const sortedList = sortByFirstLetter(genres);
-        openFilterList(sortedList);
+        return monthA === monthB ? parseInt(dayA, 10) - parseInt(dayB, 10) : monthA - monthB;
     });
 }
 
@@ -194,8 +142,8 @@ async function searchForItems(clickedItem) {
     const input = spanValue.toLowerCase();
     const items = (await getFestivals());
   
-    const filteredItems = items.filter(({LAND, NAME, STADT, DATUM, GENRES}) => 
-        [LAND, NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
+    const filteredItems = items.filter(({LAND, BUNDESLAND, NAME, STADT, DATUM, GENRES}) => 
+        [LAND, BUNDESLAND, NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
     );
 
     searchItems(filteredItems);
@@ -332,14 +280,14 @@ function renderSelectedFestival(selectedFestival) {
     log(selectedFestival)
 }
 
-function selectedFestivalTemplate({ LAND, NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER }) {
+function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER }) {
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center">
             <div class="selected-event-card column">
                 <img class="selected-event-card-close grid-center" src="/assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${NAME}</span>
 
-                <div class="row selected-card-info">${renderSelectedCardInfo(LAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
+                <div class="row selected-card-info">${renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
 
                 <div class="selected-event-tickets-container">
                     <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
@@ -349,7 +297,7 @@ function selectedFestivalTemplate({ LAND, NAME, DATUM, STADT, GENRES, DAUER, KAT
     `;
 }
 
-function renderSelectedCardInfo(LAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER) {
+function renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER) {
     return /*html*/ `
         <div class="selected-event-date-container grid-center">
             <div class="flex-center">
@@ -359,7 +307,8 @@ function renderSelectedCardInfo(LAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO
         <div class="selected-event-info-container row">
             <div class="column gap-20">
                 <span class="selected-event-country">Land: </span>
-                <span class="selected-event-location">Ort: </span>
+                <span class="selected-event-state">Bundesland: </span>
+                <span class="selected-event-location">Stadt: </span>
                 <span class="selected-event-genre">Genre: </span>
                 <span class="selected-event-category">Kategorie: </span>
                 <span class="selected-event-where">Wo: </span>
@@ -368,6 +317,7 @@ function renderSelectedCardInfo(LAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO
             </div>
             <div class="column gap-30">
                 <span class="selected-event-country">${LAND}</span>
+                <span class="selected-event-state">${BUNDESLAND}</span>
                 <span class="selected-event-location">${STADT}</span>
                 <span class="selected-event-genre">${GENRES}</span>
                 <span class="selected-event-category">${KATEGORIE}</span>
@@ -383,4 +333,3 @@ function closeSelectedFestival() {
     $('#selected-festival-container-upper').classList.add('d-none');
     $('#selected-festival-container-upper').innerHTML = '';
 }
-
