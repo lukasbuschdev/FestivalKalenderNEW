@@ -18,6 +18,13 @@ const getFestivals = async () => {
     return updatedData;
 };
 
+async function getAllCountries() {
+    const counties = (await getFestivals()).map(festival => festival.LAND);
+    const uniqueCountries = new Set(counties);
+
+    return Array.from(uniqueCountries);
+}
+
 async function getAllNames() {
     const names = (await getFestivals()).map(festival => festival.NAME);
     const uniqueNames = new Set(names);
@@ -59,6 +66,7 @@ function loadFilters() {
             <button id="reset-filter-btn" class="d-none" onclick="resetSelectedFilter()">Filter löschen</button>
         </div>
         <div class="filters filters-closed row flex-center">
+            <button id="country">Land</button>
             <button id="name">Name</button>
             <button id="date">Datum</button>
             <button id="location">Ort</button>
@@ -82,6 +90,7 @@ async function resetSelectedFilter() {
 }
 
 function addClickToFilterButtons() {
+    getCountries();
     getNames();
     getDates();
     getLocations();
@@ -115,6 +124,14 @@ function sortDates(dates) {
         }
         return monthA - monthB;
     });
+}
+
+function getCountries() {
+    $('#country').addEventListener('click', async function() {
+        const countries = await getAllCountries();
+        const sortedList = sortByFirstLetter(countries);
+        openFilterList(sortedList);
+    });    
 }
 
 function getNames() {
@@ -177,8 +194,8 @@ async function searchForItems(clickedItem) {
     const input = spanValue.toLowerCase();
     const items = (await getFestivals());
   
-    const filteredItems = items.filter(({NAME, STADT, DATUM, GENRES}) => 
-        [NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
+    const filteredItems = items.filter(({LAND, NAME, STADT, DATUM, GENRES}) => 
+        [LAND, NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
     );
 
     searchItems(filteredItems);
@@ -256,7 +273,7 @@ function checkAd(allEventCardsHTML, counter) {
     return allEventCardsHTML;
 }
 
-function renderEvents({ id, NAME, DATUM, STADT, KATEGORIE }) {
+function renderEvents({ LAND, id, NAME, DATUM, STADT, KATEGORIE }) {
     return /*html*/ `
         <div class="event-card column" onclick="openSelectedFestival(${id})">
             <span class="event-name">${highlightIfContains(NAME, currentInput)}</span>
@@ -264,6 +281,7 @@ function renderEvents({ id, NAME, DATUM, STADT, KATEGORIE }) {
                 <span class="event-date">${processDate(DATUM)}</span>
                 <p></p>
                 <div class="column gap-10">
+                    <span class="event-country">${highlightIfContains(LAND, currentInput)}</span>
                     <span class="event-location">${highlightIfContains(STADT, currentInput)}</span>
                     <span class="event-genre">${highlightIfContains(KATEGORIE, currentInput)}</span>
                 </div>
@@ -314,14 +332,14 @@ function renderSelectedFestival(selectedFestival) {
     log(selectedFestival)
 }
 
-function selectedFestivalTemplate({ NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER }) {
+function selectedFestivalTemplate({ LAND, NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER }) {
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center">
             <div class="selected-event-card column">
                 <img class="selected-event-card-close grid-center" src="/assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${NAME}</span>
 
-                <div class="row selected-card-info">${renderSelectedCardInfo(DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
+                <div class="row selected-card-info">${renderSelectedCardInfo(LAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
 
                 <div class="selected-event-tickets-container">
                     <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
@@ -331,7 +349,7 @@ function selectedFestivalTemplate({ NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE
     `;
 }
 
-function renderSelectedCardInfo(DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER) {
+function renderSelectedCardInfo(LAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER) {
     return /*html*/ `
         <div class="selected-event-date-container grid-center">
             <div class="flex-center">
@@ -340,6 +358,7 @@ function renderSelectedCardInfo(DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESU
         </div>
         <div class="selected-event-info-container row">
             <div class="column gap-20">
+                <span class="selected-event-country">Land: </span>
                 <span class="selected-event-location">Ort: </span>
                 <span class="selected-event-genre">Genre: </span>
                 <span class="selected-event-category">Kategorie: </span>
@@ -348,6 +367,7 @@ function renderSelectedCardInfo(DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESU
                 <span class="selected-event-visitors">Besucher: </span>
             </div>
             <div class="column gap-30">
+                <span class="selected-event-country">${LAND}</span>
                 <span class="selected-event-location">${STADT}</span>
                 <span class="selected-event-genre">${GENRES}</span>
                 <span class="selected-event-category">${KATEGORIE}</span>
