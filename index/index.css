@@ -54,19 +54,6 @@
     transition: all 150ms ease-in-out;
 }
 
-@media(max-width: 600px) {
-    #filter-container {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .filters {
-        flex-direction: column;
-        height: 50vh;
-        gap: 30px;
-    }
-}
-
 .filters-closed {
     height: 0;
     width: 0;
@@ -123,13 +110,6 @@
     padding: 50px 30px;
 }
 
-@media(max-width: 800px) {
-    #filter-list-card {
-        width: 80%;
-        aspect-ratio: unset;
-    }
-}
-
 .filter-list-close {
     position: absolute;
     top: 3%;
@@ -150,10 +130,6 @@
     justify-content: flex-start;
 }
 
-.list-item-container {
-
-}
-
 .list-item-container span {
     font-size: 1.2rem;
     font-weight: 600;
@@ -164,12 +140,6 @@
 .list-item-container span:hover {
     cursor: pointer;
     color: var(--clr-pink);
-}
-
-@media(max-width: 500px) {
-    .list-item-container span {
-        font-size: 1rem;
-    }
 }
 
 
@@ -196,24 +166,6 @@
     padding: 10px;
     background-color: var(--clr-bg-light);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-}
-
-@media(max-width: 1000px) {
-    .event-card {
-        width: 40%;       
-    }
-}
-
-@media(max-width: 900px) {
-    .event-card {
-        width: 40%;
-    }
-}
-
-@media(max-width: 500px) {
-    .event-card {
-        width: 100%;
-    }
 }
 
 .event-card:hover {
@@ -265,22 +217,6 @@
     text-align: center;
 }
 
-.event-location {
-
-}
-
-.event-genre {
-
-}
-
-.event-lineup {
-
-}
-
-.event-tickets {
-
-}
-
 
 
 /* ############################################################### */
@@ -297,9 +233,6 @@
     height: 100%;
     cursor: pointer;
 }
-
-
-
 
 
 
@@ -325,7 +258,7 @@
 }
 
 .selected-event-date-container {
-    min-width: 30%;
+    /* min-width: 30%; */
     height: 100%;
 }
 
@@ -404,11 +337,11 @@
 }
 
 .selected-event-genre {
-    overflow: hidden;
+    /* overflow: hidden;
     text-overflow: ellipsis;
     white-space: hidden;
     width: 100%;
-    break-after: '/';
+    break-after: '/'; */
 }
 
 .selected-event-tickets-container {
@@ -442,7 +375,17 @@
 /* MAIN RESPONSIVE DESIGN  */
 /* ############################################################ */
 
+@media(max-width: 1000px) {
+    .event-card {
+        width: 40%;       
+    }
+}
+
 @media(max-width: 900px) {
+    .event-card {
+        width: 40%;
+    }
+
     .selected-event-name {
         font-size: 2.5rem;
     }
@@ -453,9 +396,9 @@
         font-size: 2rem;
     }
 
-    .selected-card-info > div span {
+    /* .selected-card-info > div span {
         font-size: 1.5rem;
-    }
+    } */
 
     .selected-event-date-container > div {
         height: 7rem;
@@ -464,6 +407,11 @@
     .selected-card-info > div:last-of-type {
         justify-content: center;
         gap: 20px;
+    }
+
+    #filter-list-card {
+        width: 80%;
+        aspect-ratio: unset;
     }
 }
 
@@ -480,13 +428,30 @@
     .selected-event-date-container > div {
         height: 5rem;
     }
+
+    #filter-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .filters {
+        flex-direction: column;
+        height: 50vh;
+        gap: 30px;
+    }
+}
+
+@media(max-width: 500px) {
+    .event-card {
+        width: 100%;
+    }
+
+    .list-item-container span {
+        font-size: 1rem;
+    }
 }
 
 @media(max-width: 450px) {
-    /* .selected-event-name {
-        padding: 55px 0;
-    } */
-
     .selected-event-date-container {
         place-items: self-start;
         height: fit-content;
