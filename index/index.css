@@ -336,13 +336,13 @@
     border-bottom: 1px solid var(--clr-placeholder);
 }
 
-.selected-event-genre {
-    /* overflow: hidden;
+/* .selected-event-genre {
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: hidden;
     width: 100%;
-    break-after: '/'; */
-}
+    break-after: '/';
+} */
 
 .selected-event-tickets-container {
     height: 20vh !important;
