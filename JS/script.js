@@ -11,7 +11,14 @@ const datasets = [
 async function getData() {
     const promises = datasets.map(dataset => fetchAndParseCSV(dataset));
     const results = await Promise.all(promises);
-    return results.flat();
+    const data = results.flat();
+    const updatedData = data.map((festival, index) => {
+        return {
+            ...festival,
+            id: index + 1
+        };
+    });
+    return updatedData;
 }
 
 async function fetchAndParseCSV(url) {

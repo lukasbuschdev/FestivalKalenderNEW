@@ -7,15 +7,7 @@ const monthMap = {
 
 const getFestivals = async () => {
     const data = await getData();
-
-    const updatedData = data.map((festival, index) => {
-        return {
-            ...festival,
-            id: index + 1
-        };
-    });
-
-    return updatedData;
+    return data;
 };
 
 async function loadContent() {
