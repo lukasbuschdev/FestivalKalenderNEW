@@ -4,11 +4,11 @@ function loadHeader() {
     const headerContainer = $('#header-container');
 
     const headerContent = /*html*/ `
-        <header class="bg-white flex-center">
+        <header class="flex-center">
             <div id="header-img">
                 <h1>Festivalkalender</h1>
                 <div class="input-wrapper">
-                    <input type="text">
+                    <input type="text" placeholder="Suchen...">
                     <div onclick="deleteInput()" id="close-icon"></div>
                 </div>
             </div>

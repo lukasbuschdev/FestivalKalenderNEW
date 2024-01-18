@@ -284,10 +284,10 @@ function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center">
             <div class="selected-event-card column">
-                <img class="selected-event-card-close grid-center" src="/assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
+                <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${NAME}</span>
 
-                <div class="row selected-card-info">${renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
+                <div class="column selected-card-info gap-30">${renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
 
                 <div class="selected-event-tickets-container">
                     <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
@@ -306,24 +306,37 @@ function renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, K
         </div>
         <div class="selected-event-info-container row">
             <div class="column gap-20">
-                <span class="selected-event-country">Land: </span>
-                <span class="selected-event-state">Bundesland: </span>
-                <span class="selected-event-location">Stadt: </span>
-                <span class="selected-event-genre">Genre: </span>
-                <span class="selected-event-category">Kategorie: </span>
-                <span class="selected-event-where">Wo: </span>
-                <span class="selected-event-duration">Dauer: </span>
-                <span class="selected-event-visitors">Besucher: </span>
-            </div>
-            <div class="column gap-30">
-                <span class="selected-event-country">${LAND}</span>
-                <span class="selected-event-state">${BUNDESLAND}</span>
-                <span class="selected-event-location">${STADT}</span>
-                <span class="selected-event-genre">${GENRES}</span>
-                <span class="selected-event-category">${KATEGORIE}</span>
-                <span class="selected-event-where">${WO}</span>
-                <span class="selected-event-duration">${DAUER}</span>
-                <span class="selected-event-visitors">${BESUCHER}</span>
+                <div class="selected-event-info row">
+                    <span class="selected-event-country">Land: </span><span class="selected-event-country">${LAND}</span>
+                </div>
+
+                <div class="selected-event-info row">
+                    <span class="selected-event-state">Bundesland: </span><span class="selected-event-state">${BUNDESLAND}</span>
+                </div>
+
+                <div class="selected-event-info row">
+                    <span class="selected-event-location">Stadt: </span><span class="selected-event-location">${STADT}</span>
+                </div>
+
+                <div class="selected-event-info row">
+                    <span>Genre: </span><span class="selected-event-genre">${GENRES}</span>
+                </div>
+
+                <div class="selected-event-info row">
+                    <span class="selected-event-category">Kategorie: </span><span class="selected-event-category">${KATEGORIE}</span>
+                </div>
+
+                <div class="selected-event-info row">
+                    <span class="selected-event-where">Wo: </span><span class="selected-event-where">${WO}</span>
+                </div>
+
+                <div class="selected-event-info row">
+                    <span class="selected-event-duration">Dauer: </span><span class="selected-event-duration">${DAUER}</span>
+                </div>
+
+                <div class="selected-event-info row">
+                    <span class="selected-event-visitors">Besucher: </span><span class="selected-event-visitors">${BESUCHER}</span>
+                </div>
             </div>
         </div>
     `;
