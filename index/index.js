@@ -270,6 +270,8 @@ function renderSelectedFestival(selectedFestival) {
 
     selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selectedFestival);
     log(selectedFestival)
+    
+    addBgLightToEverySecondSelectedEventInfo();
 }
 
 function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER }) {
@@ -297,7 +299,7 @@ function renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, K
             </div>
         </div>
         <div class="selected-event-info-container row">
-            <div class="column gap-20">
+            <div class="column gap-5">
                 <div class="selected-event-info row">
                     <span class="selected-event-country">Land: </span><span class="selected-event-country">${LAND}</span>
                 </div>
@@ -332,6 +334,16 @@ function renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, K
             </div>
         </div>
     `;
+}
+
+function addBgLightToEverySecondSelectedEventInfo() {
+    const eventInfoDivs = document.querySelectorAll('.selected-event-info');
+
+    eventInfoDivs.forEach((div, index) => {
+        if (index % 2 !== 0) {
+            div.classList.add('bg-light');
+        }
+    });
 }
 
 function closeSelectedFestival() {

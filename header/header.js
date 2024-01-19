@@ -22,8 +22,8 @@ async function filterAndSearch() {
     const input = $('#header-img input').value.toLowerCase();
     checkInput(input);
     currentInput = input;
-    const filteredFestivals = (await getFestivals()).filter(({NAME, STADT, DATUM, GENRES}) => 
-        [NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
+    const filteredFestivals = (await getFestivals()).filter(({LAND, NAME, STADT, DATUM, GENRES}) => 
+        [LAND, NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
     );
     log(filteredFestivals);
     loadFilteredEventCards(filteredFestivals);
