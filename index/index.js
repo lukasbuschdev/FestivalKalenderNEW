@@ -181,7 +181,6 @@ async function loadEventCards() {
 
     festivals.forEach(festival => {
         allEventCardsHTML += renderEvents(festival);
-        // log(festival)
         counter++;
         allEventCardsHTML = checkAd(allEventCardsHTML, counter);
     });
@@ -256,8 +255,6 @@ async function openSelectedFestival(id) {
 async function checkFestivalId(id) {
     const festivalId = parseInt(id);
     const festivals = await getFestivals();
-    log(festivalId)
-    log(festivals)
     const festivalExists = festivals.find(festival => festival.id === festivalId);    
     
     if(festivalExists) return festivalExists;
@@ -269,7 +266,6 @@ function renderSelectedFestival(selectedFestival) {
     $('#selected-festival-container-upper').classList.remove('d-none');
 
     selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selectedFestival);
-    log(selectedFestival)
 }
 
 function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER }) {
