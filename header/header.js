@@ -5,8 +5,8 @@ function loadHeader() {
 
     const headerContent = /*html*/ `
         <header class="flex-center">
-            <div id="header-img">
-                <h1>Festivalkalender</h1>
+            <div id="header-img" class="column">
+                <img src="../assets/icons/icon-text.svg" alt="Festivalkalender">
                 <div class="input-wrapper">
                     <input type="text" placeholder="Suchen...">
                     <div onclick="deleteInput()" id="close-icon"></div>
