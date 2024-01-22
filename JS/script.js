@@ -43,10 +43,10 @@ async function fetchAndParseCSV(url) {
         const text = await response.text();
 
         const jsonData = CSVtoJSON(text);
-        log(jsonData) 
+        // log(jsonData) 
         return jsonData;
     } catch (error) {
-        console.error("Error fetching or parsing the file:", error);
+        error("Error fetching or parsing the file:", error);
     }
 }
 

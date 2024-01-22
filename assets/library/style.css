@@ -44,10 +44,10 @@ body {
     margin: 0;
     height: 100vh;
     font-family: 'Zen Maru Gothic', sans-serif;
-    /* font-family: Arial, Helvetica, sans-serif;  */
     display: flex;
     flex-direction: column;
     background-color: var(--clr-bg-light);
+    line-height: 0.9;
 }
 
 *,

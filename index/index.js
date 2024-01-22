@@ -266,6 +266,7 @@ function renderSelectedFestival(selectedFestival) {
     $('#selected-festival-container-upper').classList.remove('d-none');
 
     selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selectedFestival);
+    addBgLightToEverySecondSelectedEventInfo();
 }
 
 function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER }) {
@@ -331,7 +332,7 @@ function renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, K
 }
 
 function addBgLightToEverySecondSelectedEventInfo() {
-    const eventInfoDivs = document.querySelectorAll('.selected-event-info');
+    const eventInfoDivs = $$('.selected-event-info');
 
     eventInfoDivs.forEach((div, index) => {
         if (index % 2 !== 0) {
