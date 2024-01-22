@@ -61,6 +61,11 @@ header input {
     border: 2px solid var(--clr-pink);
     border-radius: 999px;
     position: relative;
+    transition: all 75ms ease-in-out;
+}
+
+header input:hover {
+    border-color: var(--clr-pink-hover);
 }
 
 #close-icon {
