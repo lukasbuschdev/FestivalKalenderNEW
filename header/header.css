@@ -79,6 +79,7 @@ header input:hover {
     background-image: url('../assets/icons/close.svg');
     background-position: center;
     background-size: cover;
+    background-color: var(--clr-pink);
     right: 23px;
     top: 10px;
 }

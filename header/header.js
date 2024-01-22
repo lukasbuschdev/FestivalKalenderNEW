@@ -20,8 +20,8 @@ function loadHeader() {
 
 async function filterAndSearch() {
     const input = $('#header-img .input-wrapper input').value.toLowerCase();
-    currentInput = input;
     checkInput(input);
+    currentInput = input;
     const filteredFestivals = (await getFestivals()).filter(({LAND, NAME, STADT, DATUM, GENRES}) => 
         [LAND, NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
     );
