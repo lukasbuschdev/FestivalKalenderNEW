@@ -190,7 +190,6 @@
     cursor: pointer;
     border: 2px solid var(--clr-pink-hover);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-
 }
 
 .event-card > div {

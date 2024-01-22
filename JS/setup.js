@@ -1,3 +1,7 @@
+// ##########################################################
+// INCLUDING THE TEMPLATE
+// ##########################################################
+
 const includeTemplate = (selector, htmlContent) => {
     const targetElement = selector;
 

@@ -9,6 +9,7 @@ async function init() {
 }
 
 
+
 // #######################################################################
 // GET DATASET
 // #######################################################################
@@ -40,7 +41,9 @@ async function fetchAndParseCSV(url) {
     try {
         const response = await fetch(url);
         const text = await response.text();
-        const jsonData = CSVtoJSON(text); 
+
+        const jsonData = CSVtoJSON(text);
+        log(jsonData) 
         return jsonData;
     } catch (error) {
         console.error("Error fetching or parsing the file:", error);
