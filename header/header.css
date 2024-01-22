@@ -15,7 +15,6 @@ header {
     align-items: center;
     justify-content: space-around;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin-bottom: 50px;
 }
 
 #header-img h1 {
@@ -28,6 +27,11 @@ header {
 @media(max-width: 500px) {
     #header-img h1 {
         font-size: 2rem;
+    }
+
+    #header-img img {
+        width: 95%;
+        height: 100px;
     }
 }
 
@@ -68,6 +72,11 @@ header input:hover {
     border-color: var(--clr-pink-hover);
 }
 
+#header-img img {
+    width: 70%;
+    height: 200px;
+}
+
 #close-icon {
     cursor: pointer;
     display: none;
@@ -79,6 +88,7 @@ header input:hover {
     background-image: url('../assets/icons/close.svg');
     background-position: center;
     background-size: cover;
+    background-color: var(--clr-pink);
     right: 23px;
     top: 10px;
 }
