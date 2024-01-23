@@ -226,6 +226,7 @@
 .event-date {
     align-self: center;
     text-align: center;
+    font-weight: 600;
 }
 
 .card-image {
