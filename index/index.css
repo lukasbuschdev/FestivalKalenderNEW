@@ -6,7 +6,7 @@
     height: fit-content;
     width: 100%;
     max-width: 1440px;
-    padding: 50px 10%;
+    padding: 50px 5%;
     align-self: center;
 }
 
@@ -173,15 +173,13 @@
 
 .event-card {
     box-sizing: border-box;
-    height: 220px;
+    height: 300px;
     aspect-ratio: 2/1;
-    width: 20%;
-    min-width: 175px;
+    width: 30%;
+    min-width: 250px;
     border: 2px solid var(--clr-pink);
     border-radius: 20px;
-    padding: 10px;
     background-color: white;
-    /* background-color: var(--clr-bg-light); */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -193,35 +191,32 @@
 
 .event-card > div {
     height: 100%;
-    align-items: flex-start;
+    justify-content: end;
 }
 
 .card-info {
     box-sizing: border-box;
     font-size: 0.8rem;
-    padding: 5px 0;
 }
 
-.card-info > div {
+.card-info > div:last-of-type {
     position: relative;
-    height: 100%;
+    width: 100%;
+    height: 135px;
     justify-content: center;
+    padding: 5px 10px;
 }
 
-.card-info p {
-    height: 80%;
-    width: 1px;
-    border-radius: 99px;
-    background-color: var(--clr-placeholder);
+.card-info > div:last-of-type > div {
+    justify-content: space-between;
 }
 
 .event-name {
-    font-size: 0.8rem;
-    text-align: center;
+    font-size: 0.9rem;
+    text-align: start;
     font-weight: 600;
-    padding: 5px;
+    padding: 5px 0;
     border-bottom: 1px solid var(--clr-placeholder);
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -231,6 +226,18 @@
 .event-date {
     align-self: center;
     text-align: center;
+}
+
+.card-image {
+    height: 100%;
+    width: 100%;
+}
+
+.card-image img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 18px 18px 0 0;
 }
 
 
@@ -406,19 +413,13 @@
 /* ############################################################ */
 
 @media(max-width: 1000px) {
-    .event-card {
-        width: 40%;       
-    }
-
     .selected-event-name {
         font-size: 2.5rem;
     }
 }
 
 @media(max-width: 900px) {
-    .event-card {
-        width: 40%;
-    }
+
 }
 
 @media(max-width: 800px) {
@@ -509,13 +510,13 @@
         place-items: self-start;
         height: fit-content;
     }
+
+    .event-card {
+        width: 90%;
+    }
 }
 
 @media(max-width: 500px) {
-    .event-card {
-        width: 100%;
-    }
-
     .list-item-container span {
         font-size: 1rem;
     }

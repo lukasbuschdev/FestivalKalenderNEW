@@ -1,5 +1,18 @@
 const ads = ['../assets/img/ad-1.JPG', '../assets/img/ad-2.JPG'];
 
+const cardImages = [
+    '../assets/img/img1.jpg',
+    '../assets/img/img2.jpg',
+    '../assets/img/img3.jpg',
+    '../assets/img/img4.jpg',
+    '../assets/img/img5.jpg',
+    '../assets/img/img6.jpg',
+    '../assets/img/img7.jpg',
+    '../assets/img/img8.jpg'
+];
+
+let imageIndex = 0;
+
 const monthMap = {
     'Jan.': 1, 'Feb.': 2, 'März': 3, 'Apr.': 4, 'Mai': 5, 'Juni': 6,
     'Juli': 7, 'Aug.': 8, 'Sept.': 9, 'Okt.': 10, 'Nov.': 11, 'Dez.': 12
@@ -204,7 +217,7 @@ async function loadFilteredEventCards(festivals) {
 }
 
 function checkAd(allEventCardsHTML, counter) {
-    if (counter % 4 === 0) {
+    if (counter % 6 === 0) {
         const adIndex = Math.floor((counter / 4 - 1) % ads.length);
         const adUrl = ads[adIndex];
         return allEventCardsHTML + renderAdBlock(adUrl);
@@ -215,13 +228,17 @@ function checkAd(allEventCardsHTML, counter) {
 function renderEvents({ LAND, id, NAME, DATUM, STADT, KATEGORIE }) {
     return /*html*/ `
         <div class="event-card column" onclick="openSelectedFestival(${id})">
-            <span class="event-name">${highlightIfContains(NAME, currentInput)}</span>
-            <div class="row gap-20 card-info">
-                <span class="event-date">${processDate(DATUM)}</span>
-                <p></p>
-                <div class="column gap-10">
+            <div class="column card-info">
+                <div class="card-image">
+                    <img src="${renderCardImages()}">
+                </div>
+                <div class="column gap-5">
+                    <span class="event-name">${highlightIfContains(NAME, currentInput)}</span>
                     <span class="event-country">${highlightIfContains(LAND, currentInput)}</span>
-                    <span class="event-location">${highlightIfContains(STADT, currentInput)}</span>
+                    <div class="row">
+                        <span class="event-location">${highlightIfContains(STADT, currentInput)}</span>
+                        <span class="event-date">${processDate(DATUM)}</span>
+                    </div>
                     <span class="event-genre">${highlightIfContains(KATEGORIE, currentInput)}</span>
                 </div>
             </div>
@@ -235,6 +252,12 @@ function processDate(DATUM) {
         return `${highlightIfContains(start, currentInput)} - ${highlightIfContains(end, currentInput)}`;
     }
     return highlightIfContains(DATUM, currentInput);
+}
+
+function renderCardImages() {
+    const imagePath = cardImages[imageIndex];
+    imageIndex = (imageIndex + 1) % cardImages.length;
+    return imagePath;
 }
 
 function renderAdBlock(adUrl) {
