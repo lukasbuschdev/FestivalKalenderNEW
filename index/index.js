@@ -269,7 +269,7 @@ function renderSelectedFestival(selectedFestival) {
     addBgLightToEverySecondSelectedEventInfo();
 }
 
-function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER }) {
+function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER, URL }) {
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center">
             <div class="selected-event-card column">
@@ -279,7 +279,7 @@ function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES
                 <div class="column selected-card-info gap-30">${renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
 
                 <div class="selected-event-tickets-container">
-                    <a class="selected-event-tickets flex-center" href="https://www.oeticket.com/events">Tickets</a>
+                    <a class="selected-event-tickets flex-center" href="${URL}">Tickets</a>
                 </div>
             </div>
         </div>
