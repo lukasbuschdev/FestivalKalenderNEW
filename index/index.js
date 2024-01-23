@@ -8,8 +8,22 @@ const cardImages = [
     '../assets/img/img5.jpg',
     '../assets/img/img6.jpg',
     '../assets/img/img7.jpg',
-    '../assets/img/img8.jpg'
+    '../assets/img/img8.jpg',
+    '../assets/img/img9.jpg',
+    '../assets/img/img10.jpg',
+    '../assets/img/img11.jpg',
+    '../assets/img/img12.jpg',
+    '../assets/img/img13.jpg',
+    '../assets/img/img14.jpg',
+    '../assets/img/img15.jpg',
+    '../assets/img/img16.jpg'
 ];
+
+const countryFlags = {
+    "Schweiz": '../assets/icons/flag-swiss.png',
+    "Deutschland": '../assets/icons/flag-german.png',
+    "Österreich": '../assets/icons/flag-austrian.png'
+};
 
 let imageIndex = 0;
 
@@ -232,9 +246,12 @@ function renderEvents({ LAND, id, NAME, DATUM, STADT, KATEGORIE }) {
                 <div class="card-image">
                     <img src="${renderCardImages()}">
                 </div>
-                <div class="column gap-5">
+                <div class="column gap-10">
                     <span class="event-name">${highlightIfContains(NAME, currentInput)}</span>
-                    <span class="event-country">${highlightIfContains(LAND, currentInput)}</span>
+                    <div class="row event-country-container">
+                        <img src="${renderFlags(LAND)}">
+                        <span class="event-country">${highlightIfContains(LAND, currentInput)}</span>
+                    </div>
                     <div class="row">
                         <span class="event-location">${highlightIfContains(STADT, currentInput)}</span>
                         <span class="event-date">${processDate(DATUM)}</span>
@@ -258,6 +275,10 @@ function renderCardImages() {
     const imagePath = cardImages[imageIndex];
     imageIndex = (imageIndex + 1) % cardImages.length;
     return imagePath;
+}
+
+function renderFlags(LAND) {
+    return countryFlags[LAND] || '';
 }
 
 function renderAdBlock(adUrl) {
