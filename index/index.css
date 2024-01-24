@@ -425,7 +425,9 @@
 }
 
 @media(max-width: 900px) {
-
+    .event-card {
+        width: 45%;
+    }
 }
 
 @media(max-width: 800px) {

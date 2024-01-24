@@ -24,23 +24,6 @@ header {
     padding: 50px 0;
 }
 
-@media(max-width: 500px) {
-    #header-img h1 {
-        font-size: 2rem;
-    }
-
-    #header-img img {
-        width: 95%;
-        height: 100px;
-    }
-}
-
-@media(max-width: 400px) {
-    #header-img h1 {
-        font-size: 1.5rem;
-    }
-}
-
 #search-bar {
     height: 40px;
     width: 100px;
@@ -73,7 +56,7 @@ header input:hover {
 }
 
 #header-img img {
-    width: 70%;
+    width: 80%;
     height: 200px;
     min-width: 250px;
 }
@@ -90,7 +73,7 @@ header input:hover {
     background-position: center;
     background-size: cover;
     background-color: var(--clr-pink);
-    right: 23px;
+    right: 15px;
     top: 10px;
 }
 
@@ -109,4 +92,27 @@ header input:hover {
     border-radius: 7px;
     padding: 0px 3px 2px 3px;
     color: white;
+}
+
+
+
+/* ####################################################################### */
+/* RESPONSIVE DESIGN */
+/* ####################################################################### */
+
+@media(max-width: 500px) {
+    #header-img h1 {
+        font-size: 2rem;
+    }
+
+    #header-img img {
+        width: 95%;
+        height: 100px;
+    }
+}
+
+@media(max-width: 400px) {
+    #header-img h1 {
+        font-size: 1.5rem;
+    }
 }
