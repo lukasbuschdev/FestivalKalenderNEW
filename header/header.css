@@ -58,7 +58,7 @@ header input {
     background-image: url('../assets/icons/loupe.svg');
     background-position: 10px center;
     background-repeat: no-repeat;
-    padding-left: 35px;
+    padding: 0 0 3px 35px;
     height: 40px;
     max-width: 300px;
     min-width: 220px;
