@@ -22,11 +22,13 @@ async function filterAndSearch() {
     const input = $('#header-img .input-wrapper input').value.toLowerCase();
     checkInput(input);
     currentInput = input;
+    
     const filteredFestivals = (await getFestivals()).filter(({LAND, NAME, STADT, DATUM, GENRES}) => 
         [LAND, NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
     );
+
+    loadFilteredEventCards(filteredFestivals)
     log(filteredFestivals);
-    loadFilteredEventCards(filteredFestivals);
 }
 
 
@@ -64,11 +66,17 @@ document.addEventListener('DOMContentLoaded', function() {
         if(!inputField) return error("Input field not found");
         if(inputField) {
             inputField.addEventListener('input', debounce(function() {
-                filterAndSearch();
+                checkInput(inputField.value);
+                checkInputLength(inputField);
             }, 250));
         }
     }, 250);
-})
+});
+
+function checkInputLength(inputField) {
+    if(inputField.value.length < 1) return deleteInput();
+    if(inputField.value.length >= 3) return filterAndSearch();
+}
 
 function highlightIfContains(text, input) {
     const dataString = text;
