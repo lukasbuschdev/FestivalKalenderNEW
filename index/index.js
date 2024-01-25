@@ -1,4 +1,4 @@
-const ads = ['../assets/img/ad-1.JPG', '../assets/img/ad-2.JPG'];
+const ads = ['../assets/img/AD1.webp'];
 
 const cardImages = [
     '../assets/img/img1.jpg',
@@ -156,7 +156,7 @@ async function searchForItems(clickedItem) {
     $('#reset-filter-btn').classList.remove('d-none');
     $('.filters').classList.add('filters-closed');
 
-    const spanValue = clickedItem.querySelector('span').textContent;
+    const spanValue = clickedItem.$('span').textContent;
     currentInput = spanValue;
     const input = spanValue.toLowerCase();
     const items = (await getFestivals());
@@ -284,7 +284,7 @@ function renderFlags(LAND) {
 function renderAdBlock(adUrl) {
     return /*html*/ `
         <div class="ad-container">
-            <a href="https://www.austrian.com/at/de/homepage">
+            <a href="https://www.vamida.at/b1-salts-strong-as-f-k.html">
                 <img src="${adUrl}">
             </a>
         </div>
@@ -339,44 +339,41 @@ function renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, K
                 </div>
             </div>
 
-            <div class="selected-event-info-container row">
-                <div class="column gap-5">
-                    <div class="selected-event-info row">
-                        <span class="selected-event-country">Land: </span><span class="selected-event-country">${LAND}</span>
-                    </div>
-
-                    <div class="selected-event-info row">
-                        <span class="selected-event-state">Bundesland: </span><span class="selected-event-state">${BUNDESLAND}</span>
-                    </div>
-
-                    <div class="selected-event-info row">
-                        <span class="selected-event-location">Stadt: </span><span class="selected-event-location">${STADT}</span>
-                    </div>
-
-                    <div class="selected-event-info row">
-                        <span>Genre: </span><span class="selected-event-genre">${GENRES}</span>
-                    </div>
-
-                    <div class="selected-event-info row">
-                        <span class="selected-event-category">Kategorie: </span><span class="selected-event-category">${KATEGORIE}</span>
-                    </div>
-
-                    <div class="selected-event-info row">
-                        <span class="selected-event-where">Wo: </span><span class="selected-event-where">${WO}</span>
-                    </div>
-
-                    <div class="selected-event-info row">
-                        <span class="selected-event-duration">Dauer: </span><span class="selected-event-duration">${DAUER}</span>
-                    </div>
-
-                    <div class="selected-event-info row">
-                        <span class="selected-event-visitors">Besucher: </span><span class="selected-event-visitors">${BESUCHER}</span>
-                    </div>
-                </div>
-            </div>
+            <div class="selected-event-info-container row">${renderSelectedEventInfo(LAND, BUNDESLAND, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
         </div>
         <div class="selected-card-image">
             <img src="${renderCardImages()}">
+        </div>
+    `;
+}
+
+function renderSelectedEventInfo(LAND, BUNDESLAND, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER) {
+    return /*html*/ `
+        <div class="column gap-5">
+            <div class="selected-event-info row">
+                <span class="selected-event-country">Land: </span><span class="selected-event-country">${LAND}</span>
+            </div>
+            <div class="selected-event-info row">
+                <span class="selected-event-state">Bundesland: </span><span class="selected-event-state">${BUNDESLAND}</span>
+            </div>
+            <div class="selected-event-info row">
+                <span class="selected-event-location">Stadt: </span><span class="selected-event-location">${STADT}</span>
+            </div>
+            <div class="selected-event-info row">
+                <span>Genre: </span><span class="selected-event-genre">${GENRES}</span>
+            </div>
+            <div class="selected-event-info row">
+                <span class="selected-event-category">Kategorie: </span><span class="selected-event-category">${KATEGORIE}</span>
+            </div>
+            <div class="selected-event-info row">
+                <span class="selected-event-where">Wo: </span><span class="selected-event-where">${WO}</span>
+            </div>
+            <div class="selected-event-info row">
+                <span class="selected-event-duration">Dauer: </span><span class="selected-event-duration">${DAUER}</span>
+            </div>
+            <div class="selected-event-info row">
+                <span class="selected-event-visitors">Besucher: </span><span class="selected-event-visitors">${BESUCHER}</span>
+            </div>
         </div>
     `;
 }
