@@ -349,11 +349,6 @@
     background-color: var(--clr-pink-hover);
 }
 
-.selected-event-card > div {
-    align-items: flex-start;
-    padding: 10px 20px;
-}
-
 .selected-card-info {
     box-sizing: border-box;
     font-size: 0.8rem;
@@ -361,9 +356,14 @@
     width: 100%;
 }
 
+.selected-card-container {
+    height: 50vh;
+    width: 50%;
+}
+
 .selected-event-info-container {
     height: 100%;
-    width: 50%;
+    width: 100%;
     justify-content: space-between;
     gap: 40px;
 }
@@ -410,6 +410,18 @@
 
 .bg-light {
     background-color: white;
+}
+
+.selected-card-image {
+    height: 100%;
+    width: 50%;
+}
+
+.selected-card-image img {
+    border-radius: 15px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 
@@ -483,6 +495,21 @@
         border: none;
         border-radius: 0;
     }
+
+    .selected-card-image {
+        display: none;
+    }
+
+    .selected-card-info {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .selected-card-container {
+        height: 60vh;
+        width: 100%;
+        padding: 10px;
+    }
 }
 
 @media(max-width: 600px) {
@@ -514,13 +541,12 @@
         top: 3%;
     }
 
-    .selected-event-date-container {
-        place-items: self-start;
-        height: fit-content;
-    }
-
     .event-card {
         width: 90%;
+    }
+
+    .selected-event-info-container {
+        width: 100%;
     }
 }
 
@@ -534,10 +560,6 @@
     .selected-card-info {
         flex-direction: column;
     }
-
-    /* .selected-event-info-container div {
-        gap: 10px;
-    } */
 
     .selected-event-tickets {
         height: 40px;

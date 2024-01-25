@@ -320,7 +320,7 @@ function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES
                 <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${NAME}</span>
 
-                <div class="column selected-card-info gap-30">${renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
+                <div class="row selected-card-info gap-30">${renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
 
                 <div class="selected-event-tickets-container">
                     <a class="selected-event-tickets flex-center" href="${URL}">Tickets</a>
@@ -332,45 +332,51 @@ function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES
 
 function renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER) {
     return /*html*/ `
-        <div class="selected-event-date-container grid-center">
-            <div class="flex-center">
-                <span class="selected-event-date">${processDate(DATUM)}</span>
+        <div class="selected-card-container column">
+            <div class="selected-event-date-container grid-center">
+                <div class="flex-center">
+                    <span class="selected-event-date">${processDate(DATUM)}</span>
+                </div>
+            </div>
+
+            <div class="selected-event-info-container row">
+                <div class="column gap-5">
+                    <div class="selected-event-info row">
+                        <span class="selected-event-country">Land: </span><span class="selected-event-country">${LAND}</span>
+                    </div>
+
+                    <div class="selected-event-info row">
+                        <span class="selected-event-state">Bundesland: </span><span class="selected-event-state">${BUNDESLAND}</span>
+                    </div>
+
+                    <div class="selected-event-info row">
+                        <span class="selected-event-location">Stadt: </span><span class="selected-event-location">${STADT}</span>
+                    </div>
+
+                    <div class="selected-event-info row">
+                        <span>Genre: </span><span class="selected-event-genre">${GENRES}</span>
+                    </div>
+
+                    <div class="selected-event-info row">
+                        <span class="selected-event-category">Kategorie: </span><span class="selected-event-category">${KATEGORIE}</span>
+                    </div>
+
+                    <div class="selected-event-info row">
+                        <span class="selected-event-where">Wo: </span><span class="selected-event-where">${WO}</span>
+                    </div>
+
+                    <div class="selected-event-info row">
+                        <span class="selected-event-duration">Dauer: </span><span class="selected-event-duration">${DAUER}</span>
+                    </div>
+
+                    <div class="selected-event-info row">
+                        <span class="selected-event-visitors">Besucher: </span><span class="selected-event-visitors">${BESUCHER}</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="selected-event-info-container row">
-            <div class="column gap-5">
-                <div class="selected-event-info row">
-                    <span class="selected-event-country">Land: </span><span class="selected-event-country">${LAND}</span>
-                </div>
-
-                <div class="selected-event-info row">
-                    <span class="selected-event-state">Bundesland: </span><span class="selected-event-state">${BUNDESLAND}</span>
-                </div>
-
-                <div class="selected-event-info row">
-                    <span class="selected-event-location">Stadt: </span><span class="selected-event-location">${STADT}</span>
-                </div>
-
-                <div class="selected-event-info row">
-                    <span>Genre: </span><span class="selected-event-genre">${GENRES}</span>
-                </div>
-
-                <div class="selected-event-info row">
-                    <span class="selected-event-category">Kategorie: </span><span class="selected-event-category">${KATEGORIE}</span>
-                </div>
-
-                <div class="selected-event-info row">
-                    <span class="selected-event-where">Wo: </span><span class="selected-event-where">${WO}</span>
-                </div>
-
-                <div class="selected-event-info row">
-                    <span class="selected-event-duration">Dauer: </span><span class="selected-event-duration">${DAUER}</span>
-                </div>
-
-                <div class="selected-event-info row">
-                    <span class="selected-event-visitors">Besucher: </span><span class="selected-event-visitors">${BESUCHER}</span>
-                </div>
-            </div>
+        <div class="selected-card-image">
+            <img src="${renderCardImages()}">
         </div>
     `;
 }
