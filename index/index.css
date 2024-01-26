@@ -30,12 +30,12 @@
     border-radius: 999px;
     background-color: var(--clr-pink);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    transition: all var(--transition-fast) ease-in-out;
+    transition: all var(--transition-medium) ease-in-out;
 }
 
 .dark-mode-btn:hover {
     background-color: var(--clr-pink-hover);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .dark-mode-btn::before {
@@ -61,6 +61,23 @@
 .dark-mode-selected-card {
     background-color: var(--clr-bg-dark-mode) !important;
     color: var(--clr-white);
+}
+
+.dark-mode-filter {
+    background-color: var(--clr-pink) !important;
+    color: var(--clr-white) !important;
+}
+
+.dark-mode-filter-list-card {
+    background-color: var(--clr-bg-dark-mode) !important;
+}
+
+.dark-mode-filter-list-item {
+    color: var(--clr-white) !important;
+}
+
+.dark-mode-filter-list-item:hover {
+    color: var(--clr-pink) !important;
 }
 
 

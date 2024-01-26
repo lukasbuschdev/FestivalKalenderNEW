@@ -108,6 +108,7 @@ function openFilterList(sortedList) {
     });
 
     checkNumberOfItems();
+    filterListDarkMode();
 }
 
 function renderFilterList(sortedList) {
@@ -375,27 +376,41 @@ function checkDarkMode() {
 function activateDarkMode() {
     darkModeActive = true;
     const allEventCards = $$('.event-card');
+    const allFilters = $$('.filters button');
 
     $('body').classList.add('dark-mode-body');
-    $('.selected-event-card')?.classList.add('dark-mode-card');
 
     allEventCards.forEach(eventCard => eventCard.classList.add('dark-mode-card'));
+    allFilters.forEach(filter => filter.classList.add('dark-mode-filter'));
 }
 
 function deactivateDarkMode() {
     darkModeActive = false;
     const allEventCards = $$('.event-card');
+    const allFilters = $$('.filters button');
 
     $('body').classList.remove('dark-mode-body');
-    $('.selected-event-card')?.classList.remove('dark-mode-card');
 
     allEventCards.forEach(eventCard => eventCard.classList.remove('dark-mode-card'));
+    allFilters.forEach(filter => filter.classList.remove('dark-mode-filter'));
+
 }
 
 function selectedCardDarkMode() {
     if(darkModeActive) return $('.selected-event-card').classList.add('dark-mode-selected-card');
+    if(!darkModeActive) return $('.selected-event-card').classList.remove('dark-mode-selected-card'); 
+}
+
+function filterListDarkMode() {
+    const allListItems = $$('.list-item-container span');
+
+    if(darkModeActive) {
+        $('#filter-list-card').classList.add('dark-mode-filter-list-card');
+        allListItems.forEach(listItem => listItem.classList.add('dark-mode-filter-list-item')); 
+    } 
+
     if(!darkModeActive) {
-        $('.selected-event-card').classList.remove('dark-mode-selected-card');
-        addBgLightToEverySecondSelectedEventInfo();
+        $('#filter-list-card').classList.remove('dark-mode-filter-list-card');
+        allListItems.forEach(listItem => listItem.classList.remove('dark-mode-filter-list-item'));
     } 
 }

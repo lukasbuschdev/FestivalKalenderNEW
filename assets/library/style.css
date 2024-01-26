@@ -161,7 +161,7 @@ input::placeholder {
 }
 
 .txt-white {
-    color: var(--clr-white);
+    color: var(--clr-white) !important;
 }
 
 .txt-dark {
