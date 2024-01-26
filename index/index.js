@@ -125,7 +125,7 @@ async function searchForItems(clickedItem) {
     $('#reset-filter-btn').classList.remove('d-none');
     $('.filters').classList.add('filters-closed');
 
-    const spanValue = clickedItem.$('span').textContent;
+    const spanValue = clickedItem.querySelector('span').textContent;
     currentInput = spanValue;
     const input = spanValue.toLowerCase();
     const items = (await getFestivals());
@@ -402,15 +402,15 @@ function selectedCardDarkMode() {
 }
 
 function filterListDarkMode() {
-    const allListItems = $$('.list-item-container span');
+    const allItems = $$('.list-item-container span');
 
     if(darkModeActive) {
         $('#filter-list-card').classList.add('dark-mode-filter-list-card');
-        allListItems.forEach(listItem => listItem.classList.add('dark-mode-filter-list-item')); 
+        allItems.forEach(item => item.classList.add('dark-mode-filter-list-item')); 
     } 
 
     if(!darkModeActive) {
         $('#filter-list-card').classList.remove('dark-mode-filter-list-card');
-        allListItems.forEach(listItem => listItem.classList.remove('dark-mode-filter-list-item'));
+        allItems.forEach(item => item.classList.remove('dark-mode-filter-list-item'));
     } 
 }
