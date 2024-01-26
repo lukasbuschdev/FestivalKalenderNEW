@@ -3,11 +3,64 @@
 }
 
 #content {
+    position: relative;
     height: fit-content;
     width: 100%;
     max-width: 1440px;
     padding: 50px 5%;
     align-self: center;
+}
+
+
+
+/* ############################################################### */
+/* DARK MODE */
+/* ############################################################### */
+
+.dark-mode-btn {
+    position: absolute;
+    box-sizing: border-box;
+    right: 5%;
+    padding: 3px 10px 3px 5px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: white;
+    text-align: center;
+    border: 1px solid var(--clr-pink);
+    border-radius: 999px;
+    background-color: var(--clr-pink);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    transition: all var(--transition-fast) ease-in-out;
+}
+
+.dark-mode-btn:hover {
+    background-color: var(--clr-pink-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+}
+
+.dark-mode-btn::before {
+    content: '';
+    background-image: url('../assets/icons/darkmode.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    height: 25px;
+    width: 25px;
+}
+
+.dark-mode-body {
+    background-color: var(--clr-bg-dark-mode);
+}
+
+.dark-mode-card {
+    background-color: var(--clr-bg-card-dark-mode) !important;
+    color: var(--clr-white);
+}
+
+.dark-mode-selected-card {
+    background-color: var(--clr-bg-dark-mode) !important;
+    color: var(--clr-white);
 }
 
 
@@ -181,6 +234,7 @@
     border-radius: 20px;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    transition: all var(--transition-medium) ease-in-out;
 }
 
 .event-card:hover {
@@ -300,7 +354,7 @@
     height: 8rem;
     aspect-ratio: 1;
     border-radius: 999px;
-    background-color: white;
+    background-color: transparent;
     border: 3px solid var(--clr-pink);
 }
 
@@ -325,8 +379,9 @@
     justify-content: space-between;
     text-align: end;
     padding: 5px 10px;
-    border-radius: 15px;
-    background-color: #ebebeb;
+    border-bottom: 1px solid var(--clr-pink);
+    /* border-radius: 15px; */
+    /* background-color: #ebebeb; */
 }
 
 .selected-event-genre {
@@ -379,7 +434,7 @@
     font-weight: 600;
     font-size: 3rem;
     padding: 30px 0;
-    border-bottom: 1px solid var(--clr-placeholder);
+    border-bottom: 1px solid var(--clr-pink);
 }
 
 .selected-event-tickets-container {

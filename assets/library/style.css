@@ -11,6 +11,8 @@
     --clr-green: #7AE229;
     --clr-placeholder: #D1D1D1;
     --clr-bg-light: #f7f7f7;
+    --clr-bg-dark-mode: #3f3f3f;
+    --clr-bg-card-dark-mode: #5b5b5b;
     --clr-gray: #646464;
     --clr-email: #007cee;
     --clr-pink: #FF6C92;
@@ -22,8 +24,6 @@
     --transition-fast: 125ms ease-in-out;
     --transition-medium: 150ms ease-in-out;
     --transition-slow: 200ms ease-in-out;
-
-    --header-height: 85px;
 }
 
 @font-face {
@@ -48,6 +48,7 @@ body {
     flex-direction: column;
     background-color: var(--clr-bg-light);
     line-height: 0.9;
+    transition: all var(--transition-medium) ease-in-out;
 }
 
 *,

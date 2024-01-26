@@ -1,36 +1,4 @@
-const ads = ['../assets/img/AD1.webp'];
-
-const cardImages = [
-    '../assets/img/img1.jpg',
-    '../assets/img/img2.jpg',
-    '../assets/img/img3.jpg',
-    '../assets/img/img4.jpg',
-    '../assets/img/img5.jpg',
-    '../assets/img/img6.jpg',
-    '../assets/img/img7.jpg',
-    '../assets/img/img8.jpg',
-    '../assets/img/img9.jpg',
-    '../assets/img/img10.jpg',
-    '../assets/img/img11.jpg',
-    '../assets/img/img12.jpg',
-    '../assets/img/img13.jpg',
-    '../assets/img/img14.jpg',
-    '../assets/img/img15.jpg',
-    '../assets/img/img16.jpg'
-];
-
-const countryFlags = {
-    "Schweiz": '../assets/icons/flag-swiss.png',
-    "Deutschland": '../assets/icons/flag-german.png',
-    "Österreich": '../assets/icons/flag-austrian.png'
-};
-
-let imageIndex = 0;
-
-const monthMap = {
-    'Jan.': 1, 'Feb.': 2, 'März': 3, 'Apr.': 4, 'Mai': 5, 'Juni': 6,
-    'Juli': 7, 'Aug.': 8, 'Sept.': 9, 'Okt.': 10, 'Nov.': 11, 'Dez.': 12
-};
+let darkModeActive = false;
 
 const getFestivals = async () => {
     const data = await getData();
@@ -232,9 +200,9 @@ async function loadFilteredEventCards(festivals) {
 
 function checkAd(allEventCardsHTML, counter) {
     if (counter % 6 === 0) {
-        const adIndex = Math.floor((counter / 4 - 1) % ads.length);
-        const adUrl = ads[adIndex];
-        return allEventCardsHTML + renderAdBlock(adUrl);
+        const adIndex = Math.floor((counter / 6 - 1) % ads.length);
+        const ad = ads[adIndex];
+        return allEventCardsHTML + renderAdBlock(ad);
     }
     return allEventCardsHTML;
 }
@@ -281,11 +249,11 @@ function renderFlags(LAND) {
     return countryFlags[LAND] || '';
 }
 
-function renderAdBlock(adUrl) {
+function renderAdBlock(ad) {
     return /*html*/ `
         <div class="ad-container">
-            <a href="https://www.vamida.at/b1-salts-strong-as-f-k.html">
-                <img src="${adUrl}">
+            <a href="${ad.src}">
+                <img src="${ad.img}">
             </a>
         </div>
     `;
@@ -310,7 +278,7 @@ function renderSelectedFestival(selectedFestival) {
     $('#selected-festival-container-upper').classList.remove('d-none');
 
     selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selectedFestival);
-    addBgLightToEverySecondSelectedEventInfo();
+    selectedCardDarkMode();
 }
 
 function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER, URL }) {
@@ -378,17 +346,56 @@ function renderSelectedEventInfo(LAND, BUNDESLAND, STADT, GENRES, DAUER, KATEGOR
     `;
 }
 
-function addBgLightToEverySecondSelectedEventInfo() {
-    const eventInfoDivs = $$('.selected-event-info');
+// function addBgLightToEverySecondSelectedEventInfo() {
+//     const eventInfoDivs = $$('.selected-event-info');
 
-    eventInfoDivs.forEach((div, index) => {
-        if (index % 2 !== 0) {
-            div.classList.add('bg-light');
-        }
-    });
-}
+//     eventInfoDivs.forEach((div, index) => {
+//         if (index % 2 !== 0) {
+//             div.classList.add('bg-light');
+//         }
+//     });
+// }
 
 function closeSelectedFestival() {
     $('#selected-festival-container-upper').classList.add('d-none');
     $('#selected-festival-container-upper').innerHTML = '';
+}
+
+
+
+// ################################################################################
+// DARK MODE SECTION
+// ################################################################################
+
+function checkDarkMode() {
+    if(!darkModeActive) return activateDarkMode();
+    if(darkModeActive) return deactivateDarkMode();
+}
+
+function activateDarkMode() {
+    darkModeActive = true;
+    const allEventCards = $$('.event-card');
+
+    $('body').classList.add('dark-mode-body');
+    $('.selected-event-card')?.classList.add('dark-mode-card');
+
+    allEventCards.forEach(eventCard => eventCard.classList.add('dark-mode-card'));
+}
+
+function deactivateDarkMode() {
+    darkModeActive = false;
+    const allEventCards = $$('.event-card');
+
+    $('body').classList.remove('dark-mode-body');
+    $('.selected-event-card')?.classList.remove('dark-mode-card');
+
+    allEventCards.forEach(eventCard => eventCard.classList.remove('dark-mode-card'));
+}
+
+function selectedCardDarkMode() {
+    if(darkModeActive) return $('.selected-event-card').classList.add('dark-mode-selected-card');
+    if(!darkModeActive) {
+        $('.selected-event-card').classList.remove('dark-mode-selected-card');
+        addBgLightToEverySecondSelectedEventInfo();
+    } 
 }

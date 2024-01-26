@@ -1,6 +1,7 @@
 header {
     height: 40vh;
     width: 100%;
+    position: relative;
 }
 
 #header-img {
