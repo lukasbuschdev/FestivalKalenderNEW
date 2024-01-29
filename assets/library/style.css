@@ -48,7 +48,7 @@ body {
     flex-direction: column;
     background-color: var(--clr-bg-light);
     line-height: 0.9;
-    transition: all var(--transition-medium) ease-in-out;
+    transition: all var(--transition-medium);
 }
 
 *,

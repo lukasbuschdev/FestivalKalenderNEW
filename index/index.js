@@ -347,16 +347,6 @@ function renderSelectedEventInfo(LAND, BUNDESLAND, STADT, GENRES, DAUER, KATEGOR
     `;
 }
 
-// function addBgLightToEverySecondSelectedEventInfo() {
-//     const eventInfoDivs = $$('.selected-event-info');
-
-//     eventInfoDivs.forEach((div, index) => {
-//         if (index % 2 !== 0) {
-//             div.classList.add('bg-light');
-//         }
-//     });
-// }
-
 function closeSelectedFestival() {
     $('#selected-festival-container-upper').classList.add('d-none');
     $('#selected-festival-container-upper').innerHTML = '';
@@ -379,6 +369,7 @@ function activateDarkMode() {
     const allFilters = $$('.filters button');
 
     $('body').classList.add('dark-mode-body');
+    $('#header-img').classList.add('dark-mode-header');
 
     allEventCards.forEach(eventCard => eventCard.classList.add('dark-mode-card'));
     allFilters.forEach(filter => filter.classList.add('dark-mode-filter'));
@@ -390,6 +381,7 @@ function deactivateDarkMode() {
     const allFilters = $$('.filters button');
 
     $('body').classList.remove('dark-mode-body');
+    $('#header-img').classList.remove('dark-mode-header');
 
     allEventCards.forEach(eventCard => eventCard.classList.remove('dark-mode-card'));
     allFilters.forEach(filter => filter.classList.remove('dark-mode-filter'));
