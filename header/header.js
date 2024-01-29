@@ -28,7 +28,7 @@ async function filterAndSearch() {
     );
 
     loadFilteredEventCards(filteredFestivals)
-    log(filteredFestivals);
+    // log(filteredFestivals);
 }
 
 

@@ -53,6 +53,10 @@
     background-color: var(--clr-bg-dark-mode);
 }
 
+.dark-mode-header {
+    filter: brightness(0.9) !important;
+}
+
 .dark-mode-card {
     background-color: var(--clr-bg-card-dark-mode) !important;
     color: var(--clr-white);
@@ -121,7 +125,7 @@
     overflow-x: scroll;
     scrollbar-width: none;
     justify-content: center;
-    transition: all 150ms ease-in-out;
+    transition: all var(--transition-medium);
 }
 
 .filters-closed {
@@ -144,7 +148,7 @@
     color: var(--clr-gray);
     border: 1px solid var(--clr-pink);
     border-radius: 999px;
-    transition: all var(--transition-fast) ease-in-out;
+    transition: all var(--transition-fast);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1)
 }
 
@@ -170,10 +174,6 @@
 
 #filter-list-card {
     position: relative;
-    /* width: 50%;
-    height: 80vh;
-    max-height: 650px;
-    min-height: 500px; */
     height: 80vh;
     width: 80%;
     max-width: 1200px;
@@ -251,7 +251,7 @@
     border-radius: 20px;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    transition: all var(--transition-medium) ease-in-out;
+    transition: all var(--transition-medium);
 }
 
 .event-card:hover {
