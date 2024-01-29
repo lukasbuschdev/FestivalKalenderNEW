@@ -5,6 +5,10 @@ function loadHeader() {
 
     const headerContent = /*html*/ `
         <header class="flex-center">
+            <div class="presented-logo row gap-10">
+                <img id="presented-by" src="../assets/icons/presentedby.png">
+                <a href="https://www.vamida.at/"><img id="vamida-logo" src="../assets/icons/vamidalogo.png"></a>
+            </div>
             <div id="header-img" class="column">
                 <img src="../assets/icons/icon-text.svg" alt="Festivalkalender">
                 <div class="input-wrapper">
