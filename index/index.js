@@ -183,6 +183,8 @@ async function loadEventCards() {
 
     const eventCardsContainer = $('#event-cards-container');
     eventCardsContainer.innerHTML = allEventCardsHTML;
+
+    applyDarkModeToEventCards();
 }
 
 async function loadFilteredEventCards(festivals) {
@@ -197,6 +199,8 @@ async function loadFilteredEventCards(festivals) {
 
     const eventCardsContainer = $('#event-cards-container');
     eventCardsContainer.innerHTML = allEventCardsHTML;
+
+    applyDarkModeToEventCards();
 }
 
 function checkAd(allEventCardsHTML, counter) {
@@ -292,7 +296,7 @@ function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES
                 <div class="row selected-card-info gap-30">${renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
 
                 <div class="selected-event-tickets-container">
-                    <a class="selected-event-tickets flex-center" href="${URL}">Tickets</a>
+                    <a class="selected-event-tickets flex-center" target="_blank" href="${URL}">Tickets</a>
                 </div>
             </div>
         </div>
@@ -385,7 +389,6 @@ function deactivateDarkMode() {
 
     allEventCards.forEach(eventCard => eventCard.classList.remove('dark-mode-card'));
     allFilters.forEach(filter => filter.classList.remove('dark-mode-filter'));
-
 }
 
 function selectedCardDarkMode() {
@@ -405,4 +408,11 @@ function filterListDarkMode() {
         $('#filter-list-card').classList.remove('dark-mode-filter-list-card');
         allItems.forEach(item => item.classList.remove('dark-mode-filter-list-item'));
     } 
+}
+
+function applyDarkModeToEventCards() {
+    if (darkModeActive) {
+        const allEventCards = $$('.event-card');
+        allEventCards.forEach(eventCard => eventCard.classList.add('dark-mode-card'));
+    }
 }

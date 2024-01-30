@@ -1,3 +1,7 @@
+#header-container {
+    height: 40vh;
+}
+
 header {
     height: 40vh;
     width: 100%;
@@ -8,7 +12,10 @@ header {
     position: absolute;
     right: 1%;
     top: 5%;
-    z-index: 5;
+    z-index: 1;
+    background-color: rgba(256,256,256, 0.5);
+    border-radius: 15px;
+    padding: 5px 5px 5px 10px;
 }
 
 #presented-by {
@@ -114,8 +121,8 @@ header input:hover {
 .highlight {
     box-sizing: border-box;
     background-color: var(--clr-pink);
-    border-radius: 7px;
-    padding: 0px 3px 2px 3px;
+    border-radius: 15px;
+    padding: 0px 7px 3px 7px;
     color: white;
 }
 
