@@ -135,6 +135,7 @@ async function searchForItems(clickedItem) {
     );
 
     searchItems(filteredItems);
+    applyDarkModeToEventCards();
 }
 
 function searchItems(filteredItems) {
