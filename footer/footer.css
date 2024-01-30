@@ -3,7 +3,7 @@ footer {
     width: 100%;
     background-color: var(--clr-pink);
     color: white !important;
-    position: fixed;
+    position: sticky;
     bottom: 0;
 }
 
