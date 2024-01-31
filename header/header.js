@@ -20,6 +20,7 @@ function loadHeader() {
     `;
 
     includeTemplate(headerContainer, headerContent);
+    initHeaderInput();
 };
 
 async function filterAndSearch() {
@@ -62,19 +63,15 @@ function debounce(func, delay) {
     };
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        const inputField = $('#header-img input');
-        
-        if(!inputField) return error("Input field not found");
-        if(inputField) {
-            inputField.addEventListener('input', debounce(function() {
-                checkInput(inputField.value);
-                checkInputLength(inputField);
-            }, 250));
-        }
-    }, 250);
-});
+function initHeaderInput() {
+    const inputField = $('#header-img input');
+    
+    if(!inputField) return error("Input field not found");
+    inputField.addEventListener('input', debounce(function() {
+        checkInput(inputField.value);
+        checkInputLength(inputField);
+    }, 150));
+}
 
 function checkInputLength(inputField) {
     if(inputField.value.length < 1) return deleteInput();
@@ -84,7 +81,7 @@ function checkInputLength(inputField) {
 function highlightIfContains(text, input) {
     const dataString = text;
 
-    if (input && dataString.toLowerCase().includes(input.toLowerCase())) {
+    if(input && dataString.toLowerCase().includes(input.toLowerCase())) {
         return `<span class="highlight">${text}</span>`;
     }
     return text;
