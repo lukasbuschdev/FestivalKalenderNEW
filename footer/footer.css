@@ -30,6 +30,11 @@ footer a:hover {
     width: 50%;
 }
 
+.links-container div {
+    display: flex;
+    justify-content: center;
+}
+
 .links-container div a {
     color: white !important;
     display: flex;
