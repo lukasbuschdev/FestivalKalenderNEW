@@ -1,0 +1,653 @@
+#content {
+    /* display: none; */
+    position: relative;
+    height: fit-content;
+    width: 100%;
+    max-width: 1440px;
+    padding: 50px 5%;
+    align-self: center;
+}
+
+
+
+/* ############################################################### */
+/* DARK MODE */
+/* ############################################################### */
+
+.dark-mode-btn {
+    position: absolute;
+    box-sizing: border-box;
+    right: 5%;
+    padding: 3px 10px 4px 5px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: white;
+    text-align: center;
+    border: 1px solid var(--clr-pink);
+    border-radius: 999px;
+    background-color: var(--clr-pink);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    transition: all var(--transition-medium) ease-in-out;
+}
+
+.dark-mode-btn:hover {
+    background-color: var(--clr-pink-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode-btn::before {
+    content: '';
+    background-image: url('../assets/icons/darkmode.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    height: 20px;
+    width: 20px;
+}
+
+.dark-mode-body {
+    background-color: var(--clr-bg-dark-mode);
+}
+
+.dark-mode-header {
+    filter: brightness(0.9) !important;
+}
+
+.dark-mode-card {
+    background-color: var(--clr-bg-card-dark-mode) !important;
+    color: var(--clr-white);
+}
+
+.dark-mode-selected-card {
+    background-color: var(--clr-bg-dark-mode) !important;
+    color: var(--clr-white);
+}
+
+.dark-mode-filter {
+    background-color: var(--clr-pink) !important;
+    color: var(--clr-white) !important;
+}
+
+.dark-mode-filter-list-card {
+    background-color: var(--clr-bg-dark-mode) !important;
+}
+
+.dark-mode-filter-list-item {
+    color: var(--clr-white) !important;
+}
+
+.dark-mode-filter-list-item:hover {
+    color: var(--clr-pink) !important;
+}
+
+
+
+/* ############################################# */
+/* FILTER BUTTONS SECTION */
+/* ############################################# */
+
+.open-filter-btn-containter {
+    gap: 10px;
+}
+
+.open-filter-btn-containter button {
+    box-sizing: border-box;
+    padding: 5px 15px 8px 15px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    border: 1px solid var(--clr-pink);
+    border-radius: 999px;
+    background-color: var(--clr-pink);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1)
+}
+
+.open-filter-btn-containter button:hover {
+    background-color: var(--clr-pink-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+}
+
+#filter-container {
+    width: 100%;
+    justify-content: center;
+}
+
+.filters {
+    box-sizing: border-box;
+    width: 100%;
+    height: fit-content;
+    gap: 15px;
+    padding: 10px;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    justify-content: center;
+    transition: all var(--transition-medium);
+}
+
+.filters-closed {
+    height: 0 !important;
+    width: 0;
+    padding: 0;
+}
+
+.filters::-webkit-scrollbar {
+    display: none;
+}
+
+.filters button {
+    box-sizing: border-box;
+    background-color: white;
+    padding: 0 10px 5px 10px;
+    height: 30px;
+    width: fit-content;
+    font-weight: 600;
+    color: var(--clr-gray);
+    border: 1px solid var(--clr-pink);
+    border-radius: 999px;
+    transition: all var(--transition-fast);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1)
+}
+
+.filters button:hover {
+    border-color: var(--clr-pink-hover);
+    color: var(--clr-pink);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+}
+
+
+
+/* ########################################################### */
+/* FILTER LIST CONTAINER / POP UP */
+/* ########################################################### */
+
+#filter-list-container {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(200, 200, 200, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+#filter-list-card {
+    position: relative;
+    height: 80vh;
+    width: 80%;
+    max-width: 1200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    border: 2px solid var(--clr-pink);
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    padding: 50px 30px;
+}
+
+.filter-list-close {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    scale: 1;
+    border-radius: 999px;
+    transition: all var(--transition-fast);
+    background-color: var(--clr-pink);
+}
+
+.filter-list-close:hover {
+    scale: 1.05;
+    background-color: var(--clr-pink-hover);
+}
+
+.filter-list-close:hover {
+    cursor: pointer;
+    scale: 1.2;
+}
+
+#filter-list-items {
+    height: 85%;
+    width: 100%;
+    overflow-y: scroll;
+    justify-content: flex-start;
+}
+
+.list-item-container span {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--clr-dark);
+    transition: all var(--transition-fast);
+}
+
+.list-item-container span:hover {
+    cursor: pointer;
+    color: var(--clr-pink);
+}
+
+
+
+/* ########################################################### */
+/* EVENTS / CARDS SECTION */
+/* ########################################################### */
+
+#event-cards-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.event-card {
+    box-sizing: border-box;
+    height: 350px;
+    aspect-ratio: 2/1;
+    width: 30%;
+    min-width: 250px;
+    border: 2px solid var(--clr-pink);
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    transition: all var(--transition-medium);
+}
+
+.event-card:hover {
+    cursor: pointer;
+    border: 2px solid var(--clr-pink-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.event-card > div {
+    height: 100%;
+    justify-content: end;
+}
+
+.card-info {
+    box-sizing: border-box;
+    font-size: 0.9rem;
+}
+
+.card-info > div:last-of-type {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    padding: 5px 10px;
+}
+
+.card-info > div:last-of-type > div {
+    justify-content: space-between;
+}
+
+.event-name {
+    font-size: 1.1rem;
+    text-align: start;
+    font-weight: 600;
+    padding: 5px 0 9px 0px;
+    border-bottom: 1px solid var(--clr-pink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.event-date {
+    align-self: center;
+    text-align: center;
+    font-weight: 600;
+}
+
+.card-image {
+    width: 100%;
+}
+
+.card-image img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 18px 18px 0 0;
+}
+
+.event-country-container img {
+    height: 20px;
+    width: 25px;
+    object-fit: contain;
+}
+
+
+
+/* ############################################################### */
+/* AD CONTAINER */
+/* ############################################################### */
+
+.ad-container {
+    width: 90%;
+    aspect-ratio: 4/1;
+}
+
+.ad-container img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+
+
+/* ############################################################### */
+/* SELECTED FESTIVAL  */
+/* ############################################################### */
+
+#selected-festival-container-upper {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(200, 200, 200, 0.5);
+    backdrop-filter: blur(3px);
+    z-index: 999;
+}
+
+.selected-festival-container-lower {
+    height: 100vh;
+    width: 100%;
+    z-index: 9;
+}
+
+.selected-event-date-container {
+    height: 100%;
+}
+
+.selected-event-date {
+    align-self: center;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.selected-event-date-container > div {
+    height: 8rem;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background-color: transparent;
+    border: 3px solid var(--clr-pink);
+}
+
+.selected-event-card {
+    position: relative;
+    box-sizing: border-box;
+    height: 80vh;
+    width: 80%;
+    max-width: 1200px;
+    padding: 10px;
+    background-color: var(--clr-bg-light);
+    z-index: 100;
+    border: 2px solid var(--clr-pink);
+    border-radius: 20px;
+}
+
+.selected-event-info-container > div {
+    width: 100%;
+}
+
+.selected-event-info {
+    justify-content: space-between;
+    text-align: end;
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--clr-pink);
+    /* border-radius: 15px; */
+    /* background-color: #ebebeb; */
+}
+
+.selected-event-genre {
+    word-break: break-word;
+}
+
+.selected-event-card-close {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    scale: 1;
+    background-color: var(--clr-pink);
+    border-radius: 99px;
+    transition: all var(--transition-fast);
+}
+
+.selected-event-card-close:hover {
+    cursor: pointer;
+    scale: 1.05;
+    background-color: var(--clr-pink-hover);
+}
+
+.selected-card-info {
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    padding: 5px 0;
+    width: 100%;
+}
+
+.selected-card-container {
+    height: 50vh;
+    width: 50%;
+}
+
+.selected-event-info-container {
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.selected-card-info > div span {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.selected-event-name {
+    box-sizing: border-box;
+    text-align: center;
+    font-weight: 600;
+    font-size: 3rem;
+    padding: 30px 0;
+    border-bottom: 1px solid var(--clr-pink);
+}
+
+.selected-event-tickets-container {
+    height: 20vh !important;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selected-event-tickets {
+    align-self: center;
+    height: 50px;
+    width: 200px;
+    font-size: 1.7rem;
+    border-radius: 999px;
+    color: white;
+    background-color: var(--clr-pink);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    padding: 0 0 5px 0;
+}
+
+.selected-event-tickets:hover {
+    cursor: pointer;
+    background-color: var(--clr-pink-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.bg-light {
+    background-color: white;
+}
+
+.selected-card-image {
+    height: 100%;
+    width: 50%;
+}
+
+.selected-card-image img {
+    border-radius: 15px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+
+/* ############################################################ */
+/* MAIN RESPONSIVE DESIGN  */
+/* ############################################################ */
+
+@media(max-width: 1000px) {
+    .selected-event-name {
+        font-size: 2.5rem;
+    }
+}
+
+@media(max-width: 900px) {
+    .event-card {
+        width: 45%;
+    }
+}
+
+@media(max-width: 800px) {
+    button:hover {
+        scale: 1;
+        box-shadow: none;
+        cursor: unset;
+        background-color: none;
+    }
+
+    .event-card:hover {
+        cursor: unset;
+        background-color: none;
+        box-shadow: none;
+    }
+
+    #content {
+        padding: 50px 5%;
+    }
+
+    .selected-event-name {
+        font-size: 2rem;
+    }
+
+    #filter-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #filter-list-card {
+        height: 100vh;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+    }
+
+    .selected-event-date-container > div {
+        height: 6rem;
+    }
+
+    .selected-card-info > div:last-of-type {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .selected-event-info {
+        padding: 15px 10px;
+    }
+
+    .selected-event-card {
+        height: 100vh;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+    }
+
+    .selected-card-image {
+        display: none;
+    }
+
+    .selected-card-info {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .selected-card-container {
+        height: 60vh;
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+@media(max-width: 600px) {
+    .selected-event-name {
+        font-size: 1.8rem;
+        padding: 55px 0;
+    }
+
+    .selected-card-info > div span {
+        font-size: 1rem;
+    }
+
+    .selected-event-date-container > div {
+        height: 5rem;
+    }
+
+    #filter-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .filters {
+        flex-direction: column;
+        height: 50vh;
+        gap: 40px;
+    }
+
+    .selected-event-card-close {
+        top: 3%;
+    }
+
+    .event-card {
+        width: 90%;
+    }
+
+    .selected-event-info-container {
+        width: 100%;
+    }
+}
+
+@media(max-width: 500px) {
+    .list-item-container span {
+        font-size: 1rem;
+    }
+}
+
+@media(max-width: 450px) {
+    .selected-card-info {
+        flex-direction: column;
+    }
+
+    .selected-event-tickets {
+        height: 40px;
+        width: 170px;
+        font-size: 1.5rem;
+    }
+}
+
+@media(max-width: 400px) {
+    .selected-card-info > div:last-of-type {
+        gap: 10px;
+    }
+
+    .selected-card-info > div span {
+        font-size: 0.9rem;
+    }
+
+    .selected-event-card > div {
+        padding: 15px 5px;
+    }
+}

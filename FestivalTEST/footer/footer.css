@@ -1,0 +1,42 @@
+footer {
+    height: 200px;
+    width: 100%;
+    background-color: var(--clr-pink);
+    color: white !important;
+    position: sticky;
+    bottom: 0;
+}
+
+footer a:hover {
+    cursor: pointer;
+    filter: brightness(0.9);
+}
+
+.copyright {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright img {
+    height: 50px;
+    width: 167px;
+    object-fit: contain;
+    filter: brightness(3);
+}
+
+.links-container {
+    width: 50%;
+}
+
+.links-container div {
+    display: flex;
+    justify-content: center;
+}
+
+.links-container div a {
+    color: white !important;
+    display: flex;
+    justify-content: center;
+}

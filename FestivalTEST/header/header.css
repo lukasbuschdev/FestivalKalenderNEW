@@ -1,0 +1,172 @@
+#header-container {
+    height: 40vh;
+}
+
+header {
+    height: 40vh;
+    width: 100%;
+    position: relative;
+}
+
+.presented-logo {
+    position: absolute;
+    right: 1%;
+    top: 5%;
+    z-index: 1;
+    background-color: rgba(256,256,256, 0.5);
+    border-radius: 15px;
+    padding: 5px 5px 5px 10px;
+}
+
+#presented-by {
+    width: 100px;
+    object-fit: contain;
+}
+
+#vamida-logo {
+    width: 180px;
+    object-fit: contain;
+}
+
+#vamida-logo:hover {
+    cursor: pointer;
+    filter: brightness(0.9);
+}
+
+#header-img {
+    height: 100%;
+    width: 100%;
+    background-image: url('../assets/img/headerBG2.jpeg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    filter: brightness(1);
+    transition: all var(--transition-fast);
+}
+
+#header-img h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--clr-pink);
+    padding: 50px 0;
+}
+
+#search-bar {
+    height: 40px;
+    width: 100px;
+}
+
+#search-bar img {
+    height: 40px;
+    width: 40px;
+}
+
+header input {
+    height: 40px;
+    width: 35%;
+    box-sizing: border-box;
+    background-image: url('../assets/icons/loupe.svg');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    padding: 0 0 3px 35px;
+    height: 40px;
+    max-width: 300px;
+    min-width: 220px;
+    border: 2px solid var(--clr-pink);
+    border-radius: 999px;
+    position: relative;
+    transition: all 75ms ease-in-out;
+}
+
+header input:hover {
+    border-color: var(--clr-pink-hover);
+}
+
+#header-img img {
+    width: 80%;
+    height: 200px;
+    min-width: 250px;
+}
+
+#close-icon {
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    box-sizing: border-box;
+    border-radius: 999px;
+    background-image: url('../assets/icons/close.svg');
+    background-position: center;
+    background-size: cover;
+    background-color: var(--clr-pink);
+    right: 15px;
+    top: 10px;
+}
+
+.show-close #close-icon {
+    display: block;
+}
+
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.highlight {
+    box-sizing: border-box;
+    background-color: var(--clr-pink);
+    border-radius: 15px;
+    padding: 0px 7px 3px 7px;
+    color: white;
+}
+
+
+
+/* ####################################################################### */
+/* RESPONSIVE DESIGN */
+/* ####################################################################### */
+
+@media(max-width: 800px) {
+    #presented-by {
+        width: 80px;
+        object-fit: contain;
+    }
+    
+    #vamida-logo {
+        width: 150px;
+        object-fit: contain;
+    }
+}
+
+@media(max-width: 500px) {
+    #header-img h1 {
+        font-size: 2rem;
+    }
+
+    #header-img img {
+        width: 95%;
+        height: 100px;
+    }
+
+    #presented-by {
+        width: 60px;
+        object-fit: contain;
+    }
+    
+    #vamida-logo {
+        width: 120px;
+        object-fit: contain;
+    }
+}
+
+@media(max-width: 400px) {
+    #header-img h1 {
+        font-size: 1.5rem;
+    }
+}
