@@ -234,11 +234,11 @@ function renderEvents(festival, singleEvent) {
                 </div>
                 <div class="column gap-10">
                     <span class="event-name">${highlightIfContains(festival.esName, currentInput)}</span>
-                    <div class="row event-country-container">
+                    <div class="row event-country-container gap-5">
                         <img src="${renderFlags(singleEvent.eventCountry)}">
                         <span class="event-country">${highlightIfContains(singleEvent.eventCountry, currentInput)}</span>
                     </div>
-                    <div class="row">
+                    <div class="row event-location-date-container">
                         <span class="event-location">${highlightIfContains(singleEvent.eventCity, currentInput)}</span>
                         <span class="event-date">${transformedDate}</span>
                     </div>
@@ -437,7 +437,7 @@ function filterListDarkMode() {
 }
 
 function applyDarkModeToEventCards() {
-    if (darkModeActive) {
+    if(darkModeActive) {
         const allEventCards = $$('.event-card');
         allEventCards.forEach(eventCard => eventCard.classList.add('dark-mode-card'));
     }

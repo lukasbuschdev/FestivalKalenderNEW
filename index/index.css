@@ -273,11 +273,12 @@
     height: 60%;
     justify-content: center;
     padding: 5px 10px;
+    font-weight: 600;
 }
 
-.card-info > div:last-of-type > div {
+/* .card-info > div:last-of-type > div {
     justify-content: space-between;
-}
+} */
 
 .event-name {
     font-size: 1.1rem;
@@ -295,6 +296,15 @@
     align-self: center;
     text-align: center;
     font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.event-country {
+    font-size: 1rem;
+}
+
+.event-location {
+    font-size: 1rem;
 }
 
 .card-image {
@@ -321,7 +331,15 @@
     width: 100%;
     object-fit: cover;
     border-radius: 18px 18px 0 0;
-    filter: blur(1px);
+    opacity: 0.25;
+}
+
+.event-location-date-container {
+    justify-content: space-between;
+}
+
+.event-country-container {
+    justify-content: flex-start;
 }
 
 .event-country-container img {
