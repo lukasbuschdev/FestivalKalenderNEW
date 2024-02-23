@@ -224,9 +224,10 @@ function checkAd(allEventCardsHTML, counter) {
 
 function renderEvents(festival, singleEvent) {
     const transformedDate = transformDateFormat(singleEvent.eventDateIso8601);
+    const transformedCountryName = transformCountryName(singleEvent.eventCountry);
 
     return /*html*/ `
-        <div class="event-card column" onclick="openSelectedFestival(${festival.esId})">
+        <div class="event-card column" onclick="openSelectedFestival('${singleEvent.eventId}')">
             <div class="column card-info">
                 <div class="card-image">
                     <img class ="card-image-main" src="${festival.esPictureBig}">
@@ -236,7 +237,7 @@ function renderEvents(festival, singleEvent) {
                     <span class="event-name">${highlightIfContains(festival.esName, currentInput)}</span>
                     <div class="row event-country-container gap-5">
                         <img src="${renderFlags(singleEvent.eventCountry)}">
-                        <span class="event-country">${highlightIfContains(singleEvent.eventCountry, currentInput)}</span>
+                        <span class="event-country">${highlightIfContains(transformedCountryName, currentInput)}</span>
                     </div>
                     <div class="row event-location-date-container">
                         <span class="event-location">${highlightIfContains(singleEvent.eventCity, currentInput)}</span>
@@ -257,24 +258,11 @@ function transformDateFormat(dateStr) {
     return formattedDate;
 }
 
-// <!-- <span class="event-genre">${highlightIfContains(KATEGORIE, currentInput)}</span> -->
-
-
-
-// ##################################################################
-// LEAVE IT THERE IN CASE SOME EVENTS HAVE NO IMAGE
-// ##################################################################
-
-// async function renderCardImages(imagePath) {
-//     const eventImage = await getFestivals().esPictureBig;
-//     log(eventImage)
-
-//     return eventImage
-
-//     // const imagePath = cardImages[imageIndex];
-//     // imageIndex = (imageIndex + 1) % cardImages.length;
-//     // return imagePath;
-// }
+function transformCountryName(eventCountry) {
+    if(eventCountry === 'AT') return eventCountry.replace('AT', 'Österreich');
+    if(eventCountry === 'DE') return eventCountry.replace('DE', 'Deutschland');
+    if(eventCountry === 'CH') return eventCountry.replace('CH', 'Schweiz');
+}
 
 function renderFlags(eventCountry) {
     return countryFlags[eventCountry] || '';
@@ -290,88 +278,102 @@ function renderAdBlock(ad) {
     `;
 }
 
-async function openSelectedFestival(id) {
-    const selectedFestival = await checkFestivalId(id);
-    renderSelectedFestival(selectedFestival);
+function openSelectedFestival(id) {
+    const selectedEvent = checkFestivalId(id);
+    renderSelectedFestival(selectedEvent);
 }
 
-async function checkFestivalId(id) {
-    const festivalId = parseInt(id);
+async function checkFestivalId(eventId) {
     const festivals = await getFestivals();
-    const festivalExists = festivals.find(festival => festival.id === festivalId);    
     
-    if(festivalExists) return festivalExists;
-    if(!festivalExists) return error(`No festival found!`);    
+    let selectedEvent = null;
+    festivals.some(festival => {
+        const foundEvent = festival.events.find(event => event.eventId === eventId);
+        if(foundEvent) {
+            selectedEvent = { festival: festival, event: foundEvent };
+            return true;
+        }
+        return false;
+    });
+
+    if(selectedEvent) return selectedEvent;
+    else throw new Error(`No event found!`);
 }
 
-function renderSelectedFestival(selectedFestival) {
+function renderSelectedFestival(selected) {
+    const selectedFestival = selected.festival;
+    const selectedEvent = selected.event;
+
     const selectedFestivalContainer = $('#selected-festival-container-upper');
     $('#selected-festival-container-upper').classList.remove('d-none');
 
-    selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selectedFestival);
+    selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selectedFestival, selectedEvent);
     selectedCardDarkMode();
 }
 
-function selectedFestivalTemplate({ LAND, BUNDESLAND, NAME, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER, URL }) {
+function selectedFestivalTemplate(selectedFestival, { eventCountry, eventCity,  eventName, eventDateIso8601, evoLink }) {
+    const transformedDate = transformDateFormat(eventDateIso8601);
+    const transformedCountryName = transformCountryName(eventCountry);
+
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center">
             <div class="selected-event-card column">
                 <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
-                <span class="selected-event-name">${NAME}</span>
+                <span class="selected-event-name">${eventName}</span>
 
-                <div class="row selected-card-info gap-30">${renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
+                <div class="row selected-card-info gap-30">${renderSelectedCardInfo(selectedFestival, eventCity, transformedCountryName, transformedDate)}</div>
 
                 <div class="selected-event-tickets-container">
-                    <a class="selected-event-tickets flex-center" target="_blank" href="${URL}">Tickets</a>
+                    <a class="selected-event-tickets flex-center" target="_blank" href="${evoLink}">Tickets</a>
                 </div>
             </div>
         </div>
     `;
 }
 
-function renderSelectedCardInfo(LAND, BUNDESLAND, DATUM, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER) {
+function renderSelectedCardInfo(selectedFestival, eventCity, transformedCountryName, transformedDate) {
     return /*html*/ `
         <div class="selected-card-container column">
             <div class="selected-event-date-container grid-center">
                 <div class="flex-center">
-                    <span class="selected-event-date">${processDate(DATUM)}</span>
+                    <span class="selected-event-date">${transformedDate}</span>
                 </div>
             </div>
 
-            <div class="selected-event-info-container row">${renderSelectedEventInfo(LAND, BUNDESLAND, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER)}</div>
+            <div class="selected-event-info-container row">${renderSelectedEventInfo(eventCity, transformedCountryName)}</div>
         </div>
         <div class="selected-card-image">
-            <img src="${renderCardImages()}">
+            <img src="${selectedFestival.esPictureBig}">
         </div>
     `;
 }
 
-function renderSelectedEventInfo(LAND, BUNDESLAND, STADT, GENRES, DAUER, KATEGORIE, WO, BESUCHER) {
+function renderSelectedEventInfo(eventCity, transformedCountryName) {
     return /*html*/ `
         <div class="column gap-5">
             <div class="selected-event-info row">
-                <span class="selected-event-country">Land: </span><span class="selected-event-country">${LAND}</span>
+                <span class="selected-event-country">Land: </span><span class="selected-event-country">${transformedCountryName}</span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-state">Bundesland: </span><span class="selected-event-state">${BUNDESLAND}</span>
+                <span class="selected-event-state">Bundesland: </span><span class="selected-event-state"></span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-location">Stadt: </span><span class="selected-event-location">${STADT}</span>
+                <span class="selected-event-location">Stadt: </span><span class="selected-event-location">${eventCity}</span>
             </div>
             <div class="selected-event-info row">
-                <span>Genre: </span><span class="selected-event-genre">${GENRES}</span>
+                <span>Genre: </span><span class="selected-event-genre"></span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-category">Kategorie: </span><span class="selected-event-category">${KATEGORIE}</span>
+                <span class="selected-event-category">Kategorie: </span><span class="selected-event-category"></span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-where">Wo: </span><span class="selected-event-where">${WO}</span>
+                <span class="selected-event-where">Wo: </span><span class="selected-event-where"></span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-duration">Dauer: </span><span class="selected-event-duration">${DAUER}</span>
+                <span class="selected-event-duration">Dauer: </span><span class="selected-event-duration"></span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-visitors">Besucher: </span><span class="selected-event-visitors">${BESUCHER}</span>
+                <span class="selected-event-visitors">Besucher: </span><span class="selected-event-visitors"></span>
             </div>
         </div>
     `;
