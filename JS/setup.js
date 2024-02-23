@@ -50,9 +50,9 @@ const cardImages = [
 ];
 
 const countryFlags = {
-    "Schweiz": '../assets/icons/flag-swiss.png',
-    "Deutschland": '../assets/icons/flag-german.png',
-    "Österreich": '../assets/icons/flag-austrian.png'
+    "CH": '../assets/icons/flag-swiss.png',
+    "D": '../assets/icons/flag-german.png',
+    "AT": '../assets/icons/flag-austrian.png'
 };
 
 let imageIndex = 0;
