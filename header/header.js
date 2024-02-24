@@ -21,6 +21,9 @@ function loadHeader() {
 
     includeTemplate(headerContainer, headerContent);
     initHeaderInput();
+
+    /* EXPERIMENTAL */
+    intObserverSetup();
 };
 
 async function filterAndSearch() {

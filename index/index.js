@@ -179,8 +179,11 @@ async function loadEventCards() {
     let counter = 0;
 
     festivals.forEach(festival => {
+        const {esId, esPictureBig, esText, esName} = festival;
+
         festival.events.forEach(singleEvent => {
-            allEventCardsHTML += renderEvents(festival, singleEvent);
+            const event = {...singleEvent, esPictureBig, esName, esText, esId};
+            allEventCardsHTML += renderEvent(event);
             counter++;
             allEventCardsHTML = checkAd(allEventCardsHTML, counter);
         });
@@ -222,25 +225,25 @@ function checkAd(allEventCardsHTML, counter) {
     return allEventCardsHTML;
 }
 
-function renderEvents(festival, singleEvent) {
-    const transformedDate = transformDateFormat(singleEvent.eventDateIso8601);
-    const transformedCountryName = transformCountryName(singleEvent.eventCountry);
+function renderEvent(event) {
+    const transformedDate = transformDateFormat(event.eventDateIso8601);
+    const transformedCountryName = transformCountryName(event.eventCountry);
 
     return /*html*/ `
-        <div class="event-card column" onclick="openSelectedFestival('${singleEvent.eventId}')">
+        <div class="event-card column" onclick="openSelectedFestival('${event.eventId}', '${event.esId}')">
             <div class="column card-info">
                 <div class="card-image">
-                    <img class ="card-image-main" src="${festival.esPictureBig}">
-                    <img class ="card-image-background" src="${festival.esPictureBig}">
+                    <img class ="card-image-main" src="${event.esPictureBig}">
+                    <img class ="card-image-background" src="${event.esPictureBig}">
                 </div>
                 <div class="column gap-10">
-                    <span class="event-name">${highlightIfContains(festival.esName, currentInput)}</span>
+                    <span class="event-name">${highlightIfContains(event.esName, currentInput)}</span>
                     <div class="row event-country-container gap-5">
-                        <img src="${renderFlags(singleEvent.eventCountry)}">
+                        <img src="${renderFlags(event.eventCountry)}">
                         <span class="event-country">${highlightIfContains(transformedCountryName, currentInput)}</span>
                     </div>
                     <div class="row event-location-date-container">
-                        <span class="event-location">${highlightIfContains(singleEvent.eventCity, currentInput)}</span>
+                        <span class="event-location">${highlightIfContains(event.eventCity, currentInput)}</span>
                         <span class="event-date">${transformedDate}</span>
                     </div>
                 </div>
@@ -278,40 +281,33 @@ function renderAdBlock(ad) {
     `;
 }
 
-function openSelectedFestival(id) {
-    const selectedEvent = checkFestivalId(id);
+async function openSelectedFestival(eventId, esId) {
+    console.log(eventId, esId)
+    const selectedEvent = await checkFestivalId(eventId, esId);
     renderSelectedFestival(selectedEvent);
 }
 
-async function checkFestivalId(eventId) {
+async function checkFestivalId(_eventId, _esId) {
     const festivals = await getFestivals();
-    
-    let selectedEvent = null;
-    festivals.some(festival => {
-        const foundEvent = festival.events.find(event => event.eventId === eventId);
-        if(foundEvent) {
-            selectedEvent = { festival: festival, event: foundEvent };
-            return true;
-        }
-        return false;
-    });
 
-    if(selectedEvent) return selectedEvent;
-    else throw new Error(`No event found!`);
+    
+    const festival = festivals.find(({esId}) => esId == _esId);
+    const {esPictureBig, esText, esName} = festival;
+    const event = festival.events.find(({eventId}) => eventId == _eventId);
+
+    return {...event, esPictureBig, esName, esText};
 }
 
 function renderSelectedFestival(selected) {
-    const selectedFestival = selected.festival;
-    const selectedEvent = selected.event;
-
+log(selected)
     const selectedFestivalContainer = $('#selected-festival-container-upper');
     $('#selected-festival-container-upper').classList.remove('d-none');
 
-    selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selectedFestival, selectedEvent);
+    selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selected);
     selectedCardDarkMode();
 }
 
-function selectedFestivalTemplate(selectedFestival, { eventCountry, eventCity,  eventName, eventDateIso8601, evoLink }) {
+function selectedFestivalTemplate({ esPictureBig, eventCountry, eventCity,  eventName, eventDateIso8601, evoLink }) {
     const transformedDate = transformDateFormat(eventDateIso8601);
     const transformedCountryName = transformCountryName(eventCountry);
 
@@ -321,7 +317,7 @@ function selectedFestivalTemplate(selectedFestival, { eventCountry, eventCity,  
                 <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${eventName}</span>
 
-                <div class="row selected-card-info gap-30">${renderSelectedCardInfo(selectedFestival, eventCity, transformedCountryName, transformedDate)}</div>
+                <div class="row selected-card-info gap-30">${renderSelectedCardInfo(esPictureBig, eventCity, transformedCountryName, transformedDate)}</div>
 
                 <div class="selected-event-tickets-container">
                     <a class="selected-event-tickets flex-center" target="_blank" href="${evoLink}">Tickets</a>
@@ -331,7 +327,7 @@ function selectedFestivalTemplate(selectedFestival, { eventCountry, eventCity,  
     `;
 }
 
-function renderSelectedCardInfo(selectedFestival, eventCity, transformedCountryName, transformedDate) {
+function renderSelectedCardInfo(esPictureBig, eventCity, transformedCountryName, transformedDate) {
     return /*html*/ `
         <div class="selected-card-container column">
             <div class="selected-event-date-container grid-center">
@@ -343,7 +339,7 @@ function renderSelectedCardInfo(selectedFestival, eventCity, transformedCountryN
             <div class="selected-event-info-container row">${renderSelectedEventInfo(eventCity, transformedCountryName)}</div>
         </div>
         <div class="selected-card-image">
-            <img src="${selectedFestival.esPictureBig}">
+            <img src="${esPictureBig}">
         </div>
     `;
 }
@@ -444,3 +440,57 @@ function applyDarkModeToEventCards() {
         allEventCards.forEach(eventCard => eventCard.classList.add('dark-mode-card'));
     }
 }
+
+
+
+
+/* EXPERIMENTAL */
+
+function toggleScrollUpButton() {
+    $('#scroll-up').classList.toggle('d-none');
+}
+
+const intObserver = new IntersectionObserver((entries) => {
+    console.log(entries)
+    toggleScrollUpButton();
+}, { threshold: 0, rootMargin: "250px" });
+
+
+function intObserverSetup() {
+    const el = $('header');
+    intObserver.observe(el);
+}
+
+class Timer {
+    secondsPassed = 0;
+    timerId = null;
+    isRunning = false;
+
+    toggle() {
+        this.isRunning = !this.isRunning;
+        this.isRunning ? this.pause() : this.start();
+    }
+
+    start() {
+        this.timerId = setInterval(() => {
+            this.secondsPassed++;
+            console.log(this.secondsPassed);
+        }, 1000);
+    }
+
+    pause() {
+        clearInterval(this.timerId);
+    }
+}
+
+const timer = new Timer();
+
+/* EXPERIMENTAL 2 */
+
+let adWatchTime = 0;
+
+// const adObserver = new IntersectionObserver((entries) => {
+
+//     const adsVisible = entries.some((entry) => entry.isIntersecting);
+//     adsVisible ? timer.start()
+// });
