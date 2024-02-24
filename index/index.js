@@ -307,27 +307,32 @@ log(selected)
     selectedCardDarkMode();
 }
 
-function selectedFestivalTemplate({ esPictureBig, eventCountry, eventCity,  eventName, eventDateIso8601, evoLink }) {
-    const transformedDate = transformDateFormat(eventDateIso8601);
-    const transformedCountryName = transformCountryName(eventCountry);
-
+function selectedFestivalTemplate(selected) {
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center">
             <div class="selected-event-card column">
                 <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
-                <span class="selected-event-name">${eventName}</span>
+                <span class="selected-event-name">${selected.eventName}</span>
 
-                <div class="row selected-card-info gap-30">${renderSelectedCardInfo(esPictureBig, eventCity, transformedCountryName, transformedDate)}</div>
+                <div class="row selected-card-info gap-30">${renderSelectedCardInfo(selected)}</div>
+
+                <div class="row">
+                    <div class="selected-event-info row">
+                        <span class="selected-event-text">${selected.esText}</span>
+                    </div>
+                </div>
 
                 <div class="selected-event-tickets-container">
-                    <a class="selected-event-tickets flex-center" target="_blank" href="${evoLink}">Tickets</a>
+                    <a class="selected-event-tickets flex-center" target="_blank" href="${selected.evoLink}">Tickets</a>
                 </div>
             </div>
         </div>
     `;
 }
 
-function renderSelectedCardInfo(esPictureBig, eventCity, transformedCountryName, transformedDate) {
+function renderSelectedCardInfo(selected) {
+    const transformedDate = transformDateFormat(selected.eventDateIso8601);
+    
     return /*html*/ `
         <div class="selected-card-container column">
             <div class="selected-event-date-container grid-center">
@@ -336,33 +341,32 @@ function renderSelectedCardInfo(esPictureBig, eventCity, transformedCountryName,
                 </div>
             </div>
 
-            <div class="selected-event-info-container row">${renderSelectedEventInfo(eventCity, transformedCountryName)}</div>
+            <div class="selected-event-info-container row">${renderSelectedEventInfo(selected)}</div>
         </div>
-        <div class="selected-card-image">
-            <img src="${esPictureBig}">
+        <div class="selected-card-image flex-center">
+            <img src="${selected.esPictureBig}">
         </div>
     `;
 }
 
-function renderSelectedEventInfo(eventCity, transformedCountryName) {
+function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventStreet, minPrice}) {
+    const transformedCountryName = transformCountryName(eventCountry);
+    
     return /*html*/ `
         <div class="column gap-5">
             <div class="selected-event-info row">
                 <span class="selected-event-country">Land: </span><span class="selected-event-country">${transformedCountryName}</span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-state">Bundesland: </span><span class="selected-event-state"></span>
+                <span class="selected-event-location">PLZ/Stadt: </span><span class="selected-event-location">${eventZip}, ${eventCity}</span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-location">Stadt: </span><span class="selected-event-location">${eventCity}</span>
+                <span class="selected-event-state">Adresse: </span><span class="selected-event-state">${eventStreet}</span>
             </div>
             <div class="selected-event-info row">
-                <span>Genre: </span><span class="selected-event-genre"></span>
+                <span class="selected-event-category">Tickets ab: </span><span class="selected-event-category">${minPrice} €</span>
             </div>
-            <div class="selected-event-info row">
-                <span class="selected-event-category">Kategorie: </span><span class="selected-event-category"></span>
-            </div>
-            <div class="selected-event-info row">
+            <!-- <div class="selected-event-info row">
                 <span class="selected-event-where">Wo: </span><span class="selected-event-where"></span>
             </div>
             <div class="selected-event-info row">
@@ -370,7 +374,7 @@ function renderSelectedEventInfo(eventCity, transformedCountryName) {
             </div>
             <div class="selected-event-info row">
                 <span class="selected-event-visitors">Besucher: </span><span class="selected-event-visitors"></span>
-            </div>
+            </div> -->
         </div>
     `;
 }
