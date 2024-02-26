@@ -419,6 +419,10 @@
     border-radius: 20px;
 }
 
+.selected-event-text-container {
+    min-height: 290px;
+}
+
 .selected-event-info-container > div {
     width: 100%;
 }
@@ -459,7 +463,7 @@
     font-size: 0.8rem;
     padding: 15px 0 0 0;
     width: 100%;
-    height: 40%;
+    /* height: 40%; */
 }
 
 .selected-card-container {

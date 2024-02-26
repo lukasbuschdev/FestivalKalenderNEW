@@ -316,7 +316,7 @@ function selectedFestivalTemplate(selected) {
 
                 <div class="row selected-card-info gap-30">${renderSelectedCardInfo(selected)}</div>
 
-                <div class="row">
+                <div class="row selected-event-text-container">
                     <div class="selected-event-info row">
                         <span class="selected-event-text">${selected.esText}</span>
                     </div>
@@ -455,7 +455,7 @@ function toggleScrollUpButton() {
 }
 
 const intObserver = new IntersectionObserver((entries) => {
-    console.log(entries)
+    // log(entries)
     toggleScrollUpButton();
 }, { threshold: 0, rootMargin: "250px" });
 
@@ -478,7 +478,7 @@ class Timer {
     start() {
         this.timerId = setInterval(() => {
             this.secondsPassed++;
-            console.log(this.secondsPassed);
+            log(this.secondsPassed);
         }, 1000);
     }
 
