@@ -395,7 +395,7 @@
 .selected-event-date {
     align-self: center;
     text-align: center;
-    font-size: 3rem;
+    font-size: 1.8rem !important;
 }
 
 .selected-event-date-container > div {
@@ -409,8 +409,8 @@
 .selected-event-card {
     position: relative;
     box-sizing: border-box;
-    height: 85vh;
-    width: 80%;
+    height: 90vh;
+    width: 90%;
     max-width: 1200px;
     padding: 15px 20px;
     background-color: var(--clr-bg-light);
@@ -421,6 +421,20 @@
 
 .selected-event-text-container {
     min-height: 290px;
+    max-height: 320px;
+    overflow: auto;
+}
+
+.selected-event-text {
+    min-height: 290px;
+    max-height: 320px;
+    word-break: break-word;
+}
+
+.selected-event-text p {
+    text-align: left;
+    margin: unset;
+    padding: 15px 0;
 }
 
 .selected-event-info-container > div {
@@ -431,14 +445,6 @@
     justify-content: space-between;
     padding: 5px 10px;
     border-bottom: 1px solid var(--clr-pink);
-}
-
-.selected-event-text {
-    word-break: break-word;
-}
-
-.selected-event-text p {
-    text-align: left;
 }
 
 .selected-event-card-close {
@@ -493,7 +499,7 @@
 }
 
 .selected-event-tickets-container {
-    height: 20vh !important;
+    height: fit-content;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -584,9 +590,9 @@
         border-radius: 0;
     }
 
-    .selected-event-date-container > div {
+    /* .selected-event-date-container > div {
         height: 6rem;
-    }
+    } */
 
     .selected-card-info > div:last-of-type {
         justify-content: center;
@@ -614,9 +620,8 @@
     }
 
     .selected-card-container {
-        height: 60vh;
+        height: 320px;
         width: 100%;
-        padding: 10px;
     }
 }
 
@@ -630,9 +635,9 @@
         font-size: 1rem;
     }
 
-    .selected-event-date-container > div {
+    /* .selected-event-date-container > div {
         height: 5rem;
-    }
+    } */
 
     #filter-container {
         flex-direction: column;
@@ -662,6 +667,10 @@
     .list-item-container span {
         font-size: 1rem;
     }
+
+    .selected-event-card {
+        padding: 15px 10px;
+    }
 }
 
 @media(max-width: 450px) {
@@ -687,5 +696,9 @@
 
     .selected-event-card > div {
         padding: 15px 5px;
+    }
+
+    .selected-event-date-container > div {
+        height: 7rem;
     }
 }

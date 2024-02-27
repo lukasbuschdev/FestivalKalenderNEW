@@ -229,6 +229,8 @@ function renderEvent(event) {
     const transformedDate = transformDateFormat(event.eventDateIso8601);
     const transformedCountryName = transformCountryName(event.eventCountry);
 
+    // log(transformedDate)
+
     return /*html*/ `
         <div class="event-card column" onclick="openSelectedFestival('${event.eventId}', '${event.esId}')">
             <div class="column card-info">
@@ -244,7 +246,7 @@ function renderEvent(event) {
                     </div>
                     <div class="row event-location-date-container">
                         <span class="event-location">${highlightIfContains(event.eventCity, currentInput)}</span>
-                        <span class="event-date">${transformedDate}</span>
+                        <span class="event-date">${transformedDate.dayName}. ${transformedDate.formattedDate}</span>
                     </div>
                 </div>
             </div>
@@ -257,9 +259,22 @@ function transformDateFormat(dateStr) {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const formattedDate = `${day}.${month}.`;
-    
-    return formattedDate;
+
+    const dayOfWeekNumber = date.getDay();
+    const days = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+    const dayName = days[dayOfWeekNumber];
+
+    return { formattedDate, dayName };
 }
+
+// function transformDateFormat(dateStr) {
+//     const date = new Date(dateStr);  
+//     const day = date.getDate().toString().padStart(2, '0');
+//     const month = (date.getMonth() + 1).toString().padStart(2, '0');
+//     const formattedDate = `${day}.${month}.`;
+    
+//     return formattedDate;
+// }
 
 function transformCountryName(eventCountry) {
     if(eventCountry === 'AT') return eventCountry.replace('AT', 'Österreich');
@@ -299,7 +314,7 @@ async function checkFestivalId(_eventId, _esId) {
 }
 
 function renderSelectedFestival(selected) {
-log(selected)
+    log(selected)
     const selectedFestivalContainer = $('#selected-festival-container-upper');
     $('#selected-festival-container-upper').classList.remove('d-none');
 
@@ -313,17 +328,16 @@ function selectedFestivalTemplate(selected) {
             <div class="selected-event-card column">
                 <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${selected.eventName}</span>
-
-                <div class="row selected-card-info gap-30">${renderSelectedCardInfo(selected)}</div>
-
-                <div class="row selected-event-text-container">
-                    <div class="selected-event-info row">
-                        <span class="selected-event-text">${selected.esText}</span>
+                <div class="column gap-15">
+                    <div class="row selected-card-info gap-30">${renderSelectedCardInfo(selected)}</div>
+    
+                    <div class="row selected-event-text-container">
+                        <div class="selected-event-text column">${selected.esText}</div>
                     </div>
-                </div>
-
-                <div class="selected-event-tickets-container">
-                    <a class="selected-event-tickets flex-center" target="_blank" href="${selected.evoLink}">Tickets</a>
+    
+                    <div class="selected-event-tickets-container">
+                        <a class="selected-event-tickets flex-center" target="_blank" href="${selected.evoLink}">Tickets</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -336,8 +350,9 @@ function renderSelectedCardInfo(selected) {
     return /*html*/ `
         <div class="selected-card-container column">
             <div class="selected-event-date-container grid-center">
-                <div class="flex-center">
-                    <span class="selected-event-date">${transformedDate}</span>
+                <div class="flex-center column gap-10">
+                    <span class="selected-event-date">${transformedDate.dayName}</span>
+                    <span class="selected-event-date">${transformedDate.formattedDate}</span>
                 </div>
             </div>
 
