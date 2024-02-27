@@ -364,7 +364,7 @@ function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventStreet
                 <span class="selected-event-state">Adresse: </span><span class="selected-event-state">${eventStreet}</span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-category">Tickets ab: </span><span class="selected-event-category">${minPrice} €</span>
+                <span class="selected-event-category">Tickets: </span><span class="selected-event-category">ab ${minPrice} €</span>
             </div>
             <!-- <div class="selected-event-info row">
                 <span class="selected-event-where">Wo: </span><span class="selected-event-where"></span>
