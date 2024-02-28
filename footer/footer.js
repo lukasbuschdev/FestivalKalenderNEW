@@ -18,6 +18,11 @@ function loadFooter() {
                 <div>
                     <a target="_blank" href="https://www.vamida.at/datenschutzerklarung">Datenschutz</a>
                 </div>
+
+                <!-- <div class="references">
+                    <a href="https://www.flaticon.com/free-icons/up-arrow" title="up arrow icons">Up arrow icon created by 'Freepik' - Flaticon</a>
+                    <a href="https://www.flaticon.com/authors/rizal2109" title="rizal2109">Darkmode icon created by 'rizal2109' - Flaticon</a>
+                </div> -->
             </div>
         </footer> 
     `;

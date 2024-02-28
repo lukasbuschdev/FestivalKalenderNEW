@@ -9,7 +9,7 @@ const getFestivals = async () => {
 
 async function loadContent() {
     // loadFilters();
-    loadEventCards();
+    loadFilteredEventCards();
 }
 
 // function loadFilters() {
@@ -173,8 +173,11 @@ async function loadContent() {
 //     filterListContainer.classList.add('d-none');
 // }
 
-async function loadEventCards() {
-    const festivals = await getFestivals();
+async function loadFilteredEventCards(festivals) {
+    if(!festivals) {
+        festivals = await getFestivals();
+    }
+
     let allEventCardsHTML = '';
     let counter = 0;
 
@@ -195,11 +198,6 @@ async function loadEventCards() {
     applyDarkModeToEventCards();
 }
 
-
-// function getSingleEventData(festival) {
-//     return festival.events
-// }
-
 // async function loadFilteredEventCards(festivals) {
 //     let allEventCardsHTML = '';
 //     let counter = 0;
@@ -214,6 +212,10 @@ async function loadEventCards() {
 //     eventCardsContainer.innerHTML = allEventCardsHTML;
 
 //     applyDarkModeToEventCards();
+// }
+
+// function getSingleEventData(festival) {
+//     return festival.events
 // }
 
 function checkAd(allEventCardsHTML, counter) {

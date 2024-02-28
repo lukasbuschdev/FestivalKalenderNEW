@@ -21,8 +21,6 @@ function loadHeader() {
 
     includeTemplate(headerContainer, headerContent);
     initHeaderInput();
-
-    /* EXPERIMENTAL */
     intObserverSetup();
 };
 
@@ -30,13 +28,34 @@ async function filterAndSearch() {
     const input = $('#header-img .input-wrapper input').value.toLowerCase();
     checkInput(input);
     currentInput = input;
-    
-    const filteredFestivals = (await getFestivals()).filter(({LAND, NAME, STADT, DATUM, GENRES}) => 
-        [LAND, NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
-    );
 
-    loadFilteredEventCards(filteredFestivals)
+    const festivals = await getFestivals();
+    const filteredFestivals = festivals.reduce((acc, festival) => {
+        const filteredEvents = festival.events.filter(event => {
+            const transformedDateObj = transformDateFormat(event.eventDateIso8601);
+            const transformedCountryName = transformCountryName(event.eventCountry);
+            const transformedDate = `${transformedDateObj.formattedDate} ${transformedDateObj.dayName}`;
+ 
+            return [event.eventCity, transformedCountryName, transformedDate, event.eventName, event.eventSearchText]
+                .some(attr => attr && attr.toLowerCase().includes(input));
+        });
+
+        if(filteredEvents.length > 0) {
+            const festivalCopy = {...festival, events: filteredEvents};
+            acc.push(festivalCopy);
+        }
+
+        return acc;
+    }, []);
+
+    loadFilteredEventCards(filteredFestivals);
 }
+
+
+
+
+
+
 
 
 function deleteInput() {
