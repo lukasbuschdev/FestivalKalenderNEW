@@ -390,6 +390,7 @@
 
 .selected-event-date-container {
     height: 100%;
+    justify-content: space-around;
 }
 
 .selected-event-date {
@@ -398,7 +399,7 @@
     font-size: 1.8rem !important;
 }
 
-.selected-event-date-container > div {
+.selected-event-date-container > div:first-of-type {
     height: 8rem;
     aspect-ratio: 1;
     border-radius: 999px;
@@ -409,7 +410,7 @@
 .selected-event-card {
     position: relative;
     box-sizing: border-box;
-    height: 90vh;
+    height: 95vh;
     width: 90%;
     max-width: 1200px;
     padding: 15px 20px;
@@ -430,22 +431,22 @@
 }
 
 .selected-event-text-container::-webkit-scrollbar-track {
-    background-color: var(--clr-pink);
+    background-color: transparent;
 }
 
 .selected-event-text-container::-webkit-scrollbar-thumb {
     background-color: var(--clr-pink);
     border-radius: 3px;
-    /* border: 1px solid transparent; */
+    border: 1px solid var(--clr-pink);
 }
 
 .selected-event-text-container::-webkit-scrollbar-thumb:hover {
-    background-color: var(--clr-pink);
+    background-color: transparent;
 }
 
 .selected-event-text {
     min-height: 290px;
-    max-height: 320px;
+    /* max-height: 320px; */
     word-break: break-word;
 }
 
@@ -492,7 +493,7 @@
 
 .selected-card-container {
     height: 100%;
-    width: 50%;
+    width: 100%;
 }
 
 .selected-event-info-container {
@@ -548,7 +549,7 @@
 
 .selected-card-image {
     height: 100%;
-    width: 50%;
+    /* width: 50%; */
 }
 
 .selected-card-image img {
@@ -622,15 +623,16 @@
     }
 
     .selected-event-card {
+        justify-content: space-around;
         height: 100vh;
         width: 100%;
         border: none;
         border-radius: 0;
     }
 
-    .selected-card-image {
+    /* .selected-card-image {
         display: none;
-    }
+    } */
 
     .selected-card-info {
         justify-content: center;
@@ -638,7 +640,7 @@
     }
 
     .selected-card-container {
-        height: 320px;
+        /* height: 320px; */
         width: 100%;
     }
 }

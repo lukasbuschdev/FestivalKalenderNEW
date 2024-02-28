@@ -3,7 +3,7 @@ let darkModeActive = false;
 const getFestivals = async () => {
     const data = await getData();
     const eventserie = data.eventserie;
-    // log(eventserie)
+
     return eventserie;
 };
 
@@ -189,7 +189,7 @@ async function loadEventCards() {
         });
     });
 
-    const eventCardsContainer = document.getElementById('event-cards-container');
+    const eventCardsContainer = $('#event-cards-container');
     eventCardsContainer.innerHTML = allEventCardsHTML;
 
     applyDarkModeToEventCards();
@@ -229,8 +229,6 @@ function renderEvent(event) {
     const transformedDate = transformDateFormat(event.eventDateIso8601);
     const transformedCountryName = transformCountryName(event.eventCountry);
 
-    // log(transformedDate)
-
     return /*html*/ `
         <div class="event-card column" onclick="openSelectedFestival('${event.eventId}', '${event.esId}')">
             <div class="column card-info">
@@ -267,15 +265,6 @@ function transformDateFormat(dateStr) {
     return { formattedDate, dayName };
 }
 
-// function transformDateFormat(dateStr) {
-//     const date = new Date(dateStr);  
-//     const day = date.getDate().toString().padStart(2, '0');
-//     const month = (date.getMonth() + 1).toString().padStart(2, '0');
-//     const formattedDate = `${day}.${month}.`;
-    
-//     return formattedDate;
-// }
-
 function transformCountryName(eventCountry) {
     if(eventCountry === 'AT') return eventCountry.replace('AT', 'Österreich');
     if(eventCountry === 'DE') return eventCountry.replace('DE', 'Deutschland');
@@ -304,7 +293,6 @@ async function openSelectedFestival(eventId, esId) {
 
 async function checkFestivalId(_eventId, _esId) {
     const festivals = await getFestivals();
-
     
     const festival = festivals.find(({esId}) => esId == _esId);
     const {esPictureBig, esText, esName} = festival;
@@ -349,17 +337,17 @@ function renderSelectedCardInfo(selected) {
     
     return /*html*/ `
         <div class="selected-card-container column">
-            <div class="selected-event-date-container grid-center">
+            <div class="selected-event-date-container row">
                 <div class="flex-center column gap-10">
                     <span class="selected-event-date">${transformedDate.dayName}</span>
                     <span class="selected-event-date">${transformedDate.formattedDate}</span>
                 </div>
+                <div class="selected-card-image flex-center">
+                    <img src="${selected.esPictureBig}">
+                </div>
             </div>
 
             <div class="selected-event-info-container row">${renderSelectedEventInfo(selected)}</div>
-        </div>
-        <div class="selected-card-image flex-center">
-            <img src="${selected.esPictureBig}">
         </div>
     `;
 }
@@ -470,7 +458,6 @@ function toggleScrollUpButton() {
 }
 
 const intObserver = new IntersectionObserver((entries) => {
-    // log(entries)
     toggleScrollUpButton();
 }, { threshold: 0, rootMargin: "250px" });
 
