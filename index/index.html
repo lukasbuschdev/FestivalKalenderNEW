@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="../footer/footer.css">
     <link rel="stylesheet" href="../index/index.css">
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
+    <!-- <a href="https://www.flaticon.com/free-icons/up-arrow" title="up arrow icons">Up arrow icons created by Freepik - Flaticon</a> -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script> -->
     <script src="../JS/utilities.js"></script>
     <script src="../JS/setup.js"></script>
     <script src="../JS/script.js" defer></script>
@@ -25,14 +26,12 @@
     <div id="header-container"></div>
 
     <div id="content">
-        <button class="dark-mode-btn row gap-5" onclick="checkDarkMode()">Dark Mode</button>
+        <button class="dark-mode-btn row gap-5" onclick="checkDarkMode()"></button>
         <div id="filter-container" class="row"></div>
         <div id="event-cards-container" class="row"></div>
 
         <!-- EXPERIMENTAL -->
-        <button id="scroll-up" onclick="window.scrollTo(0, 0)"
-        style="position: fixed; inset: auto 2rem 2rem auto; width: 3rem; aspect-ratio: 1; border-radius: 50%; background-color: var(--clr-pink); color: white; display: grid; place-items: center;" 
-        >^</button>
+        <button id="scroll-up" class="grid-center" onclick="window.scrollTo(0, 0)"></button>
     </div>
 
     <div id="selected-festival-container-upper" class="d-none"></div>

@@ -450,8 +450,9 @@ function applyDarkModeToEventCards() {
 
 
 
-
-/* EXPERIMENTAL */
+// ################################################################################
+// INTERSECTION OBSERVER FOR SCROLL UP BUTTON
+// ################################################################################
 
 function toggleScrollUpButton() {
     $('#scroll-up').classList.toggle('d-none');
@@ -467,33 +468,59 @@ function intObserverSetup() {
     intObserver.observe(el);
 }
 
-class Timer {
-    secondsPassed = 0;
-    timerId = null;
-    isRunning = false;
 
-    toggle() {
-        this.isRunning = !this.isRunning;
-        this.isRunning ? this.pause() : this.start();
-    }
 
-    start() {
-        this.timerId = setInterval(() => {
-            this.secondsPassed++;
-            log(this.secondsPassed);
-        }, 1000);
-    }
 
-    pause() {
-        clearInterval(this.timerId);
-    }
-}
 
-const timer = new Timer();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// class Timer {
+//     secondsPassed = 0;
+//     timerId = null;
+//     isRunning = false;
+
+//     toggle() {
+//         this.isRunning = !this.isRunning;
+//         this.isRunning ? this.pause() : this.start();
+//     }
+
+//     start() {
+//         this.timerId = setInterval(() => {
+//             this.secondsPassed++;
+//             log(this.secondsPassed);
+//         }, 1000);
+//     }
+
+//     pause() {
+//         clearInterval(this.timerId);
+//     }
+// }
+
+// const timer = new Timer();
 
 /* EXPERIMENTAL 2 */
 
-let adWatchTime = 0;
+// let adWatchTime = 0;
 
 // const adObserver = new IntersectionObserver((entries) => {
 
