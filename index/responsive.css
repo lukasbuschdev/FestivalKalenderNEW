@@ -1,0 +1,273 @@
+/* ############################################################ */
+/* RESPONSIVE DESIGN (WIDTH) */
+/* ############################################################ */
+
+/* 1000px */
+
+@media(max-width: 1000px) {
+    .selected-event-name {
+        font-size: 2.5rem;
+    }
+}
+
+
+/* 900px */
+
+@media(max-width: 900px) {
+    .event-card {
+        width: 45%;
+    }
+}
+
+
+/* 800px */
+
+@media(max-width: 800px) {
+    button:hover {
+        box-shadow: none;
+        cursor: unset;
+        background-color: none;
+    }
+
+    .event-card:hover {
+        cursor: unset;
+        background-color: none;
+        box-shadow: none;
+    }
+
+    #content {
+        padding: 50px 5%;
+    }
+
+    .selected-event-name {
+        font-size: 2rem;
+    }
+
+    #filter-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #filter-list-card {
+        height: 100vh;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+    }
+
+    .selected-card-info > div:last-of-type {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .selected-event-info {
+        padding: 15px 10px;
+    }
+
+    .selected-event-card {
+        justify-content: space-around;
+        height: 100vh;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+    }
+
+    .selected-card-info {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .selected-card-container {
+        width: 100%;
+    }
+}
+
+
+/* 600px */
+
+@media(max-width: 600px) {
+    .selected-event-name {
+        font-size: 1.8rem;
+        padding: 30px 0;
+    }
+
+    .selected-card-info > div span {
+        font-size: 1rem;
+    }
+
+    #filter-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .filters {
+        flex-direction: column;
+        height: 50vh;
+        gap: 40px;
+    }
+
+    .selected-event-card-close {
+        top: 3%;
+    }
+
+    .event-card {
+        width: 90%;
+    }
+
+    .selected-event-info-container {
+        width: 100%;
+    }
+}
+
+
+/* 500px */
+
+@media(max-width: 500px) {
+    .list-item-container span {
+        font-size: 1rem;
+    }
+
+    .selected-event-card {
+        padding: 15px 10px;
+    }
+}
+
+
+/* 450px */
+
+@media(max-width: 450px) {
+    .selected-card-info {
+        flex-direction: column;
+    }
+
+    .selected-event-tickets {
+        height: 40px;
+        width: 170px;
+        font-size: 1.5rem;
+    }
+}
+
+
+/* 400px */
+
+@media(max-width: 400px) {
+    .selected-card-info > div:last-of-type {
+        gap: 10px;
+    }
+
+    .selected-card-info > div span {
+        font-size: 0.9rem;
+    }
+
+    .selected-event-card > div {
+        padding: 15px 5px;
+    }
+
+    .selected-event-date-container > div:first-of-type {
+        height: 7rem;
+    }
+
+    .selected-card-image img {
+        height: 150px;
+    }
+}
+
+
+/* 300px */
+
+@media(max-width: 300px) {
+    .selected-event-date-container {
+        justify-content: space-between;
+    }
+
+    .selected-card-image img {
+        height: 130px;
+    }
+}
+
+
+/* 280px */
+
+@media(max-width: 280px) {
+    .selected-card-image img {
+        height: 110px;  
+    }
+
+    .selected-event-date-container > div:first-of-type {
+        height: 6rem;
+    }
+
+    .selected-event-date {
+        font-size: 1.4rem !important;
+    }
+}
+
+
+/* ############################################################ */
+/* RESPONSIVE DESIGN (HEIGHT) */
+/* ############################################################ */
+
+
+/* 850px */
+
+@media(max-height: 850px) {
+    .selected-event-text-container {
+        height: 200px;
+    }
+
+    .selected-event-info {
+        padding: 5px 10px;
+    }
+}
+
+
+/* 770px */
+
+@media(max-height: 770px) {
+    .selected-event-info-container > div {
+        gap: 0;
+    }
+}
+
+
+/* 700px */
+
+@media(max-height: 700px) {
+    .selected-event-text-container {
+        height: 180px;
+    }
+
+    .selected-event-card {
+        height: 100vh;
+        width: 100%;
+        border: unset;
+        border-radius: 0;
+    }
+
+    #header-img img {
+        height: 150px;
+    }
+}
+
+
+/* 670px */
+
+@media(max-height: 670px) {
+    .selected-event-name {
+        font-size: 1.7rem;
+        padding: 15px 0;
+    }
+
+    .selected-event-name {
+        font-size: 1.6rem;
+        padding: 10px 0;
+    }
+
+    .selected-card-info > div span {
+        font-size: 1rem;
+    }
+    
+    .selected-card-image img {
+        height: 130px;  
+    }
+}

@@ -317,3 +317,7 @@ input::placeholder {
 .o-none {
     opacity: 0 !important;
 }
+
+.no-scroll {
+    overflow: hidden !important;
+}

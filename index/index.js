@@ -161,6 +161,8 @@ function renderAdBlock(ad) {
 }
 
 async function openSelectedFestival(eventId, esId) {
+    document.body.classList.add('no-scroll');
+     
     const selectedEvent = await checkFestivalId(eventId, esId);
     renderSelectedFestival(selectedEvent);
 }
@@ -249,6 +251,7 @@ function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventStreet
 function closeSelectedFestival() {
     $('#selected-festival-container-upper').classList.add('d-none');
     $('#selected-festival-container-upper').innerHTML = '';
+    document.body.classList.remove('no-scroll')
 }
 
 

@@ -358,11 +358,11 @@
 
 .selected-event-card > div.column.gap-15 {
     height: 100%;
+    justify-content: space-around;
 }
 
 .selected-event-text-container {
-    min-height: 290px;
-    max-height: 320px;
+    height: 250px;
     overflow: auto;
 }
 
@@ -371,7 +371,7 @@
 }
 
 .selected-event-text {
-    max-height: 320px;
+    height: inherit;
     word-break: break-word;
 }
 
@@ -430,6 +430,7 @@
 .selected-card-info > div span {
     font-size: 1.2rem;
     font-weight: 600;
+    text-align: end;
 }
 
 .selected-event-name {
@@ -475,173 +476,4 @@
     object-fit: contain;
     height: 170px;
     border-radius: 15px;
-}
-
-
-
-/* ############################################################ */
-/* MAIN RESPONSIVE DESIGN  */
-/* ############################################################ */
-
-@media(max-width: 1000px) {
-    .selected-event-name {
-        font-size: 2.5rem;
-    }
-}
-
-@media(max-width: 900px) {
-    .event-card {
-        width: 45%;
-    }
-}
-
-@media(max-width: 800px) {
-    button:hover {
-        box-shadow: none;
-        cursor: unset;
-        background-color: none;
-    }
-
-    .event-card:hover {
-        cursor: unset;
-        background-color: none;
-        box-shadow: none;
-    }
-
-    #content {
-        padding: 50px 5%;
-    }
-
-    .selected-event-name {
-        font-size: 2rem;
-    }
-
-    #filter-container {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    #filter-list-card {
-        height: 100vh;
-        width: 100%;
-        border: none;
-        border-radius: 0;
-    }
-
-    /* .selected-event-date-container > div {
-        height: 6rem;
-    } */
-
-    .selected-card-info > div:last-of-type {
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .selected-event-info {
-        padding: 15px 10px;
-    }
-
-    .selected-event-card {
-        justify-content: space-around;
-        height: 100vh;
-        width: 100%;
-        border: none;
-        border-radius: 0;
-    }
-
-    /* .selected-card-image {
-        display: none;
-    } */
-
-    .selected-card-info {
-        justify-content: center;
-        align-items: center;
-    }
-
-    .selected-card-container {
-        /* height: 320px; */
-        width: 100%;
-    }
-}
-
-@media(max-width: 600px) {
-    .selected-event-name {
-        font-size: 1.8rem;
-        padding: 30px 0;
-    }
-
-    .selected-card-info > div span {
-        font-size: 1rem;
-    }
-
-    /* .selected-event-date-container > div {
-        height: 5rem;
-    } */
-
-    #filter-container {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .filters {
-        flex-direction: column;
-        height: 50vh;
-        gap: 40px;
-    }
-
-    .selected-event-card-close {
-        top: 3%;
-    }
-
-    .event-card {
-        width: 90%;
-    }
-
-    .selected-event-info-container {
-        width: 100%;
-    }
-}
-
-@media(max-width: 500px) {
-    .list-item-container span {
-        font-size: 1rem;
-    }
-
-    .selected-event-card {
-        padding: 15px 10px;
-    }
-}
-
-@media(max-width: 450px) {
-    .selected-card-info {
-        flex-direction: column;
-    }
-
-    .selected-event-tickets {
-        height: 40px;
-        width: 170px;
-        font-size: 1.5rem;
-    }
-}
-
-@media(max-width: 400px) {
-    .selected-card-info > div:last-of-type {
-        gap: 10px;
-    }
-
-    .selected-card-info > div span {
-        font-size: 0.9rem;
-    }
-
-    .selected-event-card > div {
-        padding: 15px 5px;
-    }
-
-    .selected-event-date-container > div:first-of-type {
-        height: 7rem;
-    }
-
-    .selected-card-image img {
-        height: 150px;
-    }
 }
