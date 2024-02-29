@@ -26,6 +26,10 @@ footer a:hover {
     filter: brightness(3);
 }
 
+.copyright span {
+    text-align: center;
+}
+
 .links-container {
     width: 50%;
 }
@@ -44,3 +48,12 @@ footer a:hover {
 /* .flaticon-link {
 
 } */
+
+@media(max-width: 400px) {
+    footer {
+        flex-direction: column !important;
+        padding: 30px 10px;
+        height: fit-content;
+        gap: 30px;
+    }
+}

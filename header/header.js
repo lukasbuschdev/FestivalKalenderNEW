@@ -56,19 +56,11 @@ async function filterAndSearch() {
     }, []);
 
     checkInputAndResults(filteredFestivals);
-
-    // log(filteredFestivals)
-    // loadFilteredEventCards(filteredFestivals);
 }
 
 function checkInputAndResults(filteredFestivals) {
-    if(filteredFestivals.length === 0) {
-        noResultsFound();
-    } else {
-        loadFilteredEventCards(filteredFestivals);
-    }
+    filteredFestivals.length === 0 ? noResultsFound() : loadFilteredEventCards(filteredFestivals);
 }
-// log(filteredFestivals);
 
 function noResultsFound() {
     const eventCardsContainer = $('#event-cards-container');
