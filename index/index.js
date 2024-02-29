@@ -26,6 +26,7 @@ function loadFilters() {
 
 async function openFilter() {
     const festivals = await getFestivals();
+    $('body').classList.add('no-scroll');
 
     $('#filter-popup-container').classList.remove('d-none');
     $('#filter-popup-container').innerHTML = renderFilterSelection(festivals);
@@ -77,6 +78,7 @@ function renderFilterSelection() {
 }
 
 function closeFilter() {
+    $('body').classList.remove('no-scroll');
     $('#filter-popup-container').classList.add('d-none');
 }
 
@@ -180,7 +182,7 @@ function renderAdBlock(ad) {
 }
 
 async function openSelectedFestival(eventId, esId) {
-    document.body.classList.add('no-scroll');
+    $('body').classList.add('no-scroll');
      
     const selectedEvent = await checkFestivalId(eventId, esId);
     renderSelectedFestival(selectedEvent);
@@ -270,7 +272,7 @@ function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventStreet
 function closeSelectedFestival() {
     $('#selected-festival-container-upper').classList.add('d-none');
     $('#selected-festival-container-upper').innerHTML = '';
-    document.body.classList.remove('no-scroll')
+    $('body').classList.remove('no-scroll')
 }
 
 

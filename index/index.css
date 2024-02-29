@@ -82,7 +82,7 @@
     color: var(--clr-white);
 }
 
-.dark-mode-filter {
+/* .dark-mode-filter {
     background-color: var(--clr-pink) !important;
     color: var(--clr-white) !important;
 }
@@ -97,7 +97,7 @@
 
 .dark-mode-filter-list-item:hover {
     color: var(--clr-pink) !important;
-}
+} */
 
 
 
@@ -176,16 +176,20 @@
     align-items: center;
 }
 
+.single-filter div {
+    width: 50%;
+}
+
 .single-filter > div input {
     height: 50px;
-    width: 40%;
+    width: 100%;
+    align-self: center;
     box-sizing: border-box;
     background-image: url('../assets/icons/loupe.svg');
     background-position: 10px center;
     background-repeat: no-repeat;
     padding: 0 0 3px 35px;
-    /* max-width: 500px; */
-    /* min-width: 40%; */
+    max-width: 500px;
     border: 2px solid var(--clr-pink);
     border-radius: 999px;
     position: relative;

@@ -43,18 +43,6 @@
         font-size: 2rem;
     }
 
-    #filter-container {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    #filter-list-card {
-        height: 100vh;
-        width: 100%;
-        border: none;
-        border-radius: 0;
-    }
-
     .selected-card-info > div:last-of-type {
         justify-content: center;
         gap: 20px;
@@ -95,17 +83,6 @@
         font-size: 1rem;
     }
 
-    #filter-container {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .filters {
-        flex-direction: column;
-        height: 50vh;
-        gap: 40px;
-    }
-
     .selected-event-card-close {
         top: 3%;
     }
@@ -115,6 +92,10 @@
     }
 
     .selected-event-info-container {
+        width: 100%;
+    }
+
+    .single-filter div {
         width: 100%;
     }
 }
