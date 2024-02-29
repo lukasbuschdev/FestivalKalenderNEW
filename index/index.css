@@ -162,6 +162,40 @@
     z-index: 999;
 }
 
+.filter-popup-content {
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    padding: 20px;
+}
+
+.single-filter {
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: 600;
+    align-items: center;
+}
+
+.single-filter > div input {
+    height: 50px;
+    width: 40%;
+    box-sizing: border-box;
+    background-image: url('../assets/icons/loupe.svg');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    padding: 0 0 3px 35px;
+    /* max-width: 500px; */
+    /* min-width: 40%; */
+    border: 2px solid var(--clr-pink);
+    border-radius: 999px;
+    position: relative;
+    transition: all 75ms ease-in-out;
+}
+
+.single-filter > div input:focus {
+    border-color: var(--clr-pink-hover);
+}
+
 
 
 /* ########################################################### */
@@ -527,10 +561,6 @@
         border: none;
         border-radius: 0;
     }
-
-    /* .selected-event-date-container > div {
-        height: 6rem;
-    } */
 
     .selected-card-info > div:last-of-type {
         justify-content: center;
