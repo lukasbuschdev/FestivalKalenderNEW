@@ -1,5 +1,13 @@
 let darkModeActive = false;
 
+let filterActive = {
+    "country": false,
+    "city": false,
+    "name": false,
+    "date": false,
+    "price": false
+}
+
 async function loadContent() {
     loadFilteredEventCards();
     loadFilters();
