@@ -1,12 +1,5 @@
 let darkModeActive = false;
 
-const getFestivals = async () => {
-    const data = await getData();
-    const eventserie = data.eventserie;
-
-    return eventserie;
-};
-
 async function loadContent() {
     // loadFilters();
     loadFilteredEventCards();
@@ -174,9 +167,7 @@ async function loadContent() {
 // }
 
 async function loadFilteredEventCards(festivals) {
-    if(!festivals) {
-        festivals = await getFestivals();
-    }
+    festivals = festivals || await getFestivals();
 
     let allEventCardsHTML = '';
     let counter = 0;
@@ -224,6 +215,7 @@ function checkAd(allEventCardsHTML, counter) {
         const ad = ads[adIndex];
         return allEventCardsHTML + renderAdBlock(ad);
     }
+    
     return allEventCardsHTML;
 }
 
@@ -371,15 +363,6 @@ function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventStreet
             <div class="selected-event-info row">
                 <span class="selected-event-category">Tickets: </span><span class="selected-event-category">ab ${minPrice} €</span>
             </div>
-            <!-- <div class="selected-event-info row">
-                <span class="selected-event-where">Wo: </span><span class="selected-event-where"></span>
-            </div>
-            <div class="selected-event-info row">
-                <span class="selected-event-duration">Dauer: </span><span class="selected-event-duration"></span>
-            </div>
-            <div class="selected-event-info row">
-                <span class="selected-event-visitors">Besucher: </span><span class="selected-event-visitors"></span>
-            </div> -->
         </div>
     `;
 }

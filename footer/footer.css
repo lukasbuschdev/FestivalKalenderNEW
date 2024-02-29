@@ -3,8 +3,8 @@ footer {
     width: 100%;
     background-color: var(--clr-pink);
     color: white !important;
-    position: sticky;
-    bottom: 0;
+    /* position: sticky;
+    bottom: 0; */
 }
 
 footer a:hover {
@@ -41,6 +41,6 @@ footer a:hover {
     justify-content: center;
 }
 
-.flaticon-link {
+/* .flaticon-link {
 
-}
+} */

@@ -1,5 +1,12 @@
 let currentInput = '';
 
+const getFestivals = async () => {
+    const data = await getData();
+    const eventserie = data.eventserie;
+
+    return eventserie;
+}
+
 function loadHeader() {
     const headerContainer = $('#header-container');
 
@@ -22,7 +29,7 @@ function loadHeader() {
     includeTemplate(headerContainer, headerContent);
     initHeaderInput();
     intObserverSetup();
-};
+}
 
 async function filterAndSearch() {
     const input = $('#header-img .input-wrapper input').value.toLowerCase();
@@ -48,7 +55,30 @@ async function filterAndSearch() {
         return acc;
     }, []);
 
-    loadFilteredEventCards(filteredFestivals);
+    checkInputAndResults(filteredFestivals);
+
+    // log(filteredFestivals)
+    // loadFilteredEventCards(filteredFestivals);
+}
+
+function checkInputAndResults(filteredFestivals) {
+    if(filteredFestivals.length === 0) {
+        noResultsFound();
+    } else {
+        loadFilteredEventCards(filteredFestivals);
+    }
+}
+// log(filteredFestivals);
+
+function noResultsFound() {
+    const eventCardsContainer = $('#event-cards-container');
+    eventCardsContainer.innerHTML = renderNoResultsText();
+}
+
+function renderNoResultsText() {
+    return /*html */ `
+        <div class="no-results">Leider keine Events gefunden!</div>
+    `;
 }
 
 

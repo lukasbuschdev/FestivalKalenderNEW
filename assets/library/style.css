@@ -41,13 +41,14 @@ html {
 }
 
 body {
-    margin: 0;
     height: 100vh;
-    font-family: 'Zen Maru Gothic', sans-serif;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     background-color: var(--clr-bg-light);
+    font-family: 'Zen Maru Gothic', sans-serif;
     line-height: 0.9;
+    margin: 0;
     transition: all var(--transition-medium);
 }
 
