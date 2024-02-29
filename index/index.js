@@ -1,170 +1,71 @@
 let darkModeActive = false;
 
 async function loadContent() {
-    // loadFilters();
     loadFilteredEventCards();
+    loadFilters();
 }
 
-// function loadFilters() {
-//     const filterContainer = $('#filter-container');
-//     filterContainer.innerHTML = /*html*/ `
-//         <div class="open-filter-btn-containter row">
-//             <button onclick="openFilterButtons()">Filter</button>
-//             <button id="reset-filter-btn" class="d-none" onclick="resetSelectedFilter()">Filter löschen</button>
-//         </div>
-//         <div class="filters filters-closed row flex-center">
-//             <button id="country">Land</button>
-//             <button id="name">Name</button>
-//             <button id="date">Datum</button>
-//             <button id="location">Stadt</button>
-//             <button id="genre">Genre</button>
-//         </div>
-//     `;
 
-//     addClickToFilterButtons();
-// }
+// ################################################################################
+// FILTERS SECTION
+// ################################################################################
 
-// function openFilterButtons() {
-//     $('.filters').classList.toggle('filters-closed');
-// }
+function loadFilters() {
+    const filterContainer = $('#filter-container');
 
-// async function resetSelectedFilter() {
-//     currentInput = '';
-//     $('#header-img .input-wrapper').classList.remove('show-close');   
-//     $('.input-wrapper input').value = '';
-//     await loadEventCards();
-//     $('#reset-filter-btn').classList.add('d-none');
-// }
+    filterContainer.innerHTML = /*html*/ `
+        <div class="open-filter-btn-container row">
+            <div class="row">
+                <button onclick="openFilter()">Filter</button>
+                <button id="reset-filter-btn" class="d-none" onclick="resetSelectedFilter()">Filter löschen</button>
+            </div>
+            <button class="dark-mode-btn row gap-5" onclick="checkDarkMode()"></button>
+        </div>
+    `;
+}
 
-// async function fetchData(attribute) {
-//     const data = (await getFestivals()).map(festival => festival[attribute]);
-//     return Array.from(new Set(data));
-// }
+function openFilter() {
+    $('#filter-popup-container').classList.remove('d-none');
+    $('#filter-popup-container').innerHTML = renderFilterSelection();
+}
 
-// function addClickListener(id, attribute, sortFunction) {
-//     $(`#${id}`).addEventListener('click', async function() {
-//         const data = await fetchData(attribute);
-//         const sortedList = sortFunction ? sortFunction(data) : data;
-//         openFilterList(sortedList);
-//     });
-// }
+function renderFilterSelection() {
+    return /*html*/ `
+        <div class="column">
+            <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeFilter()">
 
-// function addClickToFilterButtons() {
-//     addClickListener('country', 'LAND', sortByFirstLetter);
-//     addClickListener('name', 'NAME', sortByFirstLetter);
-//     addClickListener('date', 'DATUM', sortDates);
-//     addClickListener('location', 'STADT', sortByFirstLetter);
-//     addClickListener('genre', 'GENRES', sortByFirstLetter);
-// }
+            <div class="single-filter">
 
-// function sortByFirstLetter(array) {
-//     return array.sort((a, b) => a[0].localeCompare(b[0]));
-// }
+            </div>
 
-// async function getAllDates() {
-//     const date = (await getFestivals()).map(festival => festival.DATUM);
-//     const uniqueDate = new Set(date);
+            <div class="single-filter">
 
-//     return Array.from(uniqueDate);
-// }
+            </div>
 
-// function getDates() {
-//     $('#date').addEventListener('click', async function() {
-//         const dates = await getAllDates();
-//         const sortedList = sortDates(dates);
-//         openFilterList(sortedList);
-//     });
-// }
+            <div class="single-filter">
 
-// function sortDates(dates) {
-//     return dates.sort((a, b) => {
-//         let [monthA, dayA] = a.split('-');
-//         let [monthB, dayB] = b.split('-');
+            </div>
 
-//         monthA = monthMap[monthA];
-//         monthB = monthMap[monthB];
+            <div class="single-filter">
 
-//         return monthA === monthB ? parseInt(dayA, 10) - parseInt(dayB, 10) : monthA - monthB;
-//     });
-// }
+            </div>
 
-// function openFilterList(sortedList) {
-//     const filterListContainer = $('#filter-list-container'); 
-//     filterListContainer.classList.remove('d-none');
-//     const filterListItems = $('#filter-list-items');
-//     filterListItems.innerHTML = '';
-//     filterListItems.innerHTML += renderFilterList(sortedList);
+            <div class="single-filter">
 
-//     const allListItems = $$('.list-item-container');
-//     allListItems.forEach((listItem) => {
-//         listItem.addEventListener('click', function() {
-//             searchForItems(this);          
-//         });
-//     });
+            </div>
+        </div>
+    `; 
+}
 
-//     checkNumberOfItems();
-//     filterListDarkMode();
-// }
+function closeFilter() {
+    $('#filter-popup-container').classList.add('d-none');
+}
 
-// function renderFilterList(sortedList) {
-//     return sortedList.map((listItem, index) => {
-//         return /*html*/ `
-//             <div class="list-item-container" id="list-item-${index}">
-//                 <span>${listItem}</span>
-//             </div>
-//         `;
-//     }).join('');
-// }
 
-// async function searchForItems(clickedItem) {
-//     $('#reset-filter-btn').classList.remove('d-none');
-//     $('.filters').classList.add('filters-closed');
 
-//     const spanValue = clickedItem.querySelector('span').textContent;
-//     currentInput = spanValue;
-//     const input = spanValue.toLowerCase();
-//     const items = (await getFestivals());
-  
-//     const filteredItems = items.filter(({LAND, BUNDESLAND, NAME, STADT, DATUM, GENRES}) => 
-//         [LAND, BUNDESLAND, NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
-//     );
-
-//     searchItems(filteredItems);
-//     applyDarkModeToEventCards();
-// }
-
-// function searchItems(filteredItems) {
-//     loadSelectedItems(filteredItems);
-//     closeFilter();
-// }
-
-// function loadSelectedItems(filteredItems) {
-//     let allEventCardsHTML = '';
-//     let counter = 0;
-
-//     filteredItems.forEach(festival => {
-//         allEventCardsHTML += renderEvents(festival);
-//         counter++;
-//         allEventCardsHTML = checkAd(allEventCardsHTML, counter);
-//     });
-
-//     const eventCardsContainer = $('#event-cards-container');
-//     eventCardsContainer.innerHTML = allEventCardsHTML;
-// }
-
-// function checkNumberOfItems() {
-//     const filterListContainer = $('#filter-list-items');
-//     let filterList = [...$$('.list-item-container')];
-
-//     if (filterList.length >= 10) filterListContainer.style.justifyContent = "flex-start";
-//     if (filterList.length < 10) filterListContainer.style.justifyContent = "center";   
-// }
-
-// function closeFilter() {
-//     const filterListContainer = $('#filter-list-container');
-//     $('#filter-list-items').innerHTML = ''; 
-//     filterListContainer.classList.add('d-none');
-// }
+// ################################################################################
+// EVENT CARD SECTION (RENDERING & SELECTION)
+// ################################################################################
 
 async function loadFilteredEventCards(festivals) {
     festivals = festivals || await getFestivals();
@@ -189,33 +90,13 @@ async function loadFilteredEventCards(festivals) {
     applyDarkModeToEventCards();
 }
 
-// async function loadFilteredEventCards(festivals) {
-//     let allEventCardsHTML = '';
-//     let counter = 0;
-
-//     festivals.forEach(festival => {
-//         allEventCardsHTML += renderEvents(festival);
-//         counter++;
-//         allEventCardsHTML = checkAd(allEventCardsHTML, counter);
-//     });
-
-//     const eventCardsContainer = $('#event-cards-container');
-//     eventCardsContainer.innerHTML = allEventCardsHTML;
-
-//     applyDarkModeToEventCards();
-// }
-
-// function getSingleEventData(festival) {
-//     return festival.events
-// }
-
 function checkAd(allEventCardsHTML, counter) {
     if(counter % 6 === 0) {
         const adIndex = Math.floor((counter / 6 - 1) % ads.length);
         const ad = ads[adIndex];
         return allEventCardsHTML + renderAdBlock(ad);
     }
-    
+
     return allEventCardsHTML;
 }
 
@@ -280,7 +161,6 @@ function renderAdBlock(ad) {
 }
 
 async function openSelectedFestival(eventId, esId) {
-    console.log(eventId, esId)
     const selectedEvent = await checkFestivalId(eventId, esId);
     renderSelectedFestival(selectedEvent);
 }
@@ -296,7 +176,6 @@ async function checkFestivalId(_eventId, _esId) {
 }
 
 function renderSelectedFestival(selected) {
-    log(selected)
     const selectedFestivalContainer = $('#selected-festival-container-upper');
     $('#selected-festival-container-upper').classList.remove('d-none');
 
@@ -459,6 +338,151 @@ function intObserverSetup() {
 
 
 
+// ################################################################################
+// OLD FILTER FUNCTIONS
+// ################################################################################
+
+// function openFilterButtons() {
+//     $('.filters').classList.toggle('filters-closed');
+// }
+
+// async function resetSelectedFilter() {
+//     currentInput = '';
+//     $('#header-img .input-wrapper').classList.remove('show-close');   
+//     $('.input-wrapper input').value = '';
+//     await loadEventCards();
+//     $('#reset-filter-btn').classList.add('d-none');
+// }
+
+// async function fetchData(attribute) {
+//     const data = (await getFestivals()).map(festival => festival[attribute]);
+//     return Array.from(new Set(data));
+// }
+
+// function addClickListener(id, attribute, sortFunction) {
+//     $(`#${id}`).addEventListener('click', async function() {
+//         const data = await fetchData(attribute);
+//         const sortedList = sortFunction ? sortFunction(data) : data;
+//         openFilterList(sortedList);
+//     });
+// }
+
+// function addClickToFilterButtons() {
+//     addClickListener('country', 'LAND', sortByFirstLetter);
+//     addClickListener('name', 'NAME', sortByFirstLetter);
+//     addClickListener('date', 'DATUM', sortDates);
+//     addClickListener('location', 'STADT', sortByFirstLetter);
+//     addClickListener('genre', 'GENRES', sortByFirstLetter);
+// }
+
+// function sortByFirstLetter(array) {
+//     return array.sort((a, b) => a[0].localeCompare(b[0]));
+// }
+
+// async function getAllDates() {
+//     const date = (await getFestivals()).map(festival => festival.DATUM);
+//     const uniqueDate = new Set(date);
+
+//     return Array.from(uniqueDate);
+// }
+
+// function getDates() {
+//     $('#date').addEventListener('click', async function() {
+//         const dates = await getAllDates();
+//         const sortedList = sortDates(dates);
+//         openFilterList(sortedList);
+//     });
+// }
+
+// function sortDates(dates) {
+//     return dates.sort((a, b) => {
+//         let [monthA, dayA] = a.split('-');
+//         let [monthB, dayB] = b.split('-');
+
+//         monthA = monthMap[monthA];
+//         monthB = monthMap[monthB];
+
+//         return monthA === monthB ? parseInt(dayA, 10) - parseInt(dayB, 10) : monthA - monthB;
+//     });
+// }
+
+// function openFilterList(sortedList) {
+//     const filterListContainer = $('#filter-list-container'); 
+//     filterListContainer.classList.remove('d-none');
+//     const filterListItems = $('#filter-list-items');
+//     filterListItems.innerHTML = '';
+//     filterListItems.innerHTML += renderFilterList(sortedList);
+
+//     const allListItems = $$('.list-item-container');
+//     allListItems.forEach((listItem) => {
+//         listItem.addEventListener('click', function() {
+//             searchForItems(this);          
+//         });
+//     });
+
+//     checkNumberOfItems();
+//     filterListDarkMode();
+// }
+
+// function renderFilterList(sortedList) {
+//     return sortedList.map((listItem, index) => {
+//         return /*html*/ `
+//             <div class="list-item-container" id="list-item-${index}">
+//                 <span>${listItem}</span>
+//             </div>
+//         `;
+//     }).join('');
+// }
+
+// async function searchForItems(clickedItem) {
+//     $('#reset-filter-btn').classList.remove('d-none');
+//     $('.filters').classList.add('filters-closed');
+
+//     const spanValue = clickedItem.querySelector('span').textContent;
+//     currentInput = spanValue;
+//     const input = spanValue.toLowerCase();
+//     const items = (await getFestivals());
+  
+//     const filteredItems = items.filter(({LAND, BUNDESLAND, NAME, STADT, DATUM, GENRES}) => 
+//         [LAND, BUNDESLAND, NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
+//     );
+
+//     searchItems(filteredItems);
+//     applyDarkModeToEventCards();
+// }
+
+// function searchItems(filteredItems) {
+//     loadSelectedItems(filteredItems);
+//     closeFilter();
+// }
+
+// function loadSelectedItems(filteredItems) {
+//     let allEventCardsHTML = '';
+//     let counter = 0;
+
+//     filteredItems.forEach(festival => {
+//         allEventCardsHTML += renderEvents(festival);
+//         counter++;
+//         allEventCardsHTML = checkAd(allEventCardsHTML, counter);
+//     });
+
+//     const eventCardsContainer = $('#event-cards-container');
+//     eventCardsContainer.innerHTML = allEventCardsHTML;
+// }
+
+// function checkNumberOfItems() {
+//     const filterListContainer = $('#filter-list-items');
+//     let filterList = [...$$('.list-item-container')];
+
+//     if (filterList.length >= 10) filterListContainer.style.justifyContent = "flex-start";
+//     if (filterList.length < 10) filterListContainer.style.justifyContent = "center";   
+// }
+
+// function closeFilter() {
+//     const filterListContainer = $('#filter-list-container');
+//     $('#filter-list-items').innerHTML = ''; 
+//     filterListContainer.classList.add('d-none');
+// }
 
 
 
@@ -476,8 +500,9 @@ function intObserverSetup() {
 
 
 
-
-
+// ################################################################################
+// AD WATCHTIME OBSERVER / EXPERIMENTAL
+// ################################################################################
 
 // class Timer {
 //     secondsPassed = 0;
@@ -502,8 +527,6 @@ function intObserverSetup() {
 // }
 
 // const timer = new Timer();
-
-/* EXPERIMENTAL 2 */
 
 // let adWatchTime = 0;
 

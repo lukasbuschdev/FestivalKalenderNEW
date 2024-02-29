@@ -21,8 +21,9 @@
     background-repeat: no-repeat;
     background-size: 25px 25px;
     position: fixed; 
-    inset: auto 2rem 2rem auto; 
-    width: 3rem; aspect-ratio: 1; 
+    inset: auto 5% 2rem auto; 
+    width: 3rem; 
+    aspect-ratio: 1; 
     border-radius: 50%; 
     background-color: var(--clr-pink); 
     z-index: 999;
@@ -39,16 +40,12 @@
 /* ############################################################### */
 
 .dark-mode-btn {
-    position: absolute;
     box-sizing: border-box;
-    right: 3%;
-    top: 20px;
     padding: 5px;
-    border: 1px solid var(--clr-pink);
     border-radius: 999px;
     background-color: var(--clr-pink);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    transition: all var(--transition-medium) ease-in-out;
+    transition: all var(--transition-medium);
 }
 
 .dark-mode-btn:hover {
@@ -105,57 +102,32 @@
 
 
 /* ############################################# */
-/* FILTER BUTTONS SECTION */
+/* FILTER BUTTON SECTION */
 /* ############################################# */
 
-.open-filter-btn-containter {
+.open-filter-btn-container {
+    width: 100%;
     gap: 10px;
+    justify-content: space-between;
 }
 
-.open-filter-btn-containter button {
+.open-filter-btn-container > div > button {
     box-sizing: border-box;
     padding: 5px 15px 8px 15px;
     font-weight: 600;
+    font-size: 1.2rem;
     color: white;
     text-align: center;
-    border: 1px solid var(--clr-pink);
     border-radius: 999px;
     background-color: var(--clr-pink);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1)
 }
 
-.open-filter-btn-containter button:hover {
+.open-filter-btn-container > div > button:hover {
     background-color: var(--clr-pink-hover);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
 }
-
-#filter-container {
-    width: 100%;
-    justify-content: center;
-}
-
-.filters {
-    box-sizing: border-box;
-    width: 100%;
-    height: fit-content;
-    gap: 15px;
-    padding: 10px;
-    overflow-x: scroll;
-    scrollbar-width: none;
-    justify-content: center;
-    transition: all var(--transition-medium);
-}
-
-.filters-closed {
-    height: 0 !important;
-    width: 0;
-    padding: 0;
-}
-
-.filters::-webkit-scrollbar {
-    display: none;
-}
-
+/* 
 .filters button {
     box-sizing: border-box;
     background-color: white;
@@ -174,76 +146,20 @@
     border-color: var(--clr-pink-hover);
     color: var(--clr-pink);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
-}
+} */
 
 
 
 /* ########################################################### */
-/* FILTER LIST CONTAINER / POP UP */
+/* FILTER CONTAINER / POP UP */
 /* ########################################################### */
 
-#filter-list-container {
+#filter-popup-container {
     position: fixed;
     height: 100vh;
     width: 100%;
-    background-color: rgba(200, 200, 200, 0.5);
-    backdrop-filter: blur(3px);
-}
-
-#filter-list-card {
-    position: relative;
-    height: 80vh;
-    width: 80%;
-    max-width: 1200px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: white;
-    border: 2px solid var(--clr-pink);
-    border-radius: 20px;
-    padding: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    padding: 50px 30px;
-}
-
-.filter-list-close {
-    position: absolute;
-    top: 5%;
-    right: 5%;
-    scale: 1;
-    border-radius: 999px;
-    transition: all var(--transition-fast);
-    background-color: var(--clr-pink);
-}
-
-.filter-list-close:hover {
-    scale: 1.05;
-    background-color: var(--clr-pink-hover);
-}
-
-.filter-list-close:hover {
-    cursor: pointer;
-    scale: 1.2;
-}
-
-#filter-list-items {
-    height: 85%;
-    width: 100%;
-    overflow-y: scroll;
-    justify-content: flex-start;
-}
-
-.list-item-container span {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--clr-dark);
-    transition: all var(--transition-fast);
-}
-
-.list-item-container span:hover {
-    cursor: pointer;
-    color: var(--clr-pink);
+    background-color: var(--clr-white);
+    z-index: 999;
 }
 
 

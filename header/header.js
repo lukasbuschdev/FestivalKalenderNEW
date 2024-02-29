@@ -3,7 +3,6 @@ let currentInput = '';
 const getFestivals = async () => {
     const data = await getData();
     const eventserie = data.eventserie;
-
     return eventserie;
 }
 
@@ -47,10 +46,7 @@ async function filterAndSearch() {
                 .some(attr => attr && attr.toLowerCase().includes(input));
         });
 
-        if(filteredEvents.length > 0) {
-            const festivalCopy = {...festival, events: filteredEvents};
-            acc.push(festivalCopy);
-        }
+        if(filteredEvents.length > 0) acc.push({...festival, events: filteredEvents});
 
         return acc;
     }, []);
@@ -72,13 +68,6 @@ function renderNoResultsText() {
         <div class="no-results">Leider keine Events gefunden!</div>
     `;
 }
-
-
-
-
-
-
-
 
 function deleteInput() {
     const closeIcon = $('#close-icon');

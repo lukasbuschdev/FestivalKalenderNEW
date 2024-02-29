@@ -10,21 +10,21 @@ header {
 
 .presented-logo {
     position: absolute;
-    right: 1%;
-    top: 5%;
+    width: fit-content;
+    inset: auto 2% 8% auto;
     z-index: 1;
-    background-color: rgba(256,256,256, 0.5);
+    background-color: rgba(256,256,256, 0.9);
     border-radius: 15px;
     padding: 5px 5px 5px 10px;
 }
 
 #presented-by {
-    width: 100px;
+    width: 70px;
     object-fit: contain;
 }
 
 #vamida-logo {
-    width: 180px;
+    width: 130px;
     object-fit: contain;
 }
 
@@ -133,6 +133,10 @@ header input:hover {
 /* ####################################################################### */
 
 @media(max-width: 800px) {
+    .presented-logo {
+        inset: 3% auto auto auto;
+    }
+
     #presented-by {
         width: 80px;
         object-fit: contain;
