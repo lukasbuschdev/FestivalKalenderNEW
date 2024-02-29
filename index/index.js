@@ -24,34 +24,53 @@ function loadFilters() {
     `;
 }
 
-function openFilter() {
+async function openFilter() {
+    const festivals = await getFestivals();
+
     $('#filter-popup-container').classList.remove('d-none');
-    $('#filter-popup-container').innerHTML = renderFilterSelection();
+    $('#filter-popup-container').innerHTML = renderFilterSelection(festivals);
 }
 
 function renderFilterSelection() {
     return /*html*/ `
-        <div class="column">
+        <div class="filter-popup-content column gap-30">
             <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeFilter()">
 
-            <div class="single-filter">
-
+            <div class="single-filter column">
+                <div class="column">
+                    <span>Name</span>
+                    <input type="text">
+                </div> 
             </div>
 
-            <div class="single-filter">
-
+            <div class="single-filter column">
+                <div class="column">
+                    <span>Datum</span>
+                    <input type="text">
+                </div> 
             </div>
 
-            <div class="single-filter">
-
+            <div class="single-filter column">
+                <div class="column">
+                    <span>Land</span>
+                    <input type="text">
+                </div> 
             </div>
 
-            <div class="single-filter">
-
+            <div class="single-filter column">
+                <div class="column">
+                    <span>Stadt</span>
+                    <input type="text">
+                </div> 
             </div>
 
-            <div class="single-filter">
-
+            <div class="single-filter column">
+                <div class="column">
+                    <span>Preis min.</span>
+                    <input type="text">
+                    <span>Preis max.</span>
+                    <input type="text">
+                </div> 
             </div>
         </div>
     `; 
