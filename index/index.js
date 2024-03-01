@@ -1,13 +1,5 @@
 let darkModeActive = false;
 
-let filterActive = {
-    "country": false,
-    "city": false,
-    "name": false,
-    "date": false,
-    "price": false
-}
-
 async function loadContent() {
     loadFilteredEventCards();
     loadFilters();
@@ -25,7 +17,7 @@ function loadFilters() {
         <div class="open-filter-btn-container row">
             <div class="row">
                 <button onclick="openFilter()">Filter</button>
-                <button id="reset-filter-btn" class="d-none" onclick="resetSelectedFilter()">Filter löschen</button>
+                <button id="reset-filter-btn" class="d-none" onclick="resetFilter()">Filter löschen</button>
             </div>
             <button class="dark-mode-btn row gap-5" onclick="checkDarkMode()"></button>
         </div>
@@ -38,11 +30,13 @@ async function openFilter() {
 
     $('#filter-popup-container').classList.remove('d-none');
     $('#filter-popup-container').innerHTML = renderFilterSelection(festivals);
+
+    filterDarkMode();
 }
 
 function renderFilterSelection() {
     return /*html*/ `
-        <div class="filter-popup-content column gap-35">
+        <div class="filter-popup-content column gap-35" onclick="event.stopPropagation()">
             <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeFilter()">
 
             <div class="single-filter column">
@@ -91,23 +85,85 @@ function renderFilterSelection() {
 }
 
 function search() {
-    getInputs();
+    const inputs = getInputs();
+    closeFilter();
+
+    if(inputs !== undefined) {
+        filter(inputs);
+    }
 }
 
 function getInputs() {
-    const name = $('#name').value.toLowerCase();
-    const country = $('#country').value.toLowerCase();
-    const city = $('#city').value.toLowerCase();
-    const date = $('#date').value.toLowerCase();
-    const priceMin = $('#priceMin').value;
-    const priceMax = $('#priceMax').value;
+    const inputs = {
+        name: $('#name').value.toLowerCase(),
+        country: $('#country').value.toLowerCase(),
+        city: $('#city').value.toLowerCase(),
+        date: $('#date').value.toLowerCase(),
+        priceMin: $('#priceMin').value,
+        priceMax: $('#priceMax').value
+    };
 
-    log(name)
-    log(country)
-    log(city)
-    log(date)
-    log(priceMin)
-    log(priceMax)
+    const anyInputFilled = Object.values(inputs).some(input => input);
+
+    $('#reset-filter-btn').classList.toggle('d-none', !anyInputFilled);
+
+    return anyInputFilled ? inputs : undefined;
+}
+
+
+// function getInputs() {
+//     const inputs = {
+//         name: $('#name').value.toLowerCase(),
+//         country: $('#country').value.toLowerCase(),
+//         city: $('#city').value.toLowerCase(),
+//         date: $('#date').value.toLowerCase(),
+//         priceMin: $('#priceMin').value,
+//         priceMax: $('#priceMax').value
+//     };
+
+//     if(Object.values(inputs).every(input => !input)) {
+//         $('#reset-filter-btn').classList.add('d-none');
+//         return;
+//     } 
+
+//     if(Object.values(inputs).some(input => input)) {
+//         $('#reset-filter-btn').classList.remove('d-none');
+//         return inputs;
+//     }
+// }
+
+
+
+async function filter({ name, country, city, date, priceMin, priceMax }) {
+    const festivals = await getFestivals();
+    const filteredFestivals = festivals.reduce((acc, festival) => {
+        const filteredEvents = festival.events.filter(event => {
+            const transformedDateObj = transformDateFormat(event.eventDateIso8601);
+            const transformedCountryName = transformCountryName(event.eventCountry);
+            const transformedDate = `${transformedDateObj.formattedDate} ${transformedDateObj.dayName}`;
+
+            const matchesName = !name || event.eventName.toLowerCase().includes(name);
+            const matchesCountry = !country || transformedCountryName.toLowerCase().includes(country);
+            const matchesCity = !city || event.eventCity.toLowerCase().includes(city);
+            const matchesDate = !date || transformedDate.toLowerCase().includes(date);
+            const matchesPrice = (priceMin === '' && priceMax === '') ||
+                                 (event.minPrice >= parseFloat(priceMin) && event.maxPrice <= parseFloat(priceMax));
+
+            return matchesName && matchesCountry && matchesCity && matchesDate && matchesPrice;
+        });
+
+        if(filteredEvents.length > 0) acc.push({...festival, events: filteredEvents});
+
+        return acc;
+    }, []);
+
+    log(filteredFestivals)
+    checkInputAndResults(filteredFestivals);
+}
+
+function resetFilter() {
+    $('#reset-filter-btn').classList.add('d-none');
+    loadFilteredEventCards();
 }
 
 function closeFilter() {
@@ -241,8 +297,8 @@ function renderSelectedFestival(selected) {
 
 function selectedFestivalTemplate(selected) {
     return /*html*/ `
-        <div class="selected-festival-container-lower flex-center">
-            <div class="selected-event-card column">
+        <div class="selected-festival-container-lower flex-center" onclick="closeSelectedFestival()">
+            <div class="selected-event-card column" onclick="event.stopPropagation()">
                 <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${selected.eventName}</span>
                 <div class="column gap-15">
@@ -322,25 +378,21 @@ function checkDarkMode() {
 function activateDarkMode() {
     darkModeActive = true;
     const allEventCards = $$('.event-card');
-    const allFilters = $$('.filters button');
 
     $('body').classList.add('dark-mode-body');
     $('#header-img').classList.add('dark-mode-header');
 
     allEventCards.forEach(eventCard => eventCard.classList.add('dark-mode-card'));
-    allFilters.forEach(filter => filter.classList.add('dark-mode-filter'));
 }
 
 function deactivateDarkMode() {
     darkModeActive = false;
-    const allEventCards = $$('.event-card');
-    const allFilters = $$('.filters button');
+    const allEventCards = $('.event-card');
 
     $('body').classList.remove('dark-mode-body');
     $('#header-img').classList.remove('dark-mode-header');
 
     allEventCards.forEach(eventCard => eventCard.classList.remove('dark-mode-card'));
-    allFilters.forEach(filter => filter.classList.remove('dark-mode-filter'));
 }
 
 function selectedCardDarkMode() {
@@ -348,18 +400,9 @@ function selectedCardDarkMode() {
     if(!darkModeActive) return $('.selected-event-card').classList.remove('dark-mode-selected-card'); 
 }
 
-function filterListDarkMode() {
-    const allItems = $$('.list-item-container span');
-
-    if(darkModeActive) {
-        $('#filter-list-card').classList.add('dark-mode-filter-list-card');
-        allItems.forEach(item => item.classList.add('dark-mode-filter-list-item')); 
-    } 
-
-    if(!darkModeActive) {
-        $('#filter-list-card').classList.remove('dark-mode-filter-list-card');
-        allItems.forEach(item => item.classList.remove('dark-mode-filter-list-item'));
-    } 
+function filterDarkMode() {
+    $('.filter-popup-content').classList.toggle('dark-mode-filter', darkModeActive);
+    $$('.single-filter > div input').forEach(input => input.classList.toggle('dark-mode-filter-input', darkModeActive));
 }
 
 function applyDarkModeToEventCards() {

@@ -107,7 +107,7 @@ header input:hover {
     background-size: cover;
     background-color: var(--clr-pink);
     right: 15px;
-    top: 10px;
+    top: 13px;
 }
 
 .show-close #close-icon {

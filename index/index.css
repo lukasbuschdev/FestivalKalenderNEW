@@ -82,22 +82,14 @@
     color: var(--clr-white);
 }
 
-/* .dark-mode-filter {
-    background-color: var(--clr-pink) !important;
-    color: var(--clr-white) !important;
-}
-
-.dark-mode-filter-list-card {
+.dark-mode-filter {
     background-color: var(--clr-bg-dark-mode) !important;
-}
-
-.dark-mode-filter-list-item {
     color: var(--clr-white) !important;
 }
 
-.dark-mode-filter-list-item:hover {
-    color: var(--clr-pink) !important;
-} */
+.dark-mode-filter-input {
+    color: var(--clr-bg-dark-mode);
+}
 
 
 
@@ -113,7 +105,7 @@
 
 .open-filter-btn-container > div > button {
     box-sizing: border-box;
-    padding: 5px 15px 8px 15px;
+    padding: 7px 16px 10px 16px;
     font-weight: 600;
     font-size: 1.2rem;
     color: white;
@@ -168,7 +160,7 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    height: 80vh;
+    height: 85vh;
     width: 60%;
     min-width: 400px;
     max-width: 1200px;
@@ -489,7 +481,7 @@
 .selected-event-card-close {
     position: absolute;
     top: 3%;
-    right: 3%;
+    right: 5%;
     scale: 1;
     background-color: var(--clr-pink);
     border-radius: 99px;
