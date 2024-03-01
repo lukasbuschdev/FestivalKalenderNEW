@@ -42,47 +42,72 @@ async function openFilter() {
 
 function renderFilterSelection() {
     return /*html*/ `
-        <div class="filter-popup-content column gap-30">
+        <div class="filter-popup-content column gap-35">
             <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeFilter()">
 
             <div class="single-filter column">
-                <div class="column">
+                <div class="column filter-name">
                     <span>Name</span>
-                    <input type="text">
+                    <input id="name" type="text" placeholder="Nach Eventnamen suchen...">
                 </div> 
             </div>
 
             <div class="single-filter column">
-                <div class="column">
-                    <span>Datum</span>
-                    <input type="text">
-                </div> 
-            </div>
-
-            <div class="single-filter column">
-                <div class="column">
+                <div class="column filter-country">
                     <span>Land</span>
-                    <input type="text">
+                    <input id="country" type="text" placeholder="Nach Land suchen...">
                 </div> 
             </div>
 
             <div class="single-filter column">
-                <div class="column">
+                <div class="column filter-city">
                     <span>Stadt</span>
-                    <input type="text">
+                    <input id="city" type="text" placeholder="Nach Stadt suchen...">
                 </div> 
             </div>
 
             <div class="single-filter column">
-                <div class="column">
-                    <span>Preis min.</span>
-                    <input type="text">
-                    <span>Preis max.</span>
-                    <input type="text">
+                <div class="column filter-date">
+                    <span>Datum</span>
+                    <input id="date" type="text" placeholder="Nach Datum suchen...">
                 </div> 
+            </div>
+
+            <div class="single-filter column">
+                <div class="column filter-price">
+                    <span>Preis</span>
+                    <div class="price-input row">
+                        <input id="priceMin" type="number" placeholder="Von">
+                        <input id="priceMax" type="number" placeholder="Bis">
+                    </div>
+                </div> 
+            </div>
+
+            <div class="flex-center search-button-container">
+                <button onclick="search()">Suchen</button>
             </div>
         </div>
     `; 
+}
+
+function search() {
+    getInputs();
+}
+
+function getInputs() {
+    const name = $('#name').value.toLowerCase();
+    const country = $('#country').value.toLowerCase();
+    const city = $('#city').value.toLowerCase();
+    const date = $('#date').value.toLowerCase();
+    const priceMin = $('#priceMin').value;
+    const priceMax = $('#priceMax').value;
+
+    log(name)
+    log(country)
+    log(city)
+    log(date)
+    log(priceMin)
+    log(priceMax)
 }
 
 function closeFilter() {
@@ -363,161 +388,6 @@ function intObserverSetup() {
     const el = $('header');
     intObserver.observe(el);
 }
-
-
-
-
-
-
-
-// ################################################################################
-// OLD FILTER FUNCTIONS
-// ################################################################################
-
-// function openFilterButtons() {
-//     $('.filters').classList.toggle('filters-closed');
-// }
-
-// async function resetSelectedFilter() {
-//     currentInput = '';
-//     $('#header-img .input-wrapper').classList.remove('show-close');   
-//     $('.input-wrapper input').value = '';
-//     await loadEventCards();
-//     $('#reset-filter-btn').classList.add('d-none');
-// }
-
-// async function fetchData(attribute) {
-//     const data = (await getFestivals()).map(festival => festival[attribute]);
-//     return Array.from(new Set(data));
-// }
-
-// function addClickListener(id, attribute, sortFunction) {
-//     $(`#${id}`).addEventListener('click', async function() {
-//         const data = await fetchData(attribute);
-//         const sortedList = sortFunction ? sortFunction(data) : data;
-//         openFilterList(sortedList);
-//     });
-// }
-
-// function addClickToFilterButtons() {
-//     addClickListener('country', 'LAND', sortByFirstLetter);
-//     addClickListener('name', 'NAME', sortByFirstLetter);
-//     addClickListener('date', 'DATUM', sortDates);
-//     addClickListener('location', 'STADT', sortByFirstLetter);
-//     addClickListener('genre', 'GENRES', sortByFirstLetter);
-// }
-
-// function sortByFirstLetter(array) {
-//     return array.sort((a, b) => a[0].localeCompare(b[0]));
-// }
-
-// async function getAllDates() {
-//     const date = (await getFestivals()).map(festival => festival.DATUM);
-//     const uniqueDate = new Set(date);
-
-//     return Array.from(uniqueDate);
-// }
-
-// function getDates() {
-//     $('#date').addEventListener('click', async function() {
-//         const dates = await getAllDates();
-//         const sortedList = sortDates(dates);
-//         openFilterList(sortedList);
-//     });
-// }
-
-// function sortDates(dates) {
-//     return dates.sort((a, b) => {
-//         let [monthA, dayA] = a.split('-');
-//         let [monthB, dayB] = b.split('-');
-
-//         monthA = monthMap[monthA];
-//         monthB = monthMap[monthB];
-
-//         return monthA === monthB ? parseInt(dayA, 10) - parseInt(dayB, 10) : monthA - monthB;
-//     });
-// }
-
-// function openFilterList(sortedList) {
-//     const filterListContainer = $('#filter-list-container'); 
-//     filterListContainer.classList.remove('d-none');
-//     const filterListItems = $('#filter-list-items');
-//     filterListItems.innerHTML = '';
-//     filterListItems.innerHTML += renderFilterList(sortedList);
-
-//     const allListItems = $$('.list-item-container');
-//     allListItems.forEach((listItem) => {
-//         listItem.addEventListener('click', function() {
-//             searchForItems(this);          
-//         });
-//     });
-
-//     checkNumberOfItems();
-//     filterListDarkMode();
-// }
-
-// function renderFilterList(sortedList) {
-//     return sortedList.map((listItem, index) => {
-//         return /*html*/ `
-//             <div class="list-item-container" id="list-item-${index}">
-//                 <span>${listItem}</span>
-//             </div>
-//         `;
-//     }).join('');
-// }
-
-// async function searchForItems(clickedItem) {
-//     $('#reset-filter-btn').classList.remove('d-none');
-//     $('.filters').classList.add('filters-closed');
-
-//     const spanValue = clickedItem.querySelector('span').textContent;
-//     currentInput = spanValue;
-//     const input = spanValue.toLowerCase();
-//     const items = (await getFestivals());
-  
-//     const filteredItems = items.filter(({LAND, BUNDESLAND, NAME, STADT, DATUM, GENRES}) => 
-//         [LAND, BUNDESLAND, NAME, STADT, DATUM, GENRES].some(attr => attr.toLowerCase().includes(input))
-//     );
-
-//     searchItems(filteredItems);
-//     applyDarkModeToEventCards();
-// }
-
-// function searchItems(filteredItems) {
-//     loadSelectedItems(filteredItems);
-//     closeFilter();
-// }
-
-// function loadSelectedItems(filteredItems) {
-//     let allEventCardsHTML = '';
-//     let counter = 0;
-
-//     filteredItems.forEach(festival => {
-//         allEventCardsHTML += renderEvents(festival);
-//         counter++;
-//         allEventCardsHTML = checkAd(allEventCardsHTML, counter);
-//     });
-
-//     const eventCardsContainer = $('#event-cards-container');
-//     eventCardsContainer.innerHTML = allEventCardsHTML;
-// }
-
-// function checkNumberOfItems() {
-//     const filterListContainer = $('#filter-list-items');
-//     let filterList = [...$$('.list-item-container')];
-
-//     if (filterList.length >= 10) filterListContainer.style.justifyContent = "flex-start";
-//     if (filterList.length < 10) filterListContainer.style.justifyContent = "center";   
-// }
-
-// function closeFilter() {
-//     const filterListContainer = $('#filter-list-container');
-//     $('#filter-list-items').innerHTML = ''; 
-//     filterListContainer.classList.add('d-none');
-// }
-
-
-
 
 
 

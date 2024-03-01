@@ -155,18 +155,27 @@
 /* ########################################################### */
 
 #filter-popup-container {
-    position: fixed;
+    position: absolute;
     height: 100vh;
     width: 100%;
-    background-color: var(--clr-white);
-    z-index: 999;
+    z-index: 9;
+    background-color: rgba(200, 200, 200, 0.5);
+    backdrop-filter: blur(3px);
 }
 
 .filter-popup-content {
-    height: 100vh;
-    width: 100%;
+    position: relative;
     justify-content: center;
-    padding: 20px;
+    box-sizing: border-box;
+    height: 80vh;
+    width: 60%;
+    min-width: 400px;
+    max-width: 1200px;
+    padding: 15px 20px;
+    background-color: var(--clr-bg-light);
+    z-index: 100;
+    border: 2px solid var(--clr-pink);
+    border-radius: 20px;
 }
 
 .single-filter {
@@ -177,27 +186,77 @@
 }
 
 .single-filter div {
-    width: 50%;
+    width: 300px;
+    gap: 10px;
 }
 
 .single-filter > div input {
-    height: 50px;
-    width: 100%;
-    align-self: center;
     box-sizing: border-box;
+    position: relative;
+    height: 45px;
+
+    width: 100%;
+    max-width: 500px;
+    font-size: 1rem;
+    align-self: center;
     background-image: url('../assets/icons/loupe.svg');
     background-position: 10px center;
     background-repeat: no-repeat;
     padding: 0 0 3px 35px;
-    max-width: 500px;
     border: 2px solid var(--clr-pink);
     border-radius: 999px;
-    position: relative;
     transition: all 75ms ease-in-out;
 }
 
 .single-filter > div input:focus {
     border-color: var(--clr-pink-hover);
+}
+
+.price-input  {
+
+}
+
+.price-input input {
+    width: 140px;
+    background-image: none !important;
+}
+
+.price-input input[type="number"]::-webkit-inner-spin-button, 
+.price-input input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.price-input input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+
+
+
+.search-button-container {
+    height: fit-content;
+    width: 100%;
+}
+
+.search-button-container button {
+    height: 50px;
+    width: 200px;
+    font-size: 1.7rem;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 999px;
+    color: white;
+    background-color: var(--clr-pink);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    padding: 0 0 5px 0;
+}
+
+.search-button-container button:hover {
+    cursor: pointer;
+    background-color: var(--clr-pink-hover);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 
