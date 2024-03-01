@@ -164,6 +164,10 @@
     .selected-card-image img {
         height: 130px;
     }
+
+    #scroll-up {
+        width: 2.5rem;
+    }
 }
 
 
@@ -208,6 +212,13 @@
     .selected-event-info-container > div {
         gap: 0;
     }
+
+    .selected-event-card {
+        height: 100vh;
+        width: 100%;
+        border: unset;
+        border-radius: 0;
+    }
 }
 
 
@@ -218,22 +229,6 @@
         height: 180px;
     }
 
-    .selected-event-card {
-        height: 100vh;
-        width: 100%;
-        border: unset;
-        border-radius: 0;
-    }
-
-    #header-img img {
-        height: 150px;
-    }
-}
-
-
-/* 670px */
-
-@media(max-height: 670px) {
     .selected-event-name {
         font-size: 1.7rem;
         padding: 15px 0;
@@ -250,5 +245,28 @@
     
     .selected-card-image img {
         height: 130px;  
+    }
+
+    #header-img img {
+        height: 150px;
+    }
+}
+
+
+/* 670px */
+
+@media(max-height: 670px) {
+    .selected-event-text-container {
+        height: 150px;
+    }
+
+    .selected-card-image img {
+        height: 100px;
+    }
+
+    .selected-event-tickets {
+        height: 35px;
+        width: 150px;
+        font-size: 1.3rem;
     }
 }
