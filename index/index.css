@@ -40,6 +40,8 @@
 /* ############################################################### */
 
 .dark-mode-btn {
+    height: 40px;
+    width: 40px;
     box-sizing: border-box;
     padding: 5px;
     border-radius: 999px;
@@ -119,26 +121,6 @@
     background-color: var(--clr-pink-hover);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
 }
-/* 
-.filters button {
-    box-sizing: border-box;
-    background-color: white;
-    padding: 0 10px 5px 10px;
-    height: 30px;
-    width: fit-content;
-    font-weight: 600;
-    color: var(--clr-gray);
-    border: 1px solid var(--clr-pink);
-    border-radius: 999px;
-    transition: all var(--transition-fast);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1)
-}
-
-.filters button:hover {
-    border-color: var(--clr-pink-hover);
-    color: var(--clr-pink);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
-} */
 
 
 
@@ -187,15 +169,11 @@
     box-sizing: border-box;
     position: relative;
     height: 45px;
-
     width: 100%;
     max-width: 500px;
     font-size: 1rem;
     align-self: center;
-    background-image: url('../assets/icons/loupe.svg');
-    background-position: 10px center;
-    background-repeat: no-repeat;
-    padding: 0 0 3px 35px;
+    padding: 0 0 3px 20px;
     border: 2px solid var(--clr-pink);
     border-radius: 999px;
     transition: all 75ms ease-in-out;
@@ -221,10 +199,6 @@
     -moz-appearance: textfield;
 }
 
-
-
-
-
 .search-button-container {
     height: fit-content;
     width: 100%;
@@ -232,9 +206,9 @@
 
 .search-button-container button {
     height: 50px;
-    width: 200px;
-    font-size: 1.7rem;
-    font-weight: 500;
+    width: 140px;
+    font-size: 1.5rem;
+    font-weight: 600;
     text-align: center;
     border-radius: 999px;
     color: white;
@@ -247,6 +221,52 @@
     cursor: pointer;
     background-color: var(--clr-pink-hover);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.single-filter select {
+    box-sizing: border-box;
+    position: relative;
+    height: 45px;
+    width: 100%;
+    max-width: 500px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Zen Maru Gothic', sans-serif;
+    align-self: center;
+    padding: 0 0 3px 15px;
+    border: 2px solid var(--clr-pink);
+    border-radius: 999px;
+    outline: none;
+    transition: all 75ms ease-in-out;
+}
+
+.single-filter select option {
+    color: var(--clr-dark);
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 1rem;
+    max-height: 200px;
+    width: 100%;
+}
+
+.single-filter select:focus {
+    border: 2px solid var(--clr-pink-hover);
+}
+
+.reset-filter {
+    scale: 1;
+    background-color: var(--clr-pink);
+    border-radius: 99px;
+    transition: all var(--transition-fast);
+}
+
+.reset-filter:hover {
+    cursor: pointer;
+    scale: 1.05;
+    background-color: var(--clr-pink-hover);
+}
+
+.gray-text {
+    color: var(--clr-placeholder);
 }
 
 

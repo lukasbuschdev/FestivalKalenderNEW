@@ -15,11 +15,11 @@ function loadFilters() {
 
     filterContainer.innerHTML = /*html*/ `
         <div class="open-filter-btn-container row">
-            <div class="row">
+            <div class="row gap-15">
                 <button onclick="openFilter()">Filter</button>
                 <button id="reset-filter-btn" class="d-none" onclick="resetFilter()">Filter löschen</button>
             </div>
-            <button class="dark-mode-btn row gap-5" onclick="checkDarkMode()"></button>
+            <img class="dark-mode-btn row gap-5" src="../assets/icons/moon.png" onclick="checkDarkMode()">
         </div>
     `;
 }
@@ -31,10 +31,11 @@ async function openFilter() {
     $('#filter-popup-container').classList.remove('d-none');
     $('#filter-popup-container').innerHTML = renderFilterSelection(festivals);
 
+    checkSelectValueStyling();
     filterDarkMode();
 }
 
-function renderFilterSelection() {
+function renderFilterSelection(festivals) {
     return /*html*/ `
         <div class="filter-popup-content column gap-35" onclick="event.stopPropagation()">
             <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeFilter()">
@@ -42,21 +43,36 @@ function renderFilterSelection() {
             <div class="single-filter column">
                 <div class="column filter-name">
                     <span>Name</span>
-                    <input id="name" type="text" placeholder="Nach Eventnamen suchen...">
+                    <div class="row gap-15">
+                        <select id="name">
+                            ${getNameOptions(festivals)}
+                        </select>
+                        <img id="reset-name" class="reset-filter grid-center" src="../assets/icons/close.svg" alt="X" onclick="resetSelection('name')">
+                    </div>
                 </div> 
             </div>
 
             <div class="single-filter column">
                 <div class="column filter-country">
                     <span>Land</span>
-                    <input id="country" type="text" placeholder="Nach Land suchen...">
+                    <div class="row gap-15">
+                        <select id="country">
+                            ${getCountryOptions(festivals)}
+                        </select>
+                        <img id="reset-country" class="reset-filter grid-center" src="../assets/icons/close.svg" alt="X" onclick="resetSelection('country')">
+                    </div>
                 </div> 
             </div>
 
             <div class="single-filter column">
                 <div class="column filter-city">
                     <span>Stadt</span>
-                    <input id="city" type="text" placeholder="Nach Stadt suchen...">
+                    <div class="row gap-15">
+                        <select id="city">
+                            ${getCityOptions(festivals)}
+                        </select>
+                        <img id="reset-city" class="reset-filter grid-center" src="../assets/icons/close.svg" alt="X" onclick="resetSelection('city')">
+                    </div>
                 </div> 
             </div>
 
@@ -77,11 +93,76 @@ function renderFilterSelection() {
                 </div> 
             </div>
 
-            <div class="flex-center search-button-container">
+            <div class="flex-center search-button-container gap-10">
                 <button onclick="search()">Suchen</button>
+                <button onclick="resetAllFilters()">Reset</button>
             </div>
         </div>
     `; 
+}
+
+function getNameOptions(festivals) {
+    const placeholderOption = '<option value="" disabled selected>Wähle einen Namen...</option>';
+
+    const eventNames = festivals.flatMap(festival => festival.events.map(event => event.eventName));
+    const uniqueNames = [...new Set(eventNames)];
+    const sortedNames = sortAlphabetically(uniqueNames);
+    const options = sortedNames.map(name => `<option value="${name}">${name}</option>`).join('');
+
+    return placeholderOption + options;
+}
+
+
+function getCountryOptions(festivals) {
+    const placeholderOption = '<option value="" disabled selected>Wähle ein Land...</option>';
+
+    const eventCountries = festivals.flatMap(festival => festival.events.map(event => transformCountryName(event.eventCountry)));
+    const uniqueCountries = [...new Set(eventCountries)];
+    const sortedCountries = sortAlphabetically(uniqueCountries);
+    const options = sortedCountries.map(country => `<option value="${country}">${country}</option>`).join('');
+    
+    return placeholderOption + options;
+}
+
+function getCityOptions(festivals) {
+    const placeholderOption = '<option value="" disabled selected>Wähle eine Stadt...</option>';
+
+    const eventCities = festivals.flatMap(festival => festival.events.map(event => event.eventCity));
+    const uniqueCities = [...new Set(eventCities)];
+    const sortedCities = sortAlphabetically(uniqueCities)
+    const options = sortedCities.map(city => `<option value="${city}">${city}</option>`).join();
+
+    return placeholderOption + options;
+}
+
+function sortAlphabetically(array) {
+    return array.sort((a, b) => a.localeCompare(b));
+}
+
+function checkSelectValueStyling() {
+    $$('.single-filter select').forEach(select => {
+        const resetButtonId = 'reset-' + select.id;
+        const resetButton = $('#' + resetButtonId);
+
+        const toggleClasses = () => {
+            const isEmpty = select.value === "";
+            select.classList.toggle('gray-text', isEmpty);
+            resetButton.classList.toggle('d-none', isEmpty);
+        };
+
+        select.addEventListener('change', toggleClasses);
+        toggleClasses(); 
+    });
+}
+
+function resetSelection(selectElementId) {
+    $('#' + selectElementId).value = "";
+    checkSelectValueStyling();
+}
+
+function resetAllFilters() {
+    ['name', 'country', 'city', 'date', 'priceMin', 'priceMax'].forEach(resetSelection);
+    checkSelectValueStyling();
 }
 
 function search() {
@@ -99,17 +180,21 @@ function getInputs() {
         country: $('#country').value.toLowerCase(),
         city: $('#city').value.toLowerCase(),
         date: $('#date').value.toLowerCase(),
-        priceMin: $('#priceMin').value,
-        priceMax: $('#priceMax').value
+        priceMin: $('#priceMin').value || '0',
+        priceMax: $('#priceMax').value || '1000'
     };
 
-    const anyInputFilled = Object.values(inputs).some(input => input);
-
+    const anyInputFilled = Object.values(inputs).some((input, index) => {
+        const key = Object.keys(inputs)[index];
+        if (key === 'priceMin' || key === 'priceMax') {
+            return (key === 'priceMin' && input !== '0') || (key === 'priceMax' && input !== '1000');
+        }
+        return input !== '';
+    });
     $('#reset-filter-btn').classList.toggle('d-none', !anyInputFilled);
 
     return anyInputFilled ? inputs : undefined;
 }
-
 
 // function getInputs() {
 //     const inputs = {
@@ -117,22 +202,16 @@ function getInputs() {
 //         country: $('#country').value.toLowerCase(),
 //         city: $('#city').value.toLowerCase(),
 //         date: $('#date').value.toLowerCase(),
-//         priceMin: $('#priceMin').value,
-//         priceMax: $('#priceMax').value
+//         priceMin: $('#priceMin').value || '0',
+//         priceMax: $('#priceMax').value || '1000'
 //     };
 
-//     if(Object.values(inputs).every(input => !input)) {
-//         $('#reset-filter-btn').classList.add('d-none');
-//         return;
-//     } 
+//     const anyInputFilled = Object.values(inputs).some(input => input !== '0' && input);
 
-//     if(Object.values(inputs).some(input => input)) {
-//         $('#reset-filter-btn').classList.remove('d-none');
-//         return inputs;
-//     }
+//     $('#reset-filter-btn').classList.toggle('d-none', !anyInputFilled);
+
+//     return anyInputFilled ? inputs : undefined;
 // }
-
-
 
 async function filter({ name, country, city, date, priceMin, priceMax }) {
     const festivals = await getFestivals();
@@ -153,7 +232,6 @@ async function filter({ name, country, city, date, priceMin, priceMax }) {
         });
 
         if(filteredEvents.length > 0) acc.push({...festival, events: filteredEvents});
-
         return acc;
     }, []);
 
@@ -378,7 +456,8 @@ function checkDarkMode() {
 function activateDarkMode() {
     darkModeActive = true;
     const allEventCards = $$('.event-card');
-
+    
+    $('.dark-mode-btn').setAttribute('src', '../assets/icons/sun.png'); 
     $('body').classList.add('dark-mode-body');
     $('#header-img').classList.add('dark-mode-header');
 
@@ -387,8 +466,9 @@ function activateDarkMode() {
 
 function deactivateDarkMode() {
     darkModeActive = false;
-    const allEventCards = $('.event-card');
-
+    const allEventCards = $$('.event-card');
+    
+    $('.dark-mode-btn').setAttribute('src', '../assets/icons/moon.png'); 
     $('body').classList.remove('dark-mode-body');
     $('#header-img').classList.remove('dark-mode-header');
 
