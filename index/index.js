@@ -79,7 +79,11 @@ function renderFilterSelection(festivals) {
             <div class="single-filter column">
                 <div class="column filter-date">
                     <span>Datum</span>
-                    <input id="date" type="text" placeholder="Nach Datum suchen...">
+                    <div class="date-container">
+                        <input id="date" type="text" placeholder="TT/MM/JJJJ">
+                        <img src="../assets/icons/calendar.png" onclick="openCalendar()">
+                    </div>
+                    <div id="calendar-container" class="d-none"></div>
                 </div> 
             </div>
 
@@ -196,23 +200,6 @@ function getInputs() {
     return anyInputFilled ? inputs : undefined;
 }
 
-// function getInputs() {
-//     const inputs = {
-//         name: $('#name').value.toLowerCase(),
-//         country: $('#country').value.toLowerCase(),
-//         city: $('#city').value.toLowerCase(),
-//         date: $('#date').value.toLowerCase(),
-//         priceMin: $('#priceMin').value || '0',
-//         priceMax: $('#priceMax').value || '1000'
-//     };
-
-//     const anyInputFilled = Object.values(inputs).some(input => input !== '0' && input);
-
-//     $('#reset-filter-btn').classList.toggle('d-none', !anyInputFilled);
-
-//     return anyInputFilled ? inputs : undefined;
-// }
-
 async function filter({ name, country, city, date, priceMin, priceMax }) {
     const festivals = await getFestivals();
     const filteredFestivals = festivals.reduce((acc, festival) => {
@@ -248,6 +235,81 @@ function closeFilter() {
     $('body').classList.remove('no-scroll');
     $('#filter-popup-container').classList.add('d-none');
 }
+
+
+
+// ################################################################################
+// CALENDAR SECTION / EXPERIMENTAL
+// ################################################################################
+
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+
+function openCalendar() {
+    const container = document.getElementById('calendar-container');
+    container.classList.toggle('d-none');
+
+    if (!container.classList.contains('d-none')) {
+        container.innerHTML = '';
+        generateCalendar(container, currentMonth, currentYear);
+    }
+}
+
+function generateCalendar(container, month, year) {
+    container.innerHTML = '';
+
+    const firstDay = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const header = document.createElement('div');
+    const prevBtn = document.createElement('button');
+    const nextBtn = document.createElement('button');
+    prevBtn.textContent = '<';
+    nextBtn.textContent = '>';
+    prevBtn.onclick = () => changeMonth(container, -1);
+    nextBtn.onclick = () => changeMonth(container, 1);
+    header.className = 'calendar-header';
+    header.appendChild(prevBtn);
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const monthYearLabel = document.createElement('span');
+    monthYearLabel.textContent = `${monthNames[month]} ${year}`;
+    header.appendChild(monthYearLabel);
+
+    header.appendChild(nextBtn);
+    container.appendChild(header);
+
+    for (let i = 1; i <= daysInMonth; i++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.textContent = i;
+        container.appendChild(dayElement);
+    }
+}
+
+function changeMonth(container, increment) {
+    currentMonth += increment;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear -= 1;
+    } else if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear += 1;
+    }
+    generateCalendar(container, currentMonth, currentYear);
+}
+
+
+
+// ################################################################################
+// ################################################################################
+// ################################################################################
+
+
+
+
+
+
 
 
 

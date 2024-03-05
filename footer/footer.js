@@ -23,7 +23,7 @@ function loadFooter() {
                     <a href="https://www.flaticon.com/free-icons/up-arrow" title="up arrow icons">Up arrow icon created by 'Freepik' - Flaticon</a>
                     <a href="https://www.flaticon.com/free-icons/sun" title="sun icons">Sun icons created by Good Ware - Flaticon</a>
                     <a href="https://www.flaticon.com/free-icons/moon" title="moon icons">Moon icons created by Good Ware - Flaticon</a>
-
+                    <a href="https://www.flaticon.com/free-icons/calendar" title="calendar icons">Calendar icons created by Freepik - Flaticon</a>
 
 
 

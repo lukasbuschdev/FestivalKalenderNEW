@@ -165,7 +165,7 @@
     gap: 10px;
 }
 
-.single-filter > div input {
+.price-input input {
     box-sizing: border-box;
     position: relative;
     height: 45px;
@@ -179,14 +179,8 @@
     transition: all 75ms ease-in-out;
 }
 
-.single-filter > div input:focus {
+.price-input input:focus {
     border-color: var(--clr-pink-hover);
-}
-
-.price-input input {
-    width: 140px;
-    background-image: none !important;
-    padding: 0 0 3px 20px !important;
 }
 
 .price-input input[type="number"]::-webkit-inner-spin-button, 
@@ -264,6 +258,92 @@
     scale: 1.05;
     background-color: var(--clr-pink-hover);
 }
+
+.filter-date {
+    position: relative;
+}
+
+.date-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 45px;
+    width: 100%;
+    max-width: 500px;
+    border: 2px solid var(--clr-pink);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.date-container input {
+    box-sizing: border-box;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0 45px 3px 20px;
+    border: none;
+    border-radius: 999px;
+    outline: none;
+}
+
+.date-container img {
+    cursor: pointer;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: 10px;
+}
+
+
+
+
+/* ####################################################################### */
+/* ####################################################################### */
+/* ####################################################################### */
+
+#calendar-container {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+
+#calendar-container div {
+    width: 100%;
+}
+
+.calendar-day {
+    width: calc(100% / 7);
+    text-align: center;
+    padding: 5px 0;
+    margin: 2px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+}
+
+.calendar-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* ####################################################################### */
+/* ####################################################################### */
+/* ####################################################################### */
+
+
+
 
 .gray-text {
     color: var(--clr-placeholder);
