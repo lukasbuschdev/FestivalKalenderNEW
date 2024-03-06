@@ -209,6 +209,8 @@ function getInputs() {
         priceMax: $('#priceMax').value || '1000'
     };
 
+    transformInputDate(inputs);
+
     const anyInputFilled = Object.values(inputs).some((input, index) => {
         const key = Object.keys(inputs)[index];
         if (key === 'priceMin' || key === 'priceMax') {
@@ -219,6 +221,11 @@ function getInputs() {
     $('#reset-filter-btn').classList.toggle('d-none', !anyInputFilled);
 
     return anyInputFilled ? inputs : undefined;
+}
+
+function transformInputDate(inputs) {
+    const indexOfSecondDot = inputs.date.indexOf('.', inputs.date.indexOf('.') + 1);
+    if(indexOfSecondDot !== -1) return inputs.date = inputs.date.slice(0, indexOfSecondDot + 1);
 }
 
 async function filter({ name, country, city, date, priceMin, priceMax }) {
@@ -255,7 +262,6 @@ function resetFilter() {
 function closeFilter() {
     $('body').classList.remove('no-scroll');
     $('#filter-popup-container').classList.add('d-none');
-    resetFilter();
 }
 
 
@@ -293,7 +299,7 @@ function generateCalendar(container, month, year) {
     header.className = 'calendar-header';
     header.appendChild(prevBtn);
 
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
     const monthYearLabel = document.createElement('span');
     monthYearLabel.textContent = `${monthNames[month]} ${year}`;
     header.appendChild(monthYearLabel);
