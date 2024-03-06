@@ -79,18 +79,24 @@ function renderFilterSelection(festivals) {
             <div class="single-filter column">
                 <div class="column filter-date">
                     <span>Datum</span>
-                    <div class="date-container">
-                        <input id="date" type="text" placeholder="TT/MM/JJJJ">
-                        <img src="../assets/icons/calendar.png" onclick="openCalendar()">
+                    <div class="row gap-15">
+                        <div class="date-container">
+                            <input id="date" type="text" placeholder="TT.MM.JJJJ">
+                            <img src="../assets/icons/calendar.png" onclick="openCalendar()">
+                        </div>
+                        <img id="reset-date" class="reset-filter grid-center" src="../assets/icons/close.svg" alt="X" onclick="resetSelection('date')">
                     </div>
-                    <div id="calendar-container" class="d-none"></div>
                 </div> 
+            </div>
+
+            <div id="calendar-container" onclick="closeCalendar()" class="d-none">
+                <div id="calendar" onclick="event.stopPropagation()"></div>
             </div>
 
             <div class="single-filter column">
                 <div class="column filter-price">
                     <span>Preis</span>
-                    <div class="price-input row">
+                    <div class="price-input row gap-10">
                         <input id="priceMin" type="number" placeholder="Von">
                         <input id="priceMax" type="number" placeholder="Bis">
                     </div>
@@ -115,7 +121,6 @@ function getNameOptions(festivals) {
 
     return placeholderOption + options;
 }
-
 
 function getCountryOptions(festivals) {
     const placeholderOption = '<option value="" disabled selected>Wähle ein Land...</option>';
@@ -157,6 +162,22 @@ function checkSelectValueStyling() {
         select.addEventListener('change', toggleClasses);
         toggleClasses(); 
     });
+
+    checkDateInput();
+}
+
+function checkDateInput() {
+    const dateInput = $('#date');
+    const dateResetButton = $('#reset-date');
+
+    const toggleDateClasses = () => {
+        const isDateEmpty = dateInput.value === "";
+        dateInput.classList.toggle('gray-text', isDateEmpty);
+        dateResetButton.classList.toggle('d-none', isDateEmpty);
+    };
+
+    dateInput.addEventListener('input', toggleDateClasses);
+    toggleDateClasses();
 }
 
 function resetSelection(selectElementId) {
@@ -222,7 +243,7 @@ async function filter({ name, country, city, date, priceMin, priceMax }) {
         return acc;
     }, []);
 
-    log(filteredFestivals)
+    // log(filteredFestivals)
     checkInputAndResults(filteredFestivals);
 }
 
@@ -234,6 +255,7 @@ function resetFilter() {
 function closeFilter() {
     $('body').classList.remove('no-scroll');
     $('#filter-popup-container').classList.add('d-none');
+    resetFilter();
 }
 
 
@@ -246,8 +268,8 @@ let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 
 function openCalendar() {
-    const container = document.getElementById('calendar-container');
-    container.classList.toggle('d-none');
+    const container = $('#calendar');
+    $('#calendar-container').classList.toggle('d-none');
 
     if (!container.classList.contains('d-none')) {
         container.innerHTML = '';
@@ -279,24 +301,45 @@ function generateCalendar(container, month, year) {
     header.appendChild(nextBtn);
     container.appendChild(header);
 
-    for (let i = 1; i <= daysInMonth; i++) {
+    generateDays(daysInMonth, container, month, year);
+}
+
+function generateDays(daysInMonth, container, month, year) {
+    for(let i = 1; i <= daysInMonth; i++) {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
         dayElement.textContent = i;
         container.appendChild(dayElement);
+        dayElement.onclick = () => {
+            const formattedDay = i.toString().padStart(2, '0');
+            const formattedMonth = (month + 1).toString().padStart(2, '0');
+
+            const selectedDate = `${formattedDay}.${formattedMonth}.${year}`;
+            insertSelectedDate(selectedDate);
+            closeCalendar();
+        };
     }
 }
 
 function changeMonth(container, increment) {
     currentMonth += increment;
-    if (currentMonth < 0) {
+    if(currentMonth < 0) {
         currentMonth = 11;
         currentYear -= 1;
-    } else if (currentMonth > 11) {
+    } else if(currentMonth > 11) {
         currentMonth = 0;
         currentYear += 1;
     }
     generateCalendar(container, currentMonth, currentYear);
+}
+
+function insertSelectedDate(selectedDate) {
+    $('.date-container input').value = selectedDate;
+}
+
+function closeCalendar() {
+    checkSelectValueStyling();
+    $('#calendar-container').classList.toggle('d-none');
 }
 
 
@@ -544,7 +587,9 @@ function selectedCardDarkMode() {
 
 function filterDarkMode() {
     $('.filter-popup-content').classList.toggle('dark-mode-filter', darkModeActive);
+    $('#calendar').classList.toggle('dark-mode-calendar', darkModeActive);
     $$('.single-filter > div input').forEach(input => input.classList.toggle('dark-mode-filter-input', darkModeActive));
+
 }
 
 function applyDarkModeToEventCards() {

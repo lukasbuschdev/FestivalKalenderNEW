@@ -47,10 +47,11 @@
     border-radius: 999px;
     background-color: var(--clr-pink);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    transition: all var(--transition-medium);
+    transition: all var(--transition-slow);
 }
 
 .dark-mode-btn:hover {
+    cursor: pointer;
     background-color: var(--clr-pink-hover);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
@@ -64,6 +65,7 @@
     background-color: transparent;
     height: 35px;
     width: 35px;
+    transition: all var(--transition-slow);
 }
 
 .dark-mode-body {
@@ -91,6 +93,10 @@
 
 .dark-mode-filter-input {
     color: var(--clr-bg-dark-mode);
+}
+
+.dark-mode-calendar {
+    background-color: var(--clr-bg-dark-mode) !important;
 }
 
 
@@ -151,6 +157,7 @@
     z-index: 100;
     border: 2px solid var(--clr-pink);
     border-radius: 20px;
+    overflow: hidden;
 }
 
 .single-filter {
@@ -160,14 +167,14 @@
     align-items: center;
 }
 
-.single-filter div {
+.single-filter > div {
     width: 300px;
     gap: 10px;
 }
 
 .price-input input {
     box-sizing: border-box;
-    position: relative;
+    /* position: relative; */
     height: 45px;
     width: 100%;
     max-width: 500px;
@@ -218,6 +225,7 @@
 }
 
 .single-filter select {
+    cursor: pointer;
     box-sizing: border-box;
     position: relative;
     height: 45px;
@@ -304,38 +312,49 @@
 
 #calendar-container {
     position: absolute;
-    top: -100px;
-    left: 0;
+    height: 100%;
     width: 100%;
-    height: 200px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: auto;
+    background-color: rgba(200, 200, 200, 0.5);
+    backdrop-filter: blur(3px);
 }
 
-#calendar-container div {
+#calendar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 330px;
+    border: 2px solid var(--clr-pink);
+    border-radius: 15px;
+    padding: 10px;
+    background-color: var(--clr-white);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    font-size: 1.5rem;
+    font-weight: 600;
+    z-index: 999;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    margin: 10px 0;
     width: 100%;
 }
 
 .calendar-day {
+    cursor: pointer;
+    display: inline-block;
     width: calc(100% / 7);
     text-align: center;
-    padding: 5px 0;
-    margin: 2px;
-    display: inline-block;
-    cursor: pointer;
+    padding: 14px 0 17px 0;
+    border-radius: 999px;
 }
 
 .calendar-day:hover {
     background-color: #f0f0f0;
-}
-
-.calendar-header {
-    text-align: center;
-    margin-bottom: 10px;
 }
 
 /* ####################################################################### */
