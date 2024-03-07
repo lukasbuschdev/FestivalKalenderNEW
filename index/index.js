@@ -3,6 +3,7 @@ let darkModeActive = false;
 async function loadContent() {
     loadFilteredEventCards();
     loadFilters();
+    getAllDates();
 }
 
 
@@ -280,7 +281,7 @@ function openCalendar() {
     const container = $('#calendar');
     $('#calendar-container').classList.toggle('d-none');
 
-    if (!container.classList.contains('d-none')) {
+    if(!container.classList.contains('d-none')) {
         container.innerHTML = '';
         generateCalendar(container, currentMonth, currentYear);
     }
@@ -350,18 +351,6 @@ function closeCalendar() {
     checkSelectValueStyling();
     $('#calendar-container').classList.toggle('d-none');
 }
-
-
-
-// ################################################################################
-// ################################################################################
-// ################################################################################
-
-
-
-
-
-
 
 
 
@@ -631,10 +620,21 @@ function intObserverSetup() {
 
 
 
+// ################################################################################
+// MARK DATES IN CALENDAR / EXPERIMENTAL
+// ################################################################################
 
+async function getAllDates() {
+    const festivals = await getFestivals();
 
+    const dates = new Set();
 
+    festivals.forEach(festival => {
+        festival.events.map(event => dates.add(event.eventDateIso8601))
+    });
 
+    log(dates)
+}
 
 
 
