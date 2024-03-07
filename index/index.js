@@ -27,7 +27,7 @@ function loadFilters() {
 async function openFilter() {
     const festivals = await getFestivals();
     $('body').classList.add('no-scroll');
-    
+
     deleteInput();
 
     $('#filter-popup-container').classList.remove('d-none');
@@ -455,7 +455,7 @@ function renderFlags(eventCountry) {
 function renderAdBlock(ad) {
     return /*html*/ `
         <div class="ad-container">
-            <a href="${ad.src}">
+            <a href="${ad.src}" target="_blank">
                 <img src="${ad.img}">
             </a>
         </div>
