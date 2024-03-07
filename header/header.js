@@ -83,7 +83,10 @@ function deleteInput() {
 function checkInput(input) {
     const inputWrapper = $('#header-img .input-wrapper');
     if(input.length < 1) inputWrapper.classList.remove('show-close');
-    if(input.length >= 1) inputWrapper.classList.add('show-close');
+    if(input.length >= 1) {
+        inputWrapper.classList.add('show-close');
+        $('#reset-filter-btn').classList.add('d-none');
+    } 
 }
 
 function debounce(func, delay) {

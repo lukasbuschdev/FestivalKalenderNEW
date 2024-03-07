@@ -27,6 +27,8 @@ function loadFilters() {
 async function openFilter() {
     const festivals = await getFestivals();
     $('body').classList.add('no-scroll');
+    
+    deleteInput();
 
     $('#filter-popup-container').classList.remove('d-none');
     $('#filter-popup-container').innerHTML = renderFilterSelection(festivals);
@@ -256,6 +258,7 @@ async function filter({ name, country, city, date, priceMin, priceMax }) {
 
 function resetFilter() {
     $('#reset-filter-btn').classList.add('d-none');
+    deleteInput();
     loadFilteredEventCards();
 }
 
