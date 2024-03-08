@@ -17,7 +17,7 @@ function loadHeader() {
             </div>
             <div id="header-img" class="column">
                 <img src="../assets/icons/icon-text.svg" alt="Festivalkalender">
-                <div class="input-wrapper">
+                <div class="input-wrapper flex-center">
                     <input type="text" placeholder="Suchen...">
                     <div onclick="deleteInput()" id="close-icon"></div>
                 </div>

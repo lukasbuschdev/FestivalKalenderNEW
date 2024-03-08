@@ -343,6 +343,10 @@
     width: 100%;
 }
 
+.calendar-header span {
+    width: 170px;
+}
+
 .calendar-day {
     cursor: pointer;
     display: inline-block;
@@ -359,6 +363,11 @@
 
 .gray-text {
     color: var(--clr-placeholder);
+}
+
+.marked {
+    background-color: var(--clr-pink-light);
+    color: var(--clr-white);
 }
 
 

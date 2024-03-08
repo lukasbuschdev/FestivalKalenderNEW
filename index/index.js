@@ -34,6 +34,8 @@ async function openFilter() {
     $('#filter-popup-container').classList.remove('d-none');
     $('#filter-popup-container').innerHTML = renderFilterSelection(festivals);
 
+    truncateSelectOptionText('.single-filter select', 22);
+
     checkSelectValueStyling();
     filterDarkMode();
 }
@@ -108,7 +110,7 @@ function renderFilterSelection(festivals) {
 
             <div class="flex-center search-button-container gap-10">
                 <button onclick="search()">Suchen</button>
-                <button onclick="resetAllFilters()">Reset</button>
+                <button onclick="resetAllFilters()">Löschen</button>
             </div>
         </div>
     `; 
@@ -277,53 +279,67 @@ function closeFilter() {
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 
-function openCalendar() {
+async function openCalendar() {
     const container = $('#calendar');
     $('#calendar-container').classList.toggle('d-none');
 
     if(!container.classList.contains('d-none')) {
         container.innerHTML = '';
-        generateCalendar(container, currentMonth, currentYear);
+
+        const markedDates = await getAllDates();
+        generateCalendar(container, currentMonth, currentYear, markedDates);
     }
 }
 
-function generateCalendar(container, month, year) {
+async function generateCalendar(container, month, year, markedDates) {
     container.innerHTML = '';
 
-    const firstDay = new Date(year, month, 1);
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    const header = document.createElement('div');
-    const prevBtn = document.createElement('button');
-    const nextBtn = document.createElement('button');
-    prevBtn.textContent = '<';
-    nextBtn.textContent = '>';
-    prevBtn.onclick = () => changeMonth(container, -1);
-    nextBtn.onclick = () => changeMonth(container, 1);
-    header.className = 'calendar-header';
-    header.appendChild(prevBtn);
-
     const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-    const monthYearLabel = document.createElement('span');
-    monthYearLabel.textContent = `${monthNames[month]} ${year}`;
-    header.appendChild(monthYearLabel);
+    const headerHtml = /*html*/ `
+        <div class="calendar-header">
+            <button id="prevBtn" onclick="changeMonth(-1)"><</button>
+            <span id="monthYearLabel">${monthNames[month]} ${year}</span>
+            <button id="nextBtn" onclick="changeMonth(1)">></button>
+        </div>
+    `;
 
-    header.appendChild(nextBtn);
-    container.appendChild(header);
+    container.innerHTML = headerHtml;
 
-    generateDays(daysInMonth, container, month, year);
+    window.changeMonth = async function(increment) {
+        currentMonth += increment;
+        if(currentMonth < 0) {
+            currentMonth = 11;
+            currentYear -= 1;
+        } else if(currentMonth > 11) {
+            currentMonth = 0;
+            currentYear += 1;
+        }
+        const markedDates = await getAllDates();
+        generateCalendar(container, currentMonth, currentYear, markedDates);
+    };
+
+    generateDays(container, month, year, markedDates);
 }
 
-function generateDays(daysInMonth, container, month, year) {
+function generateDays(container, month, year, markedDates) {
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
     for(let i = 1; i <= daysInMonth; i++) {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
         dayElement.textContent = i;
-        container.appendChild(dayElement);
-        dayElement.onclick = () => {
-            const formattedDay = i.toString().padStart(2, '0');
-            const formattedMonth = (month + 1).toString().padStart(2, '0');
 
+        const formattedDay = i.toString().padStart(2, '0');
+        const formattedMonth = (month + 1).toString().padStart(2, '0');
+        const currentDate = `${formattedDay}.${formattedMonth}.${year}`;
+
+        if(markedDates.has(currentDate)) {
+            dayElement.classList.add('marked');
+        }
+
+        container.appendChild(dayElement);
+        
+        dayElement.onclick = () => {
             const selectedDate = `${formattedDay}.${formattedMonth}.${year}`;
             insertSelectedDate(selectedDate);
             closeCalendar();
@@ -331,7 +347,7 @@ function generateDays(daysInMonth, container, month, year) {
     }
 }
 
-function changeMonth(container, increment) {
+async function changeMonth(container, increment) {
     currentMonth += increment;
     if(currentMonth < 0) {
         currentMonth = 11;
@@ -340,7 +356,8 @@ function changeMonth(container, increment) {
         currentMonth = 0;
         currentYear += 1;
     }
-    generateCalendar(container, currentMonth, currentYear);
+    const markedDates = await getAllDates();
+    generateCalendar(container, currentMonth, currentYear, markedDates);
 }
 
 function insertSelectedDate(selectedDate) {
@@ -626,19 +643,39 @@ function intObserverSetup() {
 
 async function getAllDates() {
     const festivals = await getFestivals();
-
     const dates = new Set();
 
     festivals.forEach(festival => {
-        festival.events.map(event => dates.add(event.eventDateIso8601))
+        festival.events.map(event => dates.add(transformDate(event.eventDateIso8601)))
     });
 
-    log(dates)
+    return dates
 }
 
+function transformDate(dateStr) {
+    const date = new Date(dateStr);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
 
+    return `${day}.${month}.${year}`;
+}
 
+// ################################################################################
+// LIMIT <OPTION> OF <SELECT> TO 20 CHARACTERS
+// ################################################################################
 
+function truncateSelectOptionText(selector, maxLength) {
+    const selects = document.querySelectorAll(selector);
+  
+    selects.forEach((select) => {
+        Array.from(select.options).forEach((option) => {
+            if(option.text.length > maxLength) {
+                option.text = option.text.substring(0, maxLength) + '...';
+            }
+        });
+    });
+}
 
 
 // ################################################################################
