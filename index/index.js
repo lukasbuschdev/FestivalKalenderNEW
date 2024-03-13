@@ -4,6 +4,7 @@ async function loadContent() {
     loadFilteredEventCards();
     loadFilters();
     getAllDates();
+    loadDarkModeSetting();
 }
 
 
@@ -582,6 +583,8 @@ function activateDarkMode() {
     $('#header-img').classList.add('dark-mode-header');
 
     allEventCards.forEach(eventCard => eventCard.classList.add('dark-mode-card'));
+
+    saveDarkModeSetting()
 }
 
 function deactivateDarkMode() {
@@ -593,6 +596,8 @@ function deactivateDarkMode() {
     $('#header-img').classList.remove('dark-mode-header');
 
     allEventCards.forEach(eventCard => eventCard.classList.remove('dark-mode-card'));
+
+    saveDarkModeSetting()
 }
 
 function selectedCardDarkMode() {
@@ -613,6 +618,24 @@ function applyDarkModeToEventCards() {
         allEventCards.forEach(eventCard => eventCard.classList.add('dark-mode-card'));
     }
 }
+
+// ################################################################################
+// SAVE DARK MODE TO LOCAL STORAGE / EXPERIMENTAL
+// ################################################################################
+
+function saveDarkModeSetting() {
+    localStorage.setItem('darkMode', darkModeActive.toString());
+}
+
+function loadDarkModeSetting() {
+    const storedValue = localStorage.getItem('darkMode');
+    darkModeActive = storedValue === true;
+
+    checkDarkMode()
+}
+
+// ################################################################################
+// ################################################################################
 
 
 
