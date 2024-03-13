@@ -400,8 +400,23 @@ async function loadFilteredEventCards(festivals) {
 }
 
 function checkAd(allEventCardsHTML, counter) {
+    if(screen.width > 600) return renderWebAds(allEventCardsHTML, counter);
+    if(screen.width <= 600) return renderMobileAds(allEventCardsHTML, counter);
+}
+
+function renderWebAds(allEventCardsHTML, counter) {
     if(counter % 6 === 0) {
         const adIndex = Math.floor((counter / 6 - 1) % ads.length);
+        const ad = ads[adIndex];
+        return allEventCardsHTML + renderAdBlock(ad);
+    }
+
+    return allEventCardsHTML;
+}
+
+function renderMobileAds(allEventCardsHTML, counter) {
+    if(counter % 3 === 0) {
+        const adIndex = Math.floor((counter / 3 - 1) % ads.length);
         const ad = ads[adIndex];
         return allEventCardsHTML + renderAdBlock(ad);
     }
@@ -536,7 +551,7 @@ function renderSelectedCardInfo(selected) {
     `;
 }
 
-function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventStreet, minPrice}) {
+function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventVenue, minPrice}) {
     const transformedCountryName = transformCountryName(eventCountry);
     
     return /*html*/ `
@@ -548,7 +563,7 @@ function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventStreet
                 <span class="selected-event-location">PLZ/Stadt: </span><span class="selected-event-location">${eventZip}, ${eventCity}</span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-state">Adresse: </span><span class="selected-event-state">${eventStreet}</span>
+                <span class="selected-event-state">Ort: </span><span class="selected-event-state">${eventVenue}</span>
             </div>
             <div class="selected-event-info row">
                 <span class="selected-event-category">Tickets: </span><span class="selected-event-category">ab ${minPrice} €</span>
