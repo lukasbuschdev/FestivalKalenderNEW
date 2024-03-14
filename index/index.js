@@ -35,7 +35,8 @@ async function openFilter() {
     $('#filter-popup-container').classList.remove('d-none');
     $('#filter-popup-container').innerHTML = renderFilterSelection(festivals);
 
-    truncateSelectOptionText('.single-filter select', 22);
+    // DON'T FOLLOW THIS ROUTE ... JUST DON'T
+    truncateSelectOptionText('.single-filter select', 25);
 
     checkSelectValueStyling();
     filterDarkMode();
@@ -347,6 +348,45 @@ function generateDays(container, month, year, markedDates) {
         };
     }
 }
+
+
+
+// ########################################################
+// GENERATE DAYS MODIFICATION/REPLACEMENT -> EXPERIMENTAL
+// ########################################################
+
+// function generateDays(container, month, year, markedDates) {
+//     const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+//     container.innerHTML = Array(daysInMonth)
+//         .map((n, i) => i + 1)
+//         .reduce((day) => {
+//             const currentDate = getCurrentDate(day, month, year);
+//             const isDayMarked = markedDates.has(currentDate);
+//             dayTemplate(day, currentDate, isDayMarked);
+//         }, '');
+// }
+
+// function getCurrentDate(day, month, year) {
+//     const formattedDay = day.toString().padStart(2, '0');
+//     const formattedMonth = (month + 1).toString().padStart(2, '0');
+//     return `${formattedDay}.${formattedMonth}.${year}`;
+// }
+
+// function clickFunction(selectedDate) {
+//     insertSelectedDate(selectedDate);
+//     closeCalendar();
+// };
+
+// function dayTemplate(day, selectedDate, isDayMarked) {
+//     return /*html*/`
+//         <div onclick="clickFunction(${selectedDate})" class="calendar-day${isDayMarked ? ' marked' : ''}">
+//             ${day}
+//         </div>
+//     `;
+// }
+
+
 
 async function changeMonth(container, increment) {
     currentMonth += increment;
@@ -684,7 +724,7 @@ async function getAllDates() {
     const dates = new Set();
 
     festivals.forEach(festival => {
-        festival.events.map(event => dates.add(transformDate(event.eventDateIso8601)))
+        festival.events.forEach(event => dates.add(transformDate(event.eventDateIso8601)))
     });
 
     return dates

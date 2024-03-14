@@ -303,6 +303,7 @@
         width: 100%;
         border: none;
         border-radius: unset;
+        max-width: none;
     }
 
     .search-button-container button {
