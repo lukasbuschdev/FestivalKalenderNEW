@@ -294,33 +294,33 @@ async function openCalendar() {
 }
 
 async function generateCalendar(container, month, year, markedDates) {
-    container.innerHTML = '';
+    container.innerHTML = renderCalendarHeader(month, year);
 
+    window.changeMonth = async function(increment) {
+        month += increment;
+        if(month < 0) {
+            month = 11;
+            year -= 1;
+        } else if(month > 11) {
+            month = 0;
+            year += 1;
+        }
+        const markedDates = await getAllDates();
+        generateCalendar(container, month, year, markedDates);
+    };
+
+    generateDays(container, month, year, markedDates);
+}
+
+function renderCalendarHeader(month, year) {
     const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-    const headerHtml = /*html*/ `
+    return /*html*/ `
         <div class="calendar-header">
             <button id="prevBtn" onclick="changeMonth(-1)"><</button>
             <span id="monthYearLabel">${monthNames[month]} ${year}</span>
             <button id="nextBtn" onclick="changeMonth(1)">></button>
         </div>
     `;
-
-    container.innerHTML = headerHtml;
-
-    window.changeMonth = async function(increment) {
-        currentMonth += increment;
-        if(currentMonth < 0) {
-            currentMonth = 11;
-            currentYear -= 1;
-        } else if(currentMonth > 11) {
-            currentMonth = 0;
-            currentYear += 1;
-        }
-        const markedDates = await getAllDates();
-        generateCalendar(container, currentMonth, currentYear, markedDates);
-    };
-
-    generateDays(container, month, year, markedDates);
 }
 
 function generateDays(container, month, year, markedDates) {
