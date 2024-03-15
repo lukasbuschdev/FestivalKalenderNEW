@@ -314,6 +314,7 @@ async function generateCalendar(container, month, year, markedDates) {
 
 function renderCalendarHeader(month, year) {
     const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+    
     return /*html*/ `
         <div class="calendar-header">
             <button id="prevBtn" onclick="changeMonth(-1)"><</button>
@@ -323,31 +324,35 @@ function renderCalendarHeader(month, year) {
     `;
 }
 
-function generateDays(container, month, year, markedDates) {
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+// ######################################################
+// ORIGINAL GENERATEDAYS() FUNCTION / WORKING
+// ######################################################
 
-    for(let i = 1; i <= daysInMonth; i++) {
-        const dayElement = document.createElement('div');
-        dayElement.className = 'calendar-day';
-        dayElement.textContent = i;
+// function generateDays(container, month, year, markedDates) {
+//     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-        const formattedDay = i.toString().padStart(2, '0');
-        const formattedMonth = (month + 1).toString().padStart(2, '0');
-        const currentDate = `${formattedDay}.${formattedMonth}.${year}`;
+//     for(let i = 1; i <= daysInMonth; i++) {
+//         // const dayElement = document.createElement('div');
+//         // dayElement.className = 'calendar-day';
+//         // dayElement.textContent = i;
 
-        if(markedDates.has(currentDate)) {
-            dayElement.classList.add('marked');
-        }
+//         const formattedDay = i.toString().padStart(2, '0');
+//         const formattedMonth = (month + 1).toString().padStart(2, '0');
+//         const currentDate = `${formattedDay}.${formattedMonth}.${year}`;
 
-        container.appendChild(dayElement);
+//         if(markedDates.has(currentDate)) {
+//             dayElement.classList.add('marked');
+//         }
+
+//         container.appendChild(dayElement);
         
-        dayElement.onclick = () => {
-            const selectedDate = `${formattedDay}.${formattedMonth}.${year}`;
-            insertSelectedDate(selectedDate);
-            closeCalendar();
-        };
-    }
-}
+//         dayElement.onclick = () => {
+//             const selectedDate = `${formattedDay}.${formattedMonth}.${year}`;
+//             insertSelectedDate(selectedDate);
+//             closeCalendar();
+//         };
+//     }
+// }
 
 
 
@@ -367,24 +372,36 @@ function generateDays(container, month, year, markedDates) {
 //         }, '');
 // }
 
-// function getCurrentDate(day, month, year) {
-//     const formattedDay = day.toString().padStart(2, '0');
-//     const formattedMonth = (month + 1).toString().padStart(2, '0');
-//     return `${formattedDay}.${formattedMonth}.${year}`;
-// }
+function generateDays(container, month, year, markedDates) {
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-// function clickFunction(selectedDate) {
-//     insertSelectedDate(selectedDate);
-//     closeCalendar();
-// };
+    container.innerHTML = Array.from({length: daysInMonth}, (_, i) => i + 1)
+        .map(day => {
+            const currentDate = getCurrentDate(day, month, year);
+            const isDayMarked = markedDates.has(currentDate);
+            return dayTemplate(day, currentDate, isDayMarked);
+        })
+        .join('');
+}
 
-// function dayTemplate(day, selectedDate, isDayMarked) {
-//     return /*html*/`
-//         <div onclick="clickFunction(${selectedDate})" class="calendar-day${isDayMarked ? ' marked' : ''}">
-//             ${day}
-//         </div>
-//     `;
-// }
+function getCurrentDate(day, month, year) {
+    const formattedDay = day.toString().padStart(2, '0');
+    const formattedMonth = (month + 1).toString().padStart(2, '0');
+    return `${formattedDay}.${formattedMonth}.${year}`;
+}
+
+function clickFunction(selectedDate) {
+    insertSelectedDate(selectedDate);
+    closeCalendar();
+};
+
+function dayTemplate(day, selectedDate, isDayMarked) {
+    return /*html*/`
+        <div onclick="clickFunction(${selectedDate})" class="calendar-day${isDayMarked ? ' marked' : ''}">
+            ${day}
+        </div>
+    `;
+}
 
 
 
