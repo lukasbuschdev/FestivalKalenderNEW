@@ -639,7 +639,7 @@ function activateDarkMode() {
 
     allEventCards.forEach(eventCard => eventCard.classList.add('dark-mode-card'));
 
-    saveDarkModeSetting()
+    saveDarkModeSetting();
 }
 
 function deactivateDarkMode() {
@@ -652,7 +652,7 @@ function deactivateDarkMode() {
 
     allEventCards.forEach(eventCard => eventCard.classList.remove('dark-mode-card'));
 
-    saveDarkModeSetting()
+    saveDarkModeSetting();
 }
 
 function selectedCardDarkMode() {
@@ -664,7 +664,6 @@ function filterDarkMode() {
     $('.filter-popup-content').classList.toggle('dark-mode-filter', darkModeActive);
     $('#calendar').classList.toggle('dark-mode-calendar', darkModeActive);
     $$('.single-filter > div input').forEach(input => input.classList.toggle('dark-mode-filter-input', darkModeActive));
-
 }
 
 function applyDarkModeToEventCards() {
@@ -684,9 +683,9 @@ function saveDarkModeSetting() {
 
 function loadDarkModeSetting() {
     const storedValue = localStorage.getItem('darkMode');
-    darkModeActive = storedValue === true;
+    darkModeActive = storedValue === 'true';
 
-    checkDarkMode()
+    darkModeActive ? activateDarkMode() : deactivateDarkMode();
 }
 
 // ################################################################################
