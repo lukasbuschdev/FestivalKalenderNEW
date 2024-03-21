@@ -314,7 +314,6 @@ async function generateCalendar(container, month, year, markedDates) {
 
 function renderCalendarHeader(month, year) {
     const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-    
     return /*html*/ `
         <div class="calendar-header">
             <button id="prevBtn" onclick="changeMonth(-1)"><</button>
@@ -324,86 +323,31 @@ function renderCalendarHeader(month, year) {
     `;
 }
 
-// ######################################################
-// ORIGINAL GENERATEDAYS() FUNCTION / WORKING
-// ######################################################
-
-// function generateDays(container, month, year, markedDates) {
-//     const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-//     for(let i = 1; i <= daysInMonth; i++) {
-//         // const dayElement = document.createElement('div');
-//         // dayElement.className = 'calendar-day';
-//         // dayElement.textContent = i;
-
-//         const formattedDay = i.toString().padStart(2, '0');
-//         const formattedMonth = (month + 1).toString().padStart(2, '0');
-//         const currentDate = `${formattedDay}.${formattedMonth}.${year}`;
-
-//         if(markedDates.has(currentDate)) {
-//             dayElement.classList.add('marked');
-//         }
-
-//         container.appendChild(dayElement);
-        
-//         dayElement.onclick = () => {
-//             const selectedDate = `${formattedDay}.${formattedMonth}.${year}`;
-//             insertSelectedDate(selectedDate);
-//             closeCalendar();
-//         };
-//     }
-// }
-
-
-
-// ########################################################
-// GENERATE DAYS MODIFICATION/REPLACEMENT -> EXPERIMENTAL
-// ########################################################
-
-// function generateDays(container, month, year, markedDates) {
-//     const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-//     container.innerHTML = Array(daysInMonth)
-//         .map((n, i) => i + 1)
-//         .reduce((day) => {
-//             const currentDate = getCurrentDate(day, month, year);
-//             const isDayMarked = markedDates.has(currentDate);
-//             dayTemplate(day, currentDate, isDayMarked);
-//         }, '');
-// }
-
 function generateDays(container, month, year, markedDates) {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    container.innerHTML = Array.from({length: daysInMonth}, (_, i) => i + 1)
-        .map(day => {
-            const currentDate = getCurrentDate(day, month, year);
-            const isDayMarked = markedDates.has(currentDate);
-            return dayTemplate(day, currentDate, isDayMarked);
-        })
-        .join('');
+    for(let i = 1; i <= daysInMonth; i++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'calendar-day';
+        dayElement.textContent = i;
+
+        const formattedDay = i.toString().padStart(2, '0');
+        const formattedMonth = (month + 1).toString().padStart(2, '0');
+        const currentDate = `${formattedDay}.${formattedMonth}.${year}`;
+
+        if(markedDates.has(currentDate)) {
+            dayElement.classList.add('marked');
+        }
+
+        container.appendChild(dayElement);
+        
+        dayElement.onclick = () => {
+            const selectedDate = `${formattedDay}.${formattedMonth}.${year}`;
+            insertSelectedDate(selectedDate);
+            closeCalendar();
+        };
+    }
 }
-
-function getCurrentDate(day, month, year) {
-    const formattedDay = day.toString().padStart(2, '0');
-    const formattedMonth = (month + 1).toString().padStart(2, '0');
-    return `${formattedDay}.${formattedMonth}.${year}`;
-}
-
-function clickFunction(selectedDate) {
-    insertSelectedDate(selectedDate);
-    closeCalendar();
-};
-
-function dayTemplate(day, selectedDate, isDayMarked) {
-    return /*html*/`
-        <div onclick="clickFunction(${selectedDate})" class="calendar-day${isDayMarked ? ' marked' : ''}">
-            ${day}
-        </div>
-    `;
-}
-
-
 
 async function changeMonth(container, increment) {
     currentMonth += increment;
