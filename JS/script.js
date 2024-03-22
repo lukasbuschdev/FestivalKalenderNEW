@@ -11,7 +11,7 @@ async function init() {
 
 
 // #######################################################################
-// GET DATASET
+// GET DATASET.JSON
 // #######################################################################
 
 const dataset = [
@@ -21,10 +21,29 @@ const dataset = [
 
 
 // #######################################################################
-// GET DATASET AND CONVERT .CSV TO .JSON
+// GET DATA
 // #######################################################################
 
 async function getData() {
     const data = await (await fetch(dataset)).json();
     return data;
+}
+
+
+
+// #######################################################################
+// GET CATEGORIES.JSON
+// #######################################################################
+
+const categorySet = "../categories.json";
+
+
+
+// #######################################################################
+// GET CATEGORIES
+// #######################################################################
+
+async function getAllCategories() {
+    const categories = await (await fetch(categorySet)).json();
+    return categories;
 }

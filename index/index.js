@@ -237,6 +237,7 @@ function transformInputDate(inputs) {
 
 async function filter({ name, country, city, date, priceMin, priceMax }) {
     const festivals = await getFestivals();
+
     const filteredFestivals = festivals.reduce((acc, festival) => {
         const filteredEvents = festival.events.filter(event => {
             const transformedDateObj = transformDateFormat(event.eventDateIso8601);
@@ -379,15 +380,16 @@ function closeCalendar() {
 
 async function loadFilteredEventCards(festivals) {
     festivals = festivals || await getFestivals();
+    const categories = await getAllCategories()
 
     let allEventCardsHTML = '';
     let counter = 0;
 
     festivals.forEach(festival => {
-        const {esId, esPictureBig, esText, esName} = festival;
+        const {esId, esPictureBig, esText, esName, esCategory} = festival;
 
         festival.events.forEach(singleEvent => {
-            const event = {...singleEvent, esPictureBig, esName, esText, esId};
+            const event = {...singleEvent, esPictureBig, esName, esText, esId, esCategory};
             allEventCardsHTML += renderEvent(event);
             counter++;
             allEventCardsHTML = checkAd(allEventCardsHTML, counter);
@@ -485,39 +487,46 @@ function renderAdBlock(ad) {
     `;
 }
 
+
+
+// #################################################################
+// SELECTED FESTIVAL/EVENT SECTION
+// #################################################################
+
 async function openSelectedFestival(eventId, esId) {
     $('body').classList.add('no-scroll');
      
     const selectedEvent = await checkFestivalId(eventId, esId);
-    renderSelectedFestival(selectedEvent);
+    const transformedCategories = await checkEventCategories(selectedEvent.esCategories);
+    renderSelectedFestival(selectedEvent, transformedCategories);
 }
 
 async function checkFestivalId(_eventId, _esId) {
     const festivals = await getFestivals();
     
     const festival = festivals.find(({esId}) => esId == _esId);
-    const {esPictureBig, esText, esName} = festival;
+    const {esPictureBig, esText, esName, esCategories} = festival;
     const event = festival.events.find(({eventId}) => eventId == _eventId);
-
-    return {...event, esPictureBig, esName, esText};
+    
+    return {...event, esPictureBig, esName, esText, esCategories};
 }
 
-function renderSelectedFestival(selected) {
+function renderSelectedFestival(selected, transformedCategories) {
     const selectedFestivalContainer = $('#selected-festival-container-upper');
     $('#selected-festival-container-upper').classList.remove('d-none');
 
-    selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selected);
+    selectedFestivalContainer.innerHTML = selectedFestivalTemplate(selected, transformedCategories);
     selectedCardDarkMode();
 }
 
-function selectedFestivalTemplate(selected) {
+function selectedFestivalTemplate(selected, transformedCategories) {
     return /*html*/ `
         <div class="selected-festival-container-lower flex-center" onclick="closeSelectedFestival()">
             <div class="selected-event-card column" onclick="event.stopPropagation()">
                 <img class="selected-event-card-close grid-center" src="../assets/icons/close.svg" alt="X" onclick="closeSelectedFestival()">
                 <span class="selected-event-name">${selected.eventName}</span>
                 <div class="column gap-15">
-                    <div class="row selected-card-info gap-30">${renderSelectedCardInfo(selected)}</div>
+                    <div class="row selected-card-info gap-30">${renderSelectedCardInfo(selected, transformedCategories)}</div>
     
                     <div class="row selected-event-text-container">
                         <div class="selected-event-text column">${selected.esText}</div>
@@ -532,7 +541,7 @@ function selectedFestivalTemplate(selected) {
     `;
 }
 
-function renderSelectedCardInfo(selected) {
+function renderSelectedCardInfo(selected, transformedCategories) {
     const transformedDate = transformDateFormat(selected.eventDateIso8601);
     
     return /*html*/ `
@@ -547,12 +556,12 @@ function renderSelectedCardInfo(selected) {
                 </div>
             </div>
 
-            <div class="selected-event-info-container row">${renderSelectedEventInfo(selected)}</div>
+            <div class="selected-event-info-container row">${renderSelectedEventInfo(selected, transformedCategories)}</div>
         </div>
     `;
 }
 
-function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventVenue, minPrice}) {
+function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventVenue, minPrice}, transformedCategories) {
     const transformedCountryName = transformCountryName(eventCountry);
     
     return /*html*/ `
@@ -567,6 +576,9 @@ function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventVenue,
                 <span class="selected-event-state">Ort: </span><span class="selected-event-state">${eventVenue}</span>
             </div>
             <div class="selected-event-info row">
+                <span class="selected-event-category">Kategorie: </span><span class="selected-event-category">${transformedCategories}</span>
+            </div>
+            <div class="selected-event-info row">
                 <span class="selected-event-category">Tickets: </span><span class="selected-event-category">ab ${minPrice} €</span>
             </div>
         </div>
@@ -578,6 +590,31 @@ function closeSelectedFestival() {
     $('#selected-festival-container-upper').innerHTML = '';
     $('body').classList.remove('no-scroll')
 }
+
+async function checkEventCategories(esCategories) {
+    const allCategories = await getAllCategories();
+    const eventCategory = esCategories.map(esCategory => esCategory.category);
+    
+    const entries = eventCategory
+        .map(el => Object
+            .entries(allCategories)
+            .find(([,value]) => el === value))
+        .map(entry => entry ? entry[0] : 'Unknown');
+    
+    return entries;
+}
+
+// async function checkEventCategories(esCategories) {
+//     const allCategories = await getAllCategories();
+//     const eventCategory = esCategories.map(esCategory => esCategory.category);
+    
+//     const entries = eventCategory
+//         .map(el => Object
+//             .entries(allCategories)
+//             .find(([,value]) => el === value));
+
+//     entries.forEach(entry => entry[0]);
+// }
 
 
 
@@ -699,6 +736,8 @@ function transformDate(dateStr) {
     return `${day}.${month}.${year}`;
 }
 
+
+
 // ################################################################################
 // LIMIT <OPTION> OF <SELECT> TO 20 CHARACTERS
 // ################################################################################
@@ -720,7 +759,6 @@ function truncateSelectOptionText(selector, maxLength) {
 // ################################################################################
 // CATEGORIES SECTION
 // ################################################################################
-
 
 
 
