@@ -225,7 +225,7 @@
 
 @media(max-height: 850px) {
     .selected-event-text-container {
-        height: 200px;
+        height: 170px;
     }
 
     .selected-event-info {

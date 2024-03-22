@@ -576,7 +576,7 @@ function renderSelectedEventInfo({eventCountry, eventCity, eventZip, eventVenue,
                 <span class="selected-event-state">Ort: </span><span class="selected-event-state">${eventVenue}</span>
             </div>
             <div class="selected-event-info row">
-                <span class="selected-event-category">Kategorie: </span><span class="selected-event-category">${transformedCategories}</span>
+                <span>Kategorie: </span><span class="selected-event-category">${transformedCategories}</span>
             </div>
             <div class="selected-event-info row">
                 <span class="selected-event-category">Tickets: </span><span class="selected-event-category">ab ${minPrice} €</span>
@@ -599,22 +599,10 @@ async function checkEventCategories(esCategories) {
         .map(el => Object
             .entries(allCategories)
             .find(([,value]) => el === value))
-        .map(entry => entry ? entry[0] : 'Unknown');
+        .map(entry => entry ? ' ' + entry[0] : 'Unknown');
     
     return entries;
 }
-
-// async function checkEventCategories(esCategories) {
-//     const allCategories = await getAllCategories();
-//     const eventCategory = esCategories.map(esCategory => esCategory.category);
-    
-//     const entries = eventCategory
-//         .map(el => Object
-//             .entries(allCategories)
-//             .find(([,value]) => el === value));
-
-//     entries.forEach(entry => entry[0]);
-// }
 
 
 
