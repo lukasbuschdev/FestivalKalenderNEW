@@ -101,6 +101,10 @@
         border: none;
         border-radius: unset;
     }
+
+    .links-popup a {
+        font-size: 1.2rem;
+    }
 }
 
 
@@ -137,6 +141,10 @@
     .single-filter div {
         width: 100%;
     }
+
+    .links-popup a {
+        font-size: 1rem;
+    }
 }
 
 
@@ -165,6 +173,10 @@
 
     .search-button-container button {
         font-size: 1.3rem;
+    }
+
+    .links-popup a {
+        font-size: 0.8rem;
     }
 }
 

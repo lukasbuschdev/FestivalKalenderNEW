@@ -18,22 +18,22 @@ function loadFooter() {
                 <div>
                     <a target="_blank" href="https://www.vamida.at/datenschutzerklarung">Datenschutz</a>
                 </div>
-
-                <!-- <div class="references">
-                    <a href="https://www.flaticon.com/free-icons/up-arrow" title="up arrow icons">Up arrow icon created by 'Freepik' - Flaticon</a>
-                    <a href="https://www.flaticon.com/free-icons/sun" title="sun icons">Sun icons created by Good Ware - Flaticon</a>
-                    <a href="https://www.flaticon.com/free-icons/moon" title="moon icons">Moon icons created by Good Ware - Flaticon</a>
-                    <a href="https://www.flaticon.com/free-icons/calendar" title="calendar icons">Calendar icons created by Freepik - Flaticon</a>
-
-
-
-                    OLD DARK MODE ICON
-
-                    <a href="https://www.flaticon.com/authors/rizal2109" title="rizal2109">Darkmode icon created by 'rizal2109' - Flaticon</a>
-                </div> -->
+                <div>
+                    <a onclick="openIconLinks()">ICONS</a>
+                </div>
             </div>
         </footer> 
     `;
 
     includeTemplate(footerContainer, footerContent);
+}
+
+function openIconLinks() {
+    $('.links-popup').classList.remove('d-none');
+    $('#footer-container').classList.add('d-none'); //prevents buggy scroll - to be solved !
+}
+
+function closeIconLinks() {
+    $('.links-popup').classList.add('d-none');
+    $('#footer-container').classList.remove('d-none');
 }
