@@ -83,6 +83,10 @@
         font-size: 1rem;
     }
 
+    .selected-event-text-container {
+        height: 170px;
+    }
+
     .selected-event-card-close {
         top: 3%;
     }
@@ -219,7 +223,6 @@
 /* ############################################################ */
 /* RESPONSIVE DESIGN (HEIGHT) */
 /* ############################################################ */
-
 
 /* 850px */
 
